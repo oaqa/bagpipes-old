@@ -1,4 +1,4 @@
-ecd2
+Configuration Space Exploration Framework
 ========
 
 [![Build Status](https://secure.travis-ci.org/oaqa/ecd2.png)](http://travis-ci.org/oaqa/ecd2)
