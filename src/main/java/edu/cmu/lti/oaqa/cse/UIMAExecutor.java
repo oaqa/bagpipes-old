@@ -16,17 +16,17 @@ public class UIMAExecutor implements Executor<Pipeline> {
 
   @Override
   public void execute(Pipeline conf) {
-    CollectionReader reader = builder.buildCollectionReader(conf);
-    AnalysisEngine pipeline = builder.buildPipeline(conf, "pipeline");
-    if (conf.getIterable("post-process") != null) {
-      AnalysisEngine post = builder.buildPipeline(conf, "post-process");
-      SimplePipelineRev803.runPipeline(reader, pipeline, post);
-    } else {
-      SimplePipelineRev803.runPipeline(reader, pipeline);
-    }
-    Progress progress = reader.getProgress()[0];
-    long total = progress.getCompleted();
-    processedItems.add(total);
+//    CollectionReader reader = builder.buildCollectionReader(conf);
+//    AnalysisEngine pipeline = builder.buildPipeline(conf, "pipeline");
+//    if (conf.getIterable("post-process") != null) {
+//      AnalysisEngine post = builder.buildPipeline(conf, "post-process");
+//      SimplePipelineRev803.runPipeline(reader, pipeline, post);
+//    } else {
+//      SimplePipelineRev803.runPipeline(reader, pipeline);
+//    }
+//    Progress progress = reader.getProgress()[0];
+//    long total = progress.getCompleted();
+//    processedItems.add(total);
   }
 
   Iterable<Long> getProcessedItems() {

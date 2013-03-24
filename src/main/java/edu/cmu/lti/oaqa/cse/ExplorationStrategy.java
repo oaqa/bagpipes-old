@@ -1,5 +1,9 @@
 package edu.cmu.lti.oaqa.cse;
 
-public interface ExplorationStrategy {
+import java.util.Iterator;
+
+public interface ExplorationStrategy<T> {
+
+  Iterator<T> getSpaceIterator();
 
 }
