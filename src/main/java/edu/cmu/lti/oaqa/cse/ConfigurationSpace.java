@@ -18,6 +18,8 @@ package edu.cmu.lti.oaqa.cse;
 
 import java.util.Iterator;
 
+import edu.cmu.lti.oaqa.cse.configuration.Configuration;
+
 
 public final class ConfigurationSpace<T> implements Iterable<T> {
 

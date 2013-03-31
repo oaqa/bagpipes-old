@@ -5,7 +5,9 @@ import java.io.IOException;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import mx.bigdata.anyobject.AnyObject;
+import edu.cmu.lti.oaqa.cse.configuration.Configuration;
 import edu.cmu.lti.oaqa.ecd.config.ConfigurationLoader;
+import edu.cmu.lti.oaqa.ecd.impl.AbstractExperimentPersistenceProvider;
 import edu.cmu.lti.oaqa.ecd.impl.DefaultExperimentPersistenceProvider;
 
 public class ExperimentBase implements Experiment {
@@ -13,7 +15,7 @@ public class ExperimentBase implements Experiment {
 
   private final AnyObject configuration;
 
-  private final ExperimentPersistenceProvider persistence;
+  private final AbstractExperimentPersistenceProvider persistence;
   
   public ExperimentBase(String experimentUuid, String resource) throws Exception {
     this.experimentUuid = experimentUuid;
@@ -30,14 +32,14 @@ public class ExperimentBase implements Experiment {
     return experimentUuid;
   }
   
-  private ExperimentPersistenceProvider newPersistenceProvider(AnyObject config)
+  private AbstractExperimentPersistenceProvider newPersistenceProvider(AnyObject config)
           throws ResourceInitializationException {
     AnyObject pprovider = config.getAnyObject("persistence-provider");
     if (pprovider == null) {
       return new DefaultExperimentPersistenceProvider();
     }
     try {
-      return ResourceHelper.initializeResource(config, "persistence-provider", ExperimentPersistenceProvider.class);
+      return ResourceHelper.initializeResource(config, "persistence-provider", AbstractExperimentPersistenceProvider.class);
     } catch (Exception e) {
       throw new ResourceInitializationException(
               ResourceInitializationException.ERROR_INITIALIZING_FROM_DESCRIPTOR, new Object[] {

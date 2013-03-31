@@ -48,8 +48,11 @@ public final class CSEDriver {
     if (args.length > 1) {
       uuid = args[1];
     }
+    
     System.out.println("Experiment UUID: " + uuid);
     CSEDriver driver = new CSEDriver(args[0], uuid);
     driver.run();
+  
   }
+  
 }
