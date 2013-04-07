@@ -12,5 +12,10 @@ public class CollectionReaderDescriptor extends ComponentDescriptor {
 		super(className,paramMap);
 	}
 	
+	@Override
+	public boolean equals(Object cd){
+		return super.equals(cd);
+	}
+	
 	
 }
