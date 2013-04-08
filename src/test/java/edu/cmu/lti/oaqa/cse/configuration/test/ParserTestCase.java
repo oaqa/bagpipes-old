@@ -27,7 +27,7 @@ public class ParserTestCase {
 	private static final String OPTION1_CLASS = "org.apache.uima.tutorial.ex1.RoomNumberAnnotator";
 
 	private Configuration conf;
-	private CollectionReaderDescriptor crd;
+	private CollectionReaderDescriptor collectionReaderDesc;
 	private PipelineDescriptor pd;
 
 	@Before
@@ -43,11 +43,11 @@ public class ParserTestCase {
 
 	@Before
 	public void initCollectionReaderDescriptor() {
-		crd = new CollectionReaderDescriptor(CR_CLASS);
-		crd.addParam(CR_DIR);
-		crd.addParam(CR_LANGUAGE);
-		crd.addParam(CR_ENCODING);
-		crd.addParam(CR_BROWSE);
+		collectionReaderDesc = new CollectionReaderDescriptor(CR_CLASS);
+		collectionReaderDesc.addParam(CR_DIR);
+		collectionReaderDesc.addParam(CR_LANGUAGE);
+		collectionReaderDesc.addParam(CR_ENCODING);
+		collectionReaderDesc.addParam(CR_BROWSE);
 	}
 
 	@Before
@@ -79,21 +79,18 @@ public class ParserTestCase {
 	public void collectionReaderTest() {
 		CollectionReaderDescriptor crdConf = conf
 				.getCollectionReaderDescriptor();
-
 		// Collection reader the same as programmatic collection reader
 		// descriptor?
-		assertEquals(crdConf.getClassName(), crd.getClassName());
+		assertEquals(crdConf.getClassName(), collectionReaderDesc.getClassName());
 		assertEquals(crdConf.getParam("InputDirectory"),
-				crd.getParam("InputDirectory"));
-		assertEquals(crdConf.getParam("Encoding"), crd.getParam("Encoding"));
-		assertEquals(crdConf.getParam("Language"), crd.getParam("Language"));
+				collectionReaderDesc.getParam("InputDirectory"));
+		assertEquals(crdConf.getParam("Encoding"), collectionReaderDesc.getParam("Encoding"));
+		assertEquals(crdConf.getParam("Language"), collectionReaderDesc.getParam("Language"));
 		assertEquals(crdConf.getParam("BrowseSubdirectories"),
-				crd.getParam("BrowseSubdirectories"));
-
+				collectionReaderDesc.getParam("BrowseSubdirectories"));
 		System.out.println("Config's collection reader: " + crdConf);
-		System.out.println("Programmatic collection reader: " + crd);
-		assertEquals(crdConf, crd);
-
+		System.out.println("Programmatic collection reader: " + collectionReaderDesc);
+		assertEquals(crdConf, collectionReaderDesc);
 	}
 
 	private static <T> Parameter<T> createParam(String name, T val) {

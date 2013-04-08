@@ -14,5 +14,9 @@ public class PhaseDescriptor {
 		this(options);
 		this.name = name;
 	}
+	
+	public List<OptionDescriptor> getOptionDescriptors(){
+		return options;
+	}
 
 }
