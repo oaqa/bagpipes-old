@@ -1,6 +1,7 @@
 package edu.cmu.lti.oaqa.cse.configuration;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Parser {
@@ -28,14 +29,18 @@ public abstract class Parser {
 		String author = getAuthor();
 		CollectionReaderDescriptor crDesc = buildCollectionReader();
 		PipelineDescriptor plDesc = buildPipelineDescriptor();
-		return new Configuration(name, author, crDesc, plDesc);
+		List<ConsumerDescriptor> consumerDescs = buildConsumers();
+		return new Configuration(name, author, crDesc, plDesc, consumerDescs);
 	}
 
-	public abstract Map<String, Object> getResMap(String resource) throws FileNotFoundException;
+	public abstract Map<String, Object> getResMap(String resource)
+			throws FileNotFoundException;
 
 	public abstract CollectionReaderDescriptor buildCollectionReader();
 
 	public abstract PipelineDescriptor buildPipelineDescriptor();
+
+	public abstract List<ConsumerDescriptor> buildConsumers();
 
 	public abstract String getName();
 

@@ -16,6 +16,20 @@ public class PipelineDescriptor {
 	public List<PhaseDescriptor> getPhaseDescriptors(){
 		return phaseDescs;
 	}
+	
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		}
+		return equals((PipelineDescriptor) obj);
+	}
+	
+	private boolean equals(PipelineDescriptor plDesc){
+		return phaseDescs.equals(plDesc.getPhaseDescriptors());
+	}
 
 	
 	

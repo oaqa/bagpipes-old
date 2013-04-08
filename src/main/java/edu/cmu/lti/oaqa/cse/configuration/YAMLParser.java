@@ -20,7 +20,8 @@ public class YAMLParser extends Parser {
 	}
 
 	/**
-	 * 
+	 * Takes a resource file defined by a yaml and turns it to
+	 * Map<String,Object> corresponding to its parameters.
 	 */
 	@Override
 	public Map<String, Object> getResMap(String resource)
@@ -84,9 +85,9 @@ public class YAMLParser extends Parser {
 	 * @return
 	 */
 	public PhaseDescriptor buildPhaseDescriptor(Map<String, Object> phaseResMap) {
-		//System.out.println("Unflattened phaseMap = " + phaseResMap);
+		// System.out.println("Unflattened phaseMap = " + phaseResMap);
 		phaseResMap = flatten(phaseResMap);
-		//System.out.println("Flattened phaseMap = " + phaseResMap);
+		// System.out.println("Flattened phaseMap = " + phaseResMap);
 		List<OptionDescriptor> optionDescs = buildOptionDescriptors(phaseResMap);
 		if (phaseResMap.containsKey("name")) {
 			String name = (String) phaseResMap.get("name");
@@ -193,6 +194,26 @@ public class YAMLParser extends Parser {
 			Map<? extends K, ? extends V> map2) {
 		map1.putAll(map2);
 		return map1;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public List<ConsumerDescriptor> buildConsumers() {
+		List<Map<String,Object>> consumerResMaps = (List<Map<String,Object>>) confMap.get("consumers");
+		List<ConsumerDescriptor> consumerDescs = new LinkedList<ConsumerDescriptor>();
+		for(Map<String,Object> consumerResMap:consumerResMaps)
+			consumerDescs.add(buildConsumerDescriptor(consumerResMap));
+		return consumerDescs;
+	}
+
+	private ConsumerDescriptor buildConsumerDescriptor(
+			Map<String, Object> resMap) {
+		resMap = flatten(resMap);
+		String className = (String) resMap.get("class");
+		resMap.remove("class");
+		return new ConsumerDescriptor(className, resMap);
 	}
 
 	public static void main(String[] args) {

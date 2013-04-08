@@ -2,5 +2,5 @@ class: org.apache.uima.examples.xmi.XmiWriterCasConsumer
 
 OutputDirectory: cas-output
 
-persistence-provider: |
-  inherit: ecd.default-log-persistence-provider
+#persistence-provider: |
+#  inherit: ecd.default-log-persistence-provider

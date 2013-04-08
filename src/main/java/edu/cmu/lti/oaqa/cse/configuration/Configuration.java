@@ -13,7 +13,7 @@ public class Configuration {
 	private PersistenceProviderDescriptor ppDesc;
 	private CollectionReaderDescriptor collectionReaderDesc;
 	private PipelineDescriptor pipelineDesc;
-	private List<ConsumerDescriptor> consumers;
+	private List<ConsumerDescriptor> consumerDescs;
 
 	private Configuration(String name, String author) {
 		this.name = name;
@@ -31,7 +31,7 @@ public class Configuration {
 			CollectionReaderDescriptor crDesc, PipelineDescriptor plDesc,
 			List<ConsumerDescriptor> consumers) {
 		this(name, author, crDesc, plDesc);
-		this.consumers = consumers;
+		this.consumerDescs = consumers;
 	}
 
 	public Configuration(CollectionReaderDescriptor crDesc,
@@ -50,9 +50,39 @@ public class Configuration {
 	public CollectionReaderDescriptor getCollectionReaderDescriptor() {
 		return collectionReaderDesc;
 	}
-	
-	public PipelineDescriptor getPipelineDescriptor(){
+
+	public PipelineDescriptor getPipelineDescriptor() {
 		return pipelineDesc;
+	}
+
+	public List<ConsumerDescriptor> getConsumers() {
+		return consumerDescs;
+	}
+
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		}
+		return equals((Configuration) obj);
+	}
+
+	public boolean equals(Configuration conf) {
+		boolean equal = true;
+		equal &= this.getName().equals(conf.getName());
+		System.out.println("name: " + equal);
+		equal &= this.getAuthor().equals(conf.getAuthor());
+		System.out.println("author: " + equal);
+		equal &= this.collectionReaderDesc.equals(conf
+				.getCollectionReaderDescriptor());
+		System.out.println("collectionReader: " + equal);
+		equal &= this.pipelineDesc.equals(conf.getPipelineDescriptor());
+		System.out.println("plDesc: " + equal);
+		equal &= this.consumerDescs.equals(conf.getConsumers());
+		System.out.println("consumer1: " + consumerDescs + "consumer2: "+conf.getConsumers() + "equal?: " + equal);
+		return equal;
 	}
 
 }

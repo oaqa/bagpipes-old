@@ -13,6 +13,7 @@ import com.google.common.collect.Lists;
 import edu.cmu.lti.oaqa.cse.configuration.CollectionReaderDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.ComponentDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.Configuration;
+import edu.cmu.lti.oaqa.cse.configuration.ConsumerDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.OptionDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.Parameter;
 import edu.cmu.lti.oaqa.cse.configuration.Parser;
@@ -33,10 +34,18 @@ public class ParserTestCase {
 	private static final String CR_CLASS = "collection.fs.FileSystemCollectionReader";
 
 	private static final String OPTION1_CLASS = "org.apache.uima.tutorial.ex1.RoomNumberAnnotator";
-	private static final Parameter<String> OPTION1_PARAM1 = createParam("test","param1"); 
+	private static final Parameter<String> OPTION1_PARAM1 = createParam("test",
+			"param1");
+
+	private static final String CONSUMER1_CLASS = "org.apache.uima.examples.xmi.XmiWriterCasConsumer";
+	private static final Parameter<String> CONSUMER1_PARAM1 = createParam(
+			"OutputDirectory", "cas-output");
+
 	private Configuration parsedConf, programmedConf;
 	private CollectionReaderDescriptor collectionReaderDesc;
 	private PipelineDescriptor pipelineDesc;
+
+	// private List<ConsumerDescriptor> consumerDescs;
 
 	@Before
 	public void initialize() {
@@ -50,8 +59,9 @@ public class ParserTestCase {
 		this.collectionReaderDesc = initCollectionReaderDescriptor();
 		List<PhaseDescriptor> phaseDescs = initPhaseDescriptors();
 		this.pipelineDesc = initPipeline(phaseDescs);
-		this.programmedConf = new Configuration(AUTHOR, NAME,
-				collectionReaderDesc, pipelineDesc);
+		List<ConsumerDescriptor> consumerDescs = initConsumers();
+		this.programmedConf = new Configuration(NAME, AUTHOR,
+				collectionReaderDesc, pipelineDesc, consumerDescs);
 	}
 
 	public CollectionReaderDescriptor initCollectionReaderDescriptor() {
@@ -81,6 +91,13 @@ public class ParserTestCase {
 		return new PipelineDescriptor(phaseDescs);
 	}
 
+	public List<ConsumerDescriptor> initConsumers() {
+		ConsumerDescriptor consumerDesc = new ConsumerDescriptor(
+				CONSUMER1_CLASS);
+		consumerDesc.addParam(CONSUMER1_PARAM1);
+		return Lists.newArrayList(consumerDesc);
+	}
+
 	@Test
 	public void parserTest() {
 		// Configuration from yaml the same as programmatic conf?
@@ -95,14 +112,13 @@ public class ParserTestCase {
 
 	@Test
 	public void pipelineDescriptorTest() {
-
 		PipelineDescriptor confPd = parsedConf.getPipelineDescriptor();
 		List<PhaseDescriptor> confPhases = confPd.getPhaseDescriptors();
 		List<PhaseDescriptor> progPhases = pipelineDesc.getPhaseDescriptors();
 		System.out.println("confPhases" + confPhases);
 		System.out.println("progPhases" + progPhases);
 		assertEquals(confPhases, progPhases);
-
+		assertEquals(confPd,pipelineDesc);
 	}
 
 	@Test
@@ -125,6 +141,11 @@ public class ParserTestCase {
 		System.out.println("Programmatic collection reader: "
 				+ collectionReaderDesc);
 		assertEquals(crdConf, collectionReaderDesc);
+	}
+
+	@Test
+	public void configurationTest() {
+		assertEquals(parsedConf, programmedConf);
 	}
 
 	private static <T> Parameter<T> createParam(String name, T val) {
