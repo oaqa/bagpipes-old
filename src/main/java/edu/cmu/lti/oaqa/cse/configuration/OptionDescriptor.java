@@ -11,6 +11,11 @@ public final class OptionDescriptor extends ComponentDescriptor {
 	public OptionDescriptor(String className,Map<String,Object> resMap) {
 		super(className,resMap);
 	}
+	
+	
+	public String toString(){
+		return "Class: " + className + "\nParams: " + paramMap;
+	}
 
 	
 	

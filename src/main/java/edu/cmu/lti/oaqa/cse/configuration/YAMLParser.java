@@ -68,19 +68,14 @@ public class YAMLParser extends Parser {
 
 	@Override
 	public PipelineDescriptor buildPipelineDescriptor() {
-		ArrayList<Map<String, Object>> phaseResMaps = (ArrayList<Map<String, Object>>) confMap
+		List<Map<String, Object>> phaseResMaps = (List<Map<String, Object>>) confMap
 				.get("pipeline");
 
 		List<PhaseDescriptor> phaseDescs = new LinkedList<PhaseDescriptor>();
-
 		for (Map<String, Object> phaseResMap : phaseResMaps)
 			phaseDescs.add(buildPhaseDescriptor(phaseResMap));
 
-		// resMap = flatten(resMap);
-		// System.out.println(resMap);
-
-		// PipelineDescriptor pipelineDesc = new PipelineDescriptor();
-		return null;
+		return new PipelineDescriptor(phaseDescs);
 	}
 
 	/**
@@ -89,23 +84,31 @@ public class YAMLParser extends Parser {
 	 * @return
 	 */
 	public PhaseDescriptor buildPhaseDescriptor(Map<String, Object> phaseResMap) {
+		//System.out.println("Unflattened phaseMap = " + phaseResMap);
 		phaseResMap = flatten(phaseResMap);
-		List<Map<String, Object>> optionResMaps = (List<Map<String, Object>>) phaseResMap
-				.get("options");
-
-		List<OptionDescriptor> optionDescs = new LinkedList<OptionDescriptor>();
-
-		for (Map<String, Object> optionResMap : optionResMaps)
-			optionDescs.add(buildOptionDescriptor(optionResMap));
-
+		//System.out.println("Flattened phaseMap = " + phaseResMap);
+		List<OptionDescriptor> optionDescs = buildOptionDescriptors(phaseResMap);
 		if (phaseResMap.containsKey("name")) {
 			String name = (String) phaseResMap.get("name");
 			phaseResMap.remove("name");
-			return new PhaseDescriptor((String) phaseResMap.get("name"),
-					optionDescs);
+			return new PhaseDescriptor(name, optionDescs);
 		} else
 			return new PhaseDescriptor(optionDescs);
+	}
 
+	/**
+	 * 
+	 */
+
+	public List<OptionDescriptor> buildOptionDescriptors(
+			Map<String, Object> phaseResMap) {
+		System.out.println(phaseResMap.get("options"));
+		List<Map<String, Object>> optionResMaps = (List<Map<String, Object>>) phaseResMap
+				.get("options");
+		List<OptionDescriptor> optionDescs = new LinkedList<OptionDescriptor>();
+		for (Map<String, Object> optionResMap : optionResMaps)
+			optionDescs.add(buildOptionDescriptor(optionResMap));
+		return optionDescs;
 	}
 
 	/**
@@ -118,7 +121,7 @@ public class YAMLParser extends Parser {
 		optionResMap = flatten(optionResMap);
 		String className = (String) optionResMap.get("class");
 		optionResMap.remove("class");
-		return new OptionDescriptor(className,optionResMap);
+		return new OptionDescriptor(className, optionResMap);
 	}
 
 	/**

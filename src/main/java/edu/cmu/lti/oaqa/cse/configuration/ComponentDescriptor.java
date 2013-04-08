@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class ComponentDescriptor {
-	private String className;
-	private Map<String, Parameter> paramMap;
+	protected String className;
+	protected Map<String, Parameter> paramMap;
 
 	public ComponentDescriptor(String className) {
 		this.className = className;
@@ -60,7 +60,7 @@ public abstract class ComponentDescriptor {
 			else
 				return false;
 		}
-		return true && this.className.equals(cd.className);
+		return this.className.equals(cd.className);
 	}
 	
 	public String toString(){

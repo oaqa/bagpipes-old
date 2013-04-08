@@ -18,5 +18,19 @@ public class PhaseDescriptor {
 	public List<OptionDescriptor> getOptionDescriptors(){
 		return options;
 	}
+	
+	public boolean equals(Object obj){
+		if (obj == this) {
+			return true;
+		}
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		}
+		return this.options.equals(((PhaseDescriptor)obj).getOptionDescriptors());
+	}
+	
+	public String toString(){
+		return "name: "+ name + "\noptions: " + options; 
+	}
 
 }

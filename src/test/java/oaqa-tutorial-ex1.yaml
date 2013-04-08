@@ -6,9 +6,9 @@ collection-reader:
   InputDirectory: data/
   
 pipeline:
-  - inherit: ecd.phase  
-    name: RemoteRoomNumberAnnotator
-    options: 
-      - inherit: tutorial.ex1.RoomNumberAnnotator 
-
-  - inherit: cas_consumer.XmiWriterCasConsumer
+     - inherit: ecd.phase  
+       name: RoomNumberAnnotator
+       options: 
+         - inherit: tutorial.ex1.RoomNumberAnnotator  
+  
+  #   - inherit: cas_consumer.XmiWriterCasConsumer

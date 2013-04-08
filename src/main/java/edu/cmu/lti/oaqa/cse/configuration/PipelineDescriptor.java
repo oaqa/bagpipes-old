@@ -8,9 +8,8 @@ public class PipelineDescriptor {
 	private List<PhaseDescriptor> phaseDescs;
 //	private List<ConsumerDescriptor> consumers;
 
-	public PipelineDescriptor(List<PhaseDescriptor> phases,
-			List<ConsumerDescriptor> consumers) {
-		phases = new LinkedList<PhaseDescriptor>();
+	public PipelineDescriptor(List<PhaseDescriptor> phases) {
+		this.phaseDescs = phases;
 	//	consumers = new LinkedList<ConsumerDescriptor>();	
 	}
 	
