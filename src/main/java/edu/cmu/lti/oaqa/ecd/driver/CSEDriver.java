@@ -18,29 +18,34 @@ package edu.cmu.lti.oaqa.ecd.driver;
 
 import java.util.UUID;
 
-import edu.cmu.lti.oaqa.cse.ConfigurationSpace;
 import edu.cmu.lti.oaqa.cse.Executor;
 import edu.cmu.lti.oaqa.cse.Experiment;
 import edu.cmu.lti.oaqa.cse.ExperimentBase;
 import edu.cmu.lti.oaqa.cse.Pipeline;
+import edu.cmu.lti.oaqa.cse.space.ConfigurationSpace;
 
-public final class CSEDriver {
+public class CSEDriver {
 
-  private final ConfigurationSpace<Pipeline> confSpace;
+  private final ConfigurationSpace confSpace = null;
 
-  private final Executor<Pipeline> executor;
-
-  public CSEDriver(String resource, String uuid) throws Exception {
-    Experiment experiment = new ExperimentBase(uuid, resource);
-    confSpace = new ConfigurationSpace<Pipeline>(experiment.getConfiguration());
-    confSpace.setExplorationStrategy(experiment.getExplorationStrategy());
-    executor = experiment.getExecutor();
+  private final Executor<Pipeline> executor=null;
+  public CSEDriver(){
+	  
   }
-
+/*
+  public CSEDriver(String resource, String uuid)  {
+//    Experiment experiment = new ExperimentBase(uuid, resource);
+  //  confSpace = new ConfigurationSpace<Pipeline>(experiment.getConfiguration());
+   // confSpace.setExplorationStrategy(experiment.getExplorationStrategy());
+  //  executor = experiment.getExecutor();
+  }
+*/
+  
+  
   public void run() throws Exception {
-    for (Pipeline pipeline : confSpace) {
+  /*  for (Pipeline pipeline : confSpace) {
       executor.execute(pipeline);
-    }
+    }*/
   }
 
   public static void main(String[] args) throws Exception {
@@ -50,8 +55,8 @@ public final class CSEDriver {
     }
     
     System.out.println("Experiment UUID: " + uuid);
-    CSEDriver driver = new CSEDriver(args[0], uuid);
-    driver.run();
+  //  CSEDriver driver = new CSEDriver(args[0], uuid);
+    //driver.run();
   
   }
   

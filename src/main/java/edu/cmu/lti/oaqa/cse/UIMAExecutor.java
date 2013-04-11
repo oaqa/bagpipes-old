@@ -27,9 +27,16 @@ private AnyObject config;
 	    this.builder = new BaseExperimentBuilder(uuid, resource, typeSystem);
 	    this.config = builder.getConfiguration();
   }
+
+
+@Override
+public void execute(Pipeline conf) {
+	// TODO Auto-generated method stub
+	
+}
   
-  @Override
-  public void execute(Pipeline conf) {
+  //@Override
+/*  public void execute(Pipeline conf) {
     CollectionReader reader = builder.buildCollectionReader(conf);
     AnalysisEngine pipeline = builder.buildPipeline(conf, "pipeline");
     if (conf.getIterable("post-process") != null) {
@@ -45,5 +52,5 @@ private AnyObject config;
 
   Iterable<Long> getProcessedItems() {
     return processedItems;
-  }
+  }*/
 }

@@ -6,6 +6,8 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import mx.bigdata.anyobject.AnyObject;
 import edu.cmu.lti.oaqa.cse.configuration.Configuration;
+import edu.cmu.lti.oaqa.cse.space.exploration.ExplorationStrategy;
+import edu.cmu.lti.oaqa.cse.space.exploration.GreedyExplorationStrategy;
 import edu.cmu.lti.oaqa.ecd.config.ConfigurationLoader;
 import edu.cmu.lti.oaqa.ecd.impl.AbstractExperimentPersistenceProvider;
 import edu.cmu.lti.oaqa.ecd.impl.DefaultExperimentPersistenceProvider;
@@ -72,12 +74,12 @@ public class ExperimentBase implements Experiment {
     ExplorationStrategy ps; 
     AnyObject map = configuration.getAnyObject("exploration-strategy");
     //if (map == null) {
-      ps = new GreedyExplorationStrategy();
+      //ps = new GreedyExplorationStrategy<>();
     //}
     //{
 //      ps = ResourceHelper.buildResource(handle, type);
 //    }
-    return ps;
+    return null;
   }
 
   @Override
