@@ -28,6 +28,11 @@ public class PipelineDescriptor {
 	}
 	
 	private boolean equals(PipelineDescriptor plDesc){
+		/* REMOVE, THIS IS TEMPORARY */
+		for(PhaseDescriptor p:phaseDescs)
+			if(!plDesc.getPhaseDescriptors().contains(p))
+				System.out.println("!not equal: "+ p + "!");
+		
 		return phaseDescs.equals(plDesc.getPhaseDescriptors());
 	}
 
