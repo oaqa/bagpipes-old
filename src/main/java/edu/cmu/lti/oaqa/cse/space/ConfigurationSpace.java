@@ -35,7 +35,7 @@ import edu.cmu.lti.oaqa.cse.configuration.ComponentDescriptor;
 public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		implements Iterable<T> {
 
-	private ExplorationStrategy strategy;
+	private ExplorationStrategy<T, E> strategy;
 
 	protected final Configuration conf;
 
@@ -62,7 +62,6 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		// Build all the options in the phases from the pipeline descriptor
 		PipelineDescriptor plDesc = conf.getPipelineDescriptor();
 		buildPhases(plDesc);
-
 	}
 
 	private Node<E> buildCollectionReaderNode() {
@@ -106,12 +105,13 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		return new PipelineIterator(conf);
 	}
 
-	public void setExplorationStrategy(ExplorationStrategy explorationStrategy) {
+	public void setExplorationStrategy(
+			ExplorationStrategy<T, E> explorationStrategy) {
+		explorationStrategy.setTree(this.phaseTree);
+		System.out.println(phaseTree);
 		this.strategy = explorationStrategy;
 	}
 
-	
-	
 	public class PipelineIterator implements Iterator<T> {
 
 		public PipelineIterator(Configuration conf) {
@@ -120,21 +120,18 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 
 		@Override
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return false;
+			return strategy.hasNext();
 		}
 
 		@Override
 		public T next() {
-			// TODO Auto-generated method stub
-			return null;
+			return strategy.getNext();
 		}
 
 		@Override
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
-
 	}
 
 }

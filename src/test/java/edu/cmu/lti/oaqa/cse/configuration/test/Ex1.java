@@ -2,7 +2,7 @@ package edu.cmu.lti.oaqa.cse.configuration.test;
 
 import edu.cmu.lti.oaqa.cse.configuration.Parameter;
 
-public class Ex1 {
+public final class Ex1 {
 
 	public static final String NAME = "oaqa-tutorial", AUTHOR = "oaqa";
 	public static final Parameter<String> CR_DIR = createParam(
@@ -22,6 +22,7 @@ public class Ex1 {
 	public static final Parameter<String> CONSUMER1_PARAM1 = createParam(
 			"OutputDirectory", "cas-output");
 	
+	public static final String PHASE1_NAME = "RoomNumberAnnotator";
 	private static <T> Parameter<T> createParam(String name, T val) {
 		return new Parameter<T>(name, val);
 	}

@@ -5,17 +5,23 @@ import edu.cmu.lti.oaqa.cse.space.tree.Node;
 import edu.cmu.lti.oaqa.cse.space.tree.NodeVisitor;
 import edu.cmu.lti.oaqa.cse.space.tree.Tree;
 
-public abstract class ExplorationStrategy<T,E extends ExecutableComponent<T>> {
+public abstract class ExplorationStrategy<T, E extends ExecutableComponent<T>> {
+
+	protected Tree<E> phaseTree;
+	protected NodeVisitor<T,? extends ExecutableComponent<T>> visitor;
+	protected Node<E> root;
 	
-	Tree<E> phaseTree;
-	NodeVisitor<E> visitor;
-	public ExplorationStrategy(Tree<E> tree){
-		this.phaseTree =tree;
-	}
-	
-	public abstract Node<E> getNext();
+	public abstract T getNext();
+
 	public abstract boolean hasNext();
-	public abstract NodeVisitor<E> getNodeVisitor();
-	
-	
+
+	public void setNodeVisitor(NodeVisitor<T,? extends ExecutableComponent<T>> visitor) {
+		this.visitor = visitor;
+	}
+
+	public void setTree(Tree<E> tree) {
+		phaseTree = tree;
+		root = tree.getRoot();
+	}
+
 }

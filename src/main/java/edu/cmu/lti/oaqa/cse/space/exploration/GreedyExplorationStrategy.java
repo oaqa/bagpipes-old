@@ -7,12 +7,12 @@ import edu.cmu.lti.oaqa.cse.space.tree.Tree;
 public class GreedyExplorationStrategy<T,E extends ExecutableComponent<T>> extends ExplorationStrategy<T,E> {
 
 	public GreedyExplorationStrategy(Tree<E> tree) {
-		super(tree);
+	//	super(tree);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Node<E> getNext() {
+	public T getNext() {
 		// TODO Auto-generated method stub
 		return null;
 	}

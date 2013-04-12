@@ -26,20 +26,25 @@ public class ParserTestCase {
 	// private List<ConsumerDescriptor> consumerDescs;
 
 	private ConfigurationFactory cFactory;
-	private Configuration parsedConf;
+	private Configuration parsedConfEx1, parsedConfEx4;
 
 	@Before
 	public void initialize() {
+		// Parse example 1 configuration
 		String resource = "oaqa-tutorial-ex1.yaml";
-		Parser parser = new YAMLParser(resource);
-		parsedConf = parser.parse();
+		Parser parserEx1 = new YAMLParser(resource);
+		parsedConfEx1 = parserEx1.parse();
+		// Parse example 4 configuration
+		resource = "oaqa-tutorial-ex4.yaml";
+		Parser parserEx4 = new YAMLParser(resource);
+		parsedConfEx4 = parserEx4.parse();
 	}
 
 	@Test
 	public void parserTest() {
 		// Configuration from yaml the same as programmatic conf?
-		assertEquals(Ex1.AUTHOR, parsedConf.getAuthor());
-		assertEquals(Ex1.NAME, parsedConf.getName());
+		assertEquals(Ex1.AUTHOR, parsedConfEx1.getAuthor());
+		assertEquals(Ex1.NAME, parsedConfEx1.getName());
 	}
 
 	@Test
@@ -47,21 +52,28 @@ public class ParserTestCase {
 
 	}
 
-	@Test
-	public void pipelineDescriptorTest() {
-		PipelineDescriptor confPd = parsedConf.getPipelineDescriptor();
-		List<PhaseDescriptor> confPhases = confPd.getPhaseDescriptors();
-		List<PhaseDescriptor> progPhases = cFactory.pipelineDesc
-				.getPhaseDescriptors();
+	
+	@Test 
+	public void testPipelines(){
+		System.out.println("Testing Ex1 pipeline...");
+		testPipelines(parsedConfEx1.getPipelineDescriptor(),cFactory.pipelineDescEx1);
+		//System.out.println("Testing Ex4 pipeline...");
+	//	testPipelines(parsedConfEx4.getPipelineDescriptor(),cFactory.pipelineDescEx4);	
+	}
+
+	public void testPipelines(PipelineDescriptor parsedPd,
+			PipelineDescriptor progPd) {
+		List<PhaseDescriptor> confPhases = parsedPd.getPhaseDescriptors();
+		List<PhaseDescriptor> progPhases = progPd.getPhaseDescriptors();
 		System.out.println("confPhases" + confPhases);
 		System.out.println("progPhases" + progPhases);
 		assertEquals(confPhases, progPhases);
-		assertEquals(confPd, cFactory.pipelineDesc);
+		assertEquals(parsedPd, progPd);
 	}
 
 	@Test
 	public void collectionReaderTest() {
-		CollectionReaderDescriptor crdConf = parsedConf
+		CollectionReaderDescriptor crdConf = parsedConfEx1
 				.getCollectionReaderDescriptor();
 		// Collection reader the same as programmatic collection reader
 		// descriptor?
@@ -83,7 +95,7 @@ public class ParserTestCase {
 
 	@Test
 	public void configurationTest() {
-		assertEquals(parsedConf, cFactory.programmedConf);
+		assertEquals(parsedConfEx1, cFactory.programmedConfEx1);
 	}
 
 }

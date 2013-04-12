@@ -1,27 +1,32 @@
 package edu.cmu.lti.oaqa.cse.space.exploration;
 
+import edu.cmu.lti.oaqa.components.ExecutableComponent;
+import edu.cmu.lti.oaqa.components.simple.SimpleClassNameAnnotator;
 import edu.cmu.lti.oaqa.cse.space.tree.Node;
+import edu.cmu.lti.oaqa.cse.space.tree.NodeVisitor;
 import edu.cmu.lti.oaqa.cse.space.tree.Tree;
 
-public class SimpleExplorationStrategy extends ExplorationStrategy {
+public class SimpleExplorationStrategy extends
+		ExplorationStrategy<String, SimpleClassNameAnnotator> {
 
-	public SimpleExplorationStrategy(Tree tree) {
-		super(tree);
-		// TODO Auto-generated constructor stub
-	}
+	private Node<SimpleClassNameAnnotator> curNode, prevNode;
 
 	@Override
-	public Node getNext() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getNext() {
+		prevNode = curNode;
+		curNode = curNode.hasChildren()? curNode.getChildren().get(0): curNode;
+		return prevNode.getData().execute("");
 	}
 
 	@Override
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
+		return prevNode.hasChildren();
 	}
 
-	
-	
+	@Override
+	public void setTree(Tree<SimpleClassNameAnnotator> tree) {
+		super.setTree(tree);
+		prevNode = curNode = root;
+	}
+
 }

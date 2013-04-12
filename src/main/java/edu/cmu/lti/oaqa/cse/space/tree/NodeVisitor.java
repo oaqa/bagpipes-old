@@ -1,7 +1,9 @@
 package edu.cmu.lti.oaqa.cse.space.tree;
 
-public interface NodeVisitor<T> {
+import edu.cmu.lti.oaqa.components.ExecutableComponent;
+
+public abstract class NodeVisitor<T, E> {
 	
-	public void visit(Node<T> node);
+	public abstract T visit(Node<E> node);
 	
 }

@@ -7,10 +7,11 @@ import edu.cmu.lti.oaqa.cse.configuration.Configuration;
 import edu.cmu.lti.oaqa.cse.space.ConfigurationSpace;
 import edu.cmu.lti.oaqa.cse.space.tree.Tree;
 
-public class SimpleConfigurationSpace extends ConfigurationSpace<String,SimpleClassNameAnnotator> {
-
+public class SimpleConfigurationSpace extends
+		ConfigurationSpace<String, SimpleClassNameAnnotator> {
 
 	private SimpleFactory sFactory;
+
 	public SimpleConfigurationSpace(Configuration conf) {
 		super(conf);
 		// TODO Auto-generated constructor stub
@@ -18,17 +19,13 @@ public class SimpleConfigurationSpace extends ConfigurationSpace<String,SimpleCl
 
 	@Override
 	protected Tree<SimpleClassNameAnnotator> getTree() {
-		sFactory = new SimpleFactory(conf);
-		Tree<SimpleClassNameAnnotator> simpleTree =  new Tree<SimpleClassNameAnnotator>();
-		
-		return simpleTree;
+		return new Tree<SimpleClassNameAnnotator>();
 	}
 
 	@Override
 	protected Factory<String, SimpleClassNameAnnotator> getFactory() {
 		return new SimpleFactory(conf);
-		
+
 	}
- 
-	
+
 }
