@@ -1,5 +1,14 @@
 package edu.cmu.lti.oaqa.cse.space.exploration;
 
+import static java.util.Arrays.asList;
+
+import java.util.Collections;
+
+import org.apache.uima.cas.CAS;
+import org.apache.uima.util.CasCreationUtils;
+
+import com.google.common.collect.Lists;
+
 import edu.cmu.lti.oaqa.components.ExecutableComponent;
 import edu.cmu.lti.oaqa.cse.space.tree.Node;
 import edu.cmu.lti.oaqa.cse.space.tree.Tree;
@@ -11,11 +20,17 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>> ext
 
   private Node<E> prevNode;
 
+  private T input;
+  
+  public TSimpleExplorationStrategy(T input) {
+    this.input = input;
+  }
+  
   @Override
-  public T getNext() {
+  public T getNext() throws Exception {
     prevNode = curNode;
     curNode = curNode.hasChildren() ? curNode.getChildren().get(0) : curNode;
-    return prevNode.getData().execute(null);
+    return prevNode.getData().execute(input);
   }
 
   @Override

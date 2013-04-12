@@ -2,16 +2,15 @@ package edu.cmu.lti.oaqa.cse.space.uima;
 
 import org.apache.uima.jcas.JCas;
 
-public class SimpleUimaComponent extends UimaComponent {
+public class FakeUimaComponent extends UimaComponent {
 
-	public SimpleUimaComponent(String className){
+	public FakeUimaComponent(String className){
 		super(className);
 	}
 	
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

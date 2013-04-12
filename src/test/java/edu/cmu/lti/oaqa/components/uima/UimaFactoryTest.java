@@ -1,6 +1,12 @@
 package edu.cmu.lti.oaqa.components.uima;
 
+import java.util.Collections;
+
+import org.apache.uima.cas.CAS;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.util.CasCreationUtils;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.cmu.lti.oaqa.components.ExecutableComponent;
@@ -14,12 +20,13 @@ import edu.cmu.lti.oaqa.cse.space.uima.UimaConfigurationSpace;
 
 public class UimaFactoryTest {
 
-  private static final Configuration ex1Conf = ConfigurationFactory.programmedConfEx1;
+  private static Configuration ex1Conf;
 
-  private static final ExplorationStrategy<JCas, UimaComponent> simpleStrategy = initSimpleExplorationStrategy();
+  private static ExplorationStrategy<JCas, UimaComponent> simpleStrategy;
 
-  private static final UimaConfigurationSpace ex1SimpleSpace = initSimpleConfigurationSpace(ex1Conf);
+  private static UimaConfigurationSpace ex1SimpleSpace;
 
+  
   @Test
   public void phaseTreeTest() {
     System.out.println(ex1SimpleSpace.getPhaseTree());
@@ -27,14 +34,18 @@ public class UimaFactoryTest {
       System.out.println(c);
   }
 
-  private static UimaConfigurationSpace initSimpleConfigurationSpace(Configuration config) {
-    UimaConfigurationSpace space = new UimaConfigurationSpace(config);
+  @BeforeClass
+  public static void initSimpleConfigurationSpace() throws Exception {
+    ex1Conf = ConfigurationFactory.programmedConfEx1;
+    UimaConfigurationSpace space = new UimaConfigurationSpace(ex1Conf);
+    simpleStrategy = initSimpleExplorationStrategy();
     space.setExplorationStrategy(simpleStrategy);
-    return space;
+    ex1SimpleSpace = space;
   }
 
-  private static TSimpleExplorationStrategy<JCas, UimaComponent> initSimpleExplorationStrategy() {
-    return new TSimpleExplorationStrategy<JCas, UimaComponent>();
+  private static TSimpleExplorationStrategy<JCas, UimaComponent> initSimpleExplorationStrategy() throws Exception {
+    CAS cas = CasCreationUtils.createCas(Collections.EMPTY_LIST);
+    return new TSimpleExplorationStrategy<JCas, UimaComponent>(cas.getJCas());
   }
 
   private static NodeVisitor<String, ExecutableComponent<String>> initExecutingVisitor() {

@@ -9,7 +9,7 @@ import edu.cmu.lti.oaqa.cse.space.tree.Tree;
 
 public class UimaConfigurationSpace extends ConfigurationSpace<JCas, UimaComponent> {
 
-  public UimaConfigurationSpace(Configuration conf) {
+  public UimaConfigurationSpace(Configuration conf) throws Exception {
     super(conf);
     // TODO Auto-generated constructor stub
   }
@@ -20,7 +20,7 @@ public class UimaConfigurationSpace extends ConfigurationSpace<JCas, UimaCompone
   }
 
   @Override
-  protected Factory<JCas, UimaComponent> getFactory() {
+  protected Factory<JCas, UimaComponent> getFactory() throws Exception {
     return new UimaFactory(conf);
 
   }

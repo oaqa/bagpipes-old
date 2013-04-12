@@ -42,9 +42,9 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 	private Tree<E> phaseTree;
 	private Factory<T, E> componentFactory;
 
-	public ConfigurationSpace(Configuration conf) {
+	public ConfigurationSpace(Configuration conf) throws Exception {
 		this.conf = conf;
-		this.componentFactory = getFactory();
+      this.componentFactory = getFactory();
 		this.phaseTree = getTree();
 		initTree();
 		// typeSystem =null;
@@ -54,7 +54,7 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		return phaseTree;
 	}
 
-	private void initTree() {
+	private void initTree() throws Exception {
 		// Set the collection reader as root of the phaseTree
 		Node<E> root = buildCollectionReaderNode();
 		phaseTree.setRoot(root);
@@ -71,13 +71,13 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		return collectionReaderNode;
 	}
 
-	private void buildPhases(PipelineDescriptor plDesc) {
+	private void buildPhases(PipelineDescriptor plDesc) throws Exception {
 		List<PhaseDescriptor> phaseDescs = plDesc.getPhaseDescriptors();
 		for (PhaseDescriptor phaseDesc : phaseDescs)
 			buildPhase(phaseDesc);
 	}
 
-	private void buildPhase(PhaseDescriptor pd) {
+	private void buildPhase(PhaseDescriptor pd) throws Exception {
 		List<OptionDescriptor> optionDescs = pd.getOptionDescriptors();
 		for (OptionDescriptor optionDesc : optionDescs)
 			// IMPORTANT: this method essentially adds the next phase to the
@@ -86,19 +86,27 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 			phaseTree.addToLeaves(createNode(optionDesc));
 	}
 
-	private void buildConsumers() {
+	private void buildConsumers() throws Exception {
 		List<ConsumerDescriptor> consumerDescs = conf.getConsumers();
 		for (ConsumerDescriptor consumerDesc : consumerDescs)
 			phaseTree.addToLeaves(createNode(consumerDesc));
 	}
 
-	private Node<E> createNode(ComponentDescriptor cd) {
+	private Node<E> createNode(ComponentDescriptor cd) throws Exception {
 		return new Node<E>(componentFactory.createExecutableComponent(cd));
 	}
+	
+  private Node<E> createNode(OptionDescriptor cd) throws Exception {
+    return new Node<E>(componentFactory.createExecutableComponent(cd));
+  }
+  
+  private Node<E> createNode(CollectionReaderDescriptor cd) {
+    return new Node<E>(componentFactory.createExecutableComponent(cd));
+  }
 
 	protected abstract Tree<E> getTree();
 
-	protected abstract Factory<T, E> getFactory();
+	protected abstract Factory<T, E> getFactory() throws Exception;
 
 	@Override
 	public Iterator<T> iterator() {
@@ -125,7 +133,12 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 
 		@Override
 		public T next() {
-			return strategy.getNext();
+			try {
+        return strategy.getNext();
+      } catch (Exception e) {
+        // TODO Auto-generated catch block
+        throw new RuntimeException(e);
+      }
 		}
 
 		@Override
