@@ -8,16 +8,15 @@ import edu.cmu.lti.oaqa.cse.configuration.Configuration;
 
 public class UimaFactory extends Factory<JCas, UimaComponent> {
 
-	public UimaFactory(Configuration config) {
-		super(config);
-	}
+  public UimaFactory(Configuration config) {
+    super(config);
+  }
 
-	@Override
-	public UimaComponent createExecutableComponent(
-			ComponentDescriptor componentDescriptor) {
-		String className = componentDescriptor.getClassName();
-		return new SimpleUimaComponent(className);
-	}
+  @Override
+  public UimaComponent createExecutableComponent(ComponentDescriptor componentDescriptor) {
+    String className = componentDescriptor.getClassName();
+    System.out.println(componentDescriptor);
+    return new SimpleUimaComponent(className);
+  }
 
-	
 }
