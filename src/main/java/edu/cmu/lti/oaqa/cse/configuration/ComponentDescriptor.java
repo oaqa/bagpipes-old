@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.collect.Maps;
+
 public abstract class ComponentDescriptor {
 	protected String className;
 	protected Map<String, Parameter> paramMap;
@@ -38,6 +40,10 @@ public abstract class ComponentDescriptor {
 		return paramMap.get(name);
 	}
 
+	public Map<String, Parameter> getParamMap() {
+	  return Maps.newHashMap(paramMap);
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) {

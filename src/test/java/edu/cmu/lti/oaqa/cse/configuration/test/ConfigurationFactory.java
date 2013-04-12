@@ -1,9 +1,8 @@
 package edu.cmu.lti.oaqa.cse.configuration.test;
 
+import java.util.Arrays;
 import java.util.List;
 
-import scala.actors.threadpool.Arrays;
-import edu.cmu.lti.oaqa.cse.configuration.test.Ex1.*;
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.cse.configuration.CollectionReaderDescriptor;

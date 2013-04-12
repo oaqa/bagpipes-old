@@ -11,7 +11,7 @@ public abstract class ExplorationStrategy<T, E extends ExecutableComponent<T>> {
 	protected NodeVisitor<T,? extends ExecutableComponent<T>> visitor;
 	protected Node<E> root;
 	
-	public abstract T getNext();
+	public abstract T getNext() throws Exception;
 
 	public abstract boolean hasNext();
 

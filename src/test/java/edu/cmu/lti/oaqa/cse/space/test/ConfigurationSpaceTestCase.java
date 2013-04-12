@@ -1,22 +1,16 @@
 package edu.cmu.lti.oaqa.cse.space.test;
 
-import java.util.List;
+import org.junit.Test;
 
+import edu.cmu.lti.oaqa.components.ExecutableComponent;
+import edu.cmu.lti.oaqa.components.simple.SimpleClassNameAnnotator;
 import edu.cmu.lti.oaqa.cse.configuration.Configuration;
 import edu.cmu.lti.oaqa.cse.configuration.test.ConfigurationFactory;
 import edu.cmu.lti.oaqa.cse.space.ConfigurationSpace;
 import edu.cmu.lti.oaqa.cse.space.exploration.ExplorationStrategy;
 import edu.cmu.lti.oaqa.cse.space.exploration.SimpleExplorationStrategy;
 import edu.cmu.lti.oaqa.cse.space.simple.SimpleConfigurationSpace;
-import edu.cmu.lti.oaqa.cse.space.tree.Node;
 import edu.cmu.lti.oaqa.cse.space.tree.NodeVisitor;
-import edu.cmu.lti.oaqa.cse.space.tree.Tree;
-import edu.cmu.lti.oaqa.components.simple.*;
-import edu.cmu.lti.oaqa.components.ExecutableComponent;
-
-import org.junit.Test;
-
-import com.google.common.collect.Lists;
 
 public class ConfigurationSpaceTestCase {
 
@@ -35,9 +29,14 @@ public class ConfigurationSpaceTestCase {
 	
 	private static SimpleConfigurationSpace initSimpleConfigurationSpace(
 			Configuration config) {
-		SimpleConfigurationSpace space = new SimpleConfigurationSpace(config);
-		space.setExplorationStrategy(simpleStrategy);
-		return space;
+		SimpleConfigurationSpace space;
+    try {
+      space = new SimpleConfigurationSpace(config);
+      space.setExplorationStrategy(simpleStrategy);
+      return space;
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
 	}
 
 	private static SimpleExplorationStrategy initSimpleExplorationStrategy() {

@@ -12,7 +12,7 @@ public class SimpleConfigurationSpace extends
 
 	private SimpleFactory sFactory;
 
-	public SimpleConfigurationSpace(Configuration conf) {
+	public SimpleConfigurationSpace(Configuration conf) throws Exception {
 		super(conf);
 		// TODO Auto-generated constructor stub
 	}

@@ -28,7 +28,7 @@ public class ResourceHandle {
   
   private final HandleType type;
 
-  final String resource;
+  public final String resource;
 
   private ResourceHandle(HandleType type, String resource) {
     this.type = type;
@@ -52,7 +52,7 @@ public class ResourceHandle {
     return new ResourceHandle(type, resource);
   }
 
-  HandleType getType() {
+  public HandleType getType() {
     return type;
   }
   
