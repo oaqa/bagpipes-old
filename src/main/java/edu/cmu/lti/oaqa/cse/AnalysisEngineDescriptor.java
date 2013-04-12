@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.axis.server.ParamList;
+//import org.apache.axis.server.ParamList;
 
 import edu.cmu.lti.oaqa.cse.configuration.Parameter;
 

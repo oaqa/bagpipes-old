@@ -1,8 +1,8 @@
 package edu.cmu.lti.oaqa.components.simple;
 
-import edu.cmu.lti.oaqa.components.UIMAComponent;
+import edu.cmu.lti.oaqa.components.NamedComponent;
 
-public class SimpleClassNameAnnotator extends UIMAComponent<String> {
+public class SimpleClassNameAnnotator extends NamedComponent<String> {
 
 	public SimpleClassNameAnnotator(String className){
 		super(className);
