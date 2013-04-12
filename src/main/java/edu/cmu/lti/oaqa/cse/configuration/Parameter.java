@@ -27,5 +27,10 @@ public class Parameter<T> {
 		}
 		return this.value.equals(((Parameter<T>) obj).value);
 	}
+	
+	public String toString(){
+		return  value + ""; 
+		
+	}
 
 }

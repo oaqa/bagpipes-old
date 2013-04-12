@@ -48,17 +48,17 @@ public class ParserTestCase {
 	}
 
 	@Test
-	public void yamlParserTest() {
-
+	public void testPipelinesEx1() {
+		System.out.println("Testing Ex1 pipeline...");
+		testPipelines(parsedConfEx1.getPipelineDescriptor(),
+				cFactory.pipelineDescEx1);
 	}
 
-	
-	@Test 
-	public void testPipelines(){
-		System.out.println("Testing Ex1 pipeline...");
-		testPipelines(parsedConfEx1.getPipelineDescriptor(),cFactory.pipelineDescEx1);
-		//System.out.println("Testing Ex4 pipeline...");
-	//	testPipelines(parsedConfEx4.getPipelineDescriptor(),cFactory.pipelineDescEx4);	
+	@Test
+	public void testPipelineEx4() {
+		System.out.println("Testing Ex4 pipeline...");
+		testPipelines(parsedConfEx4.getPipelineDescriptor(),
+				cFactory.pipelineDescEx4);
 	}
 
 	public void testPipelines(PipelineDescriptor parsedPd,

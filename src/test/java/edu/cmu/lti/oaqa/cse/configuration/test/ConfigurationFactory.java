@@ -58,7 +58,7 @@ public final class ConfigurationFactory {
 		//Create phase2
 		optionOne = initOptionDescriptor(Ex4.OPTION2_1_CLASS,Ex4.OPTION2_1_PARAM1);
 		OptionDescriptor optionTwo = initOptionDescriptor(Ex4.OPTION2_2_CLASS,Ex4.OPTION2_2_PARAM1);
-		PhaseDescriptor phaseTwo = initPhaseDescriptor(Ex4.PHASE2_NAME,optionOne);
+		PhaseDescriptor phaseTwo = initPhaseDescriptor(Ex4.PHASE2_NAME,optionOne,optionTwo);
 		//create phase3
 		optionOne = initOptionDescriptor(Ex4.OPTION3_CLASS,Ex4.OPTION3_PARAM1);
 		PhaseDescriptor phaseThree = initPhaseDescriptor(Ex4.PHASE3_NAME,optionOne);
