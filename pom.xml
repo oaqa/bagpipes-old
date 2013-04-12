@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.cmu.lti.oaqa.ecd</groupId>
 	<artifactId>cse2</artifactId>
@@ -41,6 +42,23 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>scala-tools-releases</id>
+			<name>Scala-Tools Maven2 Repository Releases</name>
+			<url>http://scala-tools.org/repo-releases</url>
+		</repository>
+		<repository>
+			<id>scala-tools-snapshots</id>
+			<name>Scala-Tools Maven2 Repository - Snapshots</name>
+			<url>http://scala-tools.org/repo-snapshots</url>
+		</repository>
+	</repositories>
+	<properties>
+		<scala.version>2.9.1</scala.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.uima</groupId>
@@ -79,7 +97,18 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>1.9.0</version>
-      <scope>test</scope>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>edu.cmu.lti.oaqa.ecd</groupId>
+			<artifactId>uima-ecd</artifactId>
+			<version>2.3.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.scalaz</groupId>
+			<artifactId>scalaz-core_${scala.version}</artifactId>
+			<version>6.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.uima</groupId>
@@ -87,4 +116,7 @@
 			<version>2.4.0</version>
 		</dependency>
 	</dependencies>
+
+
+
 </project>
