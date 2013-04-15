@@ -18,14 +18,14 @@ public final class Ex4 {
 
 	public static final Parameter<Boolean> CR_BROWSE = createParam(
 			"BrowseSubdirectories", false);
-	public static final String CR_CLASS = "collection.fs.FileSystemCollectionReader";
+	public static final String CR_CLASS = "org.apache.uima.examples.collection.fs.FileSystemCollectionReader";
 
 	/*
 	 * PHASE 1:
 	 */
 	public static final String PHASE1_NAME = "RoomNumberAnnotator";
 	// OPTION1_1:
-	public static final String OPTION1_CLASS = "tutorial.ex3.RoomNumberAnnotator";
+	public static final String OPTION1_CLASS = "org.apache.uima.tutorial.ex3.RoomNumberAnnotator";
 	public static final String[] LOCATIONS = new String[] {
 			"Watson - Yorktown", "Watson - Hawthrone I",
 			"Watson - Hawthorne II" };
@@ -42,11 +42,11 @@ public final class Ex4 {
 	 */
 	public static final String PHASE2_NAME = "TutorialDateTime";
 	// OPTION2_1
-	public static final String OPTION2_1_CLASS = "tutorial.ex3.SimpleTutorialDateTime";
+	public static final String OPTION2_1_CLASS = "org.apache.uima.tutorial.ex3.SimpleTutorialDateTime";
 	public static final Parameter<String> OPTION2_1_PARAM1 = createParam(
 			"test", "param1");
 	// OPTION2_2
-	public static final String OPTION2_2_CLASS = "tutorial.ex3.TutorialDateTime";
+	public static final String OPTION2_2_CLASS = "org.apache.uima.tutorial.ex3.TutorialDateTime";
 	public static final Parameter<String> OPTION2_2_PARAM1 = createParam(
 			"test", "param1");
 
@@ -55,7 +55,7 @@ public final class Ex4 {
 	 */
 	public static final String PHASE3_NAME = "MeetingAnnotator";
 	// OPTION3
-	public static final String OPTION3_CLASS = "tutorial.ex4.MeetingAnnotator";
+	public static final String OPTION3_CLASS = "org.apache.uima.tutorial.ex4.MeetingAnnotator";
 	public static final Parameter<Integer> OPTION3_PARAM1 = createParam(
 			"WindowSize", 200);
 

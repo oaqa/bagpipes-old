@@ -19,7 +19,12 @@ pipeline:
      - inherit: ecd.phase  
        name: MeetingAnnotator
        options: 
-         - inherit: tutorial.ex4.MeetingAnnotator   
+         - inherit: tutorial.ex4.MeetingAnnotator 
+     - inherit: ecd.phase  
+       name: printtofile
+       options: 
+           - inherit: cas_consumer.XmiWriterCasConsumer  
+           
 consumers:
      - inherit: cas_consumer.XmiWriterCasConsumer
      

@@ -105,16 +105,14 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 	private Node<E> createNode(ComponentDescriptor cd) throws Exception {
 		return new Node<E>(componentFactory.createExecutableComponent(cd));
 	}
-	
-  private Node<E> createNode(OptionDescriptor cd) throws Exception {
-    return new Node<E>(componentFactory.createExecutableComponent(cd));
-  }
-  
-  private Node<E> createNode(CollectionReaderDescriptor cd) throws Exception {
-    return new Node<E>(componentFactory.createExecutableComponent(cd));
-  }
 
+	private Node<E> createNode(OptionDescriptor cd) throws Exception {
+		return new Node<E>(componentFactory.createExecutableComponent(cd));
+	}
 
+	private Node<E> createNode(CollectionReaderDescriptor cd) throws Exception {
+		return new Node<E>(componentFactory.createExecutableComponent(cd));
+	}
 
 	protected abstract Tree<E> newTree();
 

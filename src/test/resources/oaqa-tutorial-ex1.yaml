@@ -11,6 +11,10 @@ pipeline:
        name: RoomNumberAnnotator
        options: 
          - inherit: tutorial.ex1.RoomNumberAnnotator  
+     - inherit: ecd.phase  
+       name: printtofile
+       options: 
+           - inherit: cas_consumer.XmiWriterCasConsumer  
 
 consumers:
      - inherit: cas_consumer.XmiWriterCasConsumer

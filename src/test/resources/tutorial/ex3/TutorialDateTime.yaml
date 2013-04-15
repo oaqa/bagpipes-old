@@ -1,4 +1,4 @@
-class: tutorial.ex3.TutorialDateTime
+class: org.apache.uima.tutorial.ex3.TutorialDateTime
 test: param1 
 #persistence-provider: |
 #  inherit: ecd.default-log-persistence-provider

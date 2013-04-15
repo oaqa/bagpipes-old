@@ -14,7 +14,7 @@ public final class Ex1 {
 			"BrowseSubdirectories", false);
 	public static final String CR_CLASS = "org.apache.uima.examples.cpe.FileSystemCollectionReader";
 
-	public static final String OPTION1_CLASS = "tutorial.ex1.RoomNumberAnnotator";
+	public static final String OPTION1_CLASS = "org.apache.uima.tutorial.ex1.RoomNumberAnnotator";
 	public static final Parameter<String> OPTION1_PARAM1 = createParam("test",
 			"param1");
 
