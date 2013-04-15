@@ -2,6 +2,8 @@ package edu.cmu.lti.oaqa.cse.space.exploration;
 
 import java.util.Map;
 
+import com.google.common.collect.Maps;
+
 import edu.cmu.lti.oaqa.components.ExecutableComponent;
 import edu.cmu.lti.oaqa.cse.configuration.ScoreDescriptor;
 import edu.cmu.lti.oaqa.cse.space.tree.Node;
@@ -19,6 +21,10 @@ public abstract class ExplorationStrategy<T, E extends ExecutableComponent<T>> {
 
 	public abstract boolean hasNext();
 
+	public ExplorationStrategy(){
+		inputMap = Maps.newHashMap();
+	}
+	
 	public void setNodeVisitor(NodeVisitor<T,? extends ExecutableComponent<T>> visitor) {
 		this.visitor = visitor;
 	}

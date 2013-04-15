@@ -17,49 +17,10 @@ import edu.cmu.lti.oaqa.cse.space.tree.NodeVisitor;
 import edu.cmu.lti.oaqa.cse.space.tree.Tree;
 
 public class SimpleExplorationStrategy extends
-		ExplorationStrategy<String, SimpleClassNameAnnotator> {
-	private Node<SimpleClassNameAnnotator> nextNode, curNode;
-	private Stack<List<Node<SimpleClassNameAnnotator>>> traversalStack;
-	List<Node<SimpleClassNameAnnotator>> toBeTraversed;
+		TSimpleExplorationStrategy<String, SimpleClassNameAnnotator> {
 
-	public SimpleExplorationStrategy() {
-		toBeTraversed = Collections.EMPTY_LIST;
-		traversalStack = new Stack<List<Node<SimpleClassNameAnnotator>>>();
-	}
 
-	@Override
-	public String getNext() {
-		curNode = nextNode;
-		List<Node<SimpleClassNameAnnotator>> children = Lists.newLinkedList();
-		if (nextNode.hasChildren()) {
-			children.addAll(nextNode.getChildren());
-			nextNode = children.remove(0);
-			if (!children.isEmpty())
-				traversalStack.push(children);
-		} else if (toBeTraversed.isEmpty() && !traversalStack.isEmpty()) {
-			toBeTraversed = traversalStack.pop();
-			nextNode = toBeTraversed.remove(0);
-		} else if (!toBeTraversed.isEmpty())
-			nextNode = toBeTraversed.remove(0);
-		return execute(curNode, "");
-	}
 
-	private static final String execute(Node<SimpleClassNameAnnotator> node,
-			String input) {
-		return node.getElement().execute("");
-	}
-
-	@Override
-	public boolean hasNext() {
-		return curNode.hasChildren() || nextNode.hasChildren()
-				|| !traversalStack.isEmpty() || !toBeTraversed.isEmpty();
-	}
-
-	@Override
-	public void setTree(Tree<SimpleClassNameAnnotator> tree) {
-		super.setTree(tree);
-		curNode = nextNode = root;
-	}
 	
 	
 
