@@ -1,4 +1,4 @@
-class: collection.fs.FileSystemCollectionReader
+class: org.apache.uima.examples.cpe.FileSystemCollectionReader
 
 Language: en
 BrowseSubdirectories: FALSE

@@ -62,6 +62,7 @@ import com.google.common.collect.Maps;
 
 import edu.cmu.lti.oaqa.cse.ResourceHandle;
 import edu.cmu.lti.oaqa.cse.ResourceHandle.HandleType;
+import edu.cmu.lti.oaqa.cse.configuration.CollectionReaderDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.ComponentDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.Parameter;
 import edu.cmu.lti.oaqa.ecd.config.ConfigurationLoader;
@@ -228,15 +229,13 @@ public class ExperimentBuilder {
 		return description;
 	}
 
-	public CollectionReader buildCollectionReader(AnyObject config, int stageId)
+	public CollectionReader buildCollectionReader(CollectionReaderDescriptor descriptor)
 			throws Exception {
-		AnyObject descriptor = config.getAnyObject("collection-reader");
 		Map<String, Object> tuples = Maps.newLinkedHashMap();
 		tuples.put(EXPERIMENT_UUID_PROPERTY, experimentUuid);
-		tuples.put(STAGE_ID_PROPERTY, stageId);
-		Class<? extends CollectionReader> readerClass = getFromClassOrInherit(
-				descriptor, CollectionReader.class, tuples);
-		Object[] params = getParamList(tuples);
+    Class<? extends CollectionReader> readerClass = Class.forName(descriptor.getClassName()).asSubclass(CollectionReader.class);
+    Map<String, Parameter> parameters = descriptor.getParamMap();
+    Object[] params = getParamArray(parameters);
 		CollectionReader reader = CollectionReaderFactory
 				.createCollectionReader(readerClass, typeSystem, params);
 		return reader;

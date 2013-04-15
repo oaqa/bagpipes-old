@@ -18,6 +18,6 @@ public abstract class Factory<I,E extends ExecutableComponent<I>> {
   
   public abstract E createExecutableComponent(OptionDescriptor compoentDescriptor) throws Exception;
   
-  public abstract E createExecutableComponent(CollectionReaderDescriptor compoentDescriptor);
+  public abstract E createExecutableComponent(CollectionReaderDescriptor compoentDescriptor) throws Exception;
 
 }

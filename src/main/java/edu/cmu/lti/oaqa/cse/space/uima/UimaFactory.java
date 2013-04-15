@@ -1,6 +1,7 @@
 package edu.cmu.lti.oaqa.cse.space.uima;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
+import org.apache.uima.collection.CollectionReader;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
@@ -36,10 +37,10 @@ public class UimaFactory extends Factory<JCas, UimaComponent> {
   }
 
   @Override
-  public UimaComponent createExecutableComponent(CollectionReaderDescriptor componentDescriptor) {
-    String className = componentDescriptor.getClassName();
-    System.out.println("Create collection reader" + componentDescriptor);
-    return new FakeUimaComponent(className);
+  public UimaComponent createExecutableComponent(CollectionReaderDescriptor componentDescriptor) throws Exception {
+    CollectionReader desc = builder.buildCollectionReader(componentDescriptor);
+    System.out.println("Create component: " + desc);
+    return new CollectionReaderComponent(desc);
   }
 
 }

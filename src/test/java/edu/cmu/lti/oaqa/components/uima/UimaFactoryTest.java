@@ -20,8 +20,6 @@ import edu.cmu.lti.oaqa.cse.space.uima.UimaConfigurationSpace;
 
 public class UimaFactoryTest {
 
-  private static Configuration ex1Conf;
-
   private static ExplorationStrategy<JCas, UimaComponent> simpleStrategy;
 
   private static UimaConfigurationSpace ex1SimpleSpace;
@@ -36,7 +34,7 @@ public class UimaFactoryTest {
 
   @BeforeClass
   public static void initSimpleConfigurationSpace() throws Exception {
-    ex1Conf = ConfigurationFactory.programmedConfEx1;
+    Configuration ex1Conf = ConfigurationFactory.programmedConfEx1;
     UimaConfigurationSpace space = new UimaConfigurationSpace(ex1Conf);
     simpleStrategy = initSimpleExplorationStrategy();
     space.setExplorationStrategy(simpleStrategy);
@@ -44,8 +42,7 @@ public class UimaFactoryTest {
   }
 
   private static TSimpleExplorationStrategy<JCas, UimaComponent> initSimpleExplorationStrategy() throws Exception {
-    CAS cas = CasCreationUtils.createCas(Collections.EMPTY_LIST);
-    return new TSimpleExplorationStrategy<JCas, UimaComponent>(cas.getJCas());
+    return new TSimpleExplorationStrategy<JCas, UimaComponent>();
   }
 
   private static NodeVisitor<String, ExecutableComponent<String>> initExecutingVisitor() {

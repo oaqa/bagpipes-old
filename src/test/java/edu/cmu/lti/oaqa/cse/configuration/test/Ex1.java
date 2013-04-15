@@ -12,7 +12,7 @@ public final class Ex1 {
 
 	public static final Parameter<Boolean> CR_BROWSE = createParam(
 			"BrowseSubdirectories", false);
-	public static final String CR_CLASS = "collection.fs.FileSystemCollectionReader";
+	public static final String CR_CLASS = "org.apache.uima.examples.cpe.FileSystemCollectionReader";
 
 	public static final String OPTION1_CLASS = "tutorial.ex1.RoomNumberAnnotator";
 	public static final Parameter<String> OPTION1_PARAM1 = createParam("test",
