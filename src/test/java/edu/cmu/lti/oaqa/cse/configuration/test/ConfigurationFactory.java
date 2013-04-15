@@ -52,25 +52,7 @@ public final class ConfigurationFactory {
 	}
 
 	public static List<PhaseDescriptor> initPhaseDescriptorsEx4() {
-<<<<<<< HEAD
-		// Create phase1
-		OptionDescriptor optionOne = initOptionDescriptor(Ex4.OPTION1_CLASS,
-				Ex4.OPTION1_PARAM1, Ex4.OPTION1_PARAM2);
-		PhaseDescriptor phaseOne = initPhaseDescriptor(Ex4.PHASE1_NAME,
-				optionOne);
-		// Create phase2
-		optionOne = initOptionDescriptor(Ex4.OPTION2_1_CLASS,
-				Ex4.OPTION2_1_PARAM1);
-		OptionDescriptor optionTwo = initOptionDescriptor(Ex4.OPTION2_2_CLASS,
-				Ex4.OPTION2_2_PARAM1);
-		PhaseDescriptor phaseTwo = initPhaseDescriptor(Ex4.PHASE2_NAME,
-				optionOne, optionTwo);
-		// create phase3
-		optionOne = initOptionDescriptor(Ex4.OPTION3_CLASS, Ex4.OPTION3_PARAM1);
-		PhaseDescriptor phaseThree = initPhaseDescriptor(Ex4.PHASE3_NAME,
-				optionOne);
-		return Lists.newArrayList(phaseOne, phaseTwo, phaseThree);
-=======
+
 		//Create phase1
 		OptionDescriptor optionOne = initOptionDescriptor(Ex4.OPTION1_CLASS,Ex4.OPTION1_PARAM1,Ex4.OPTION1_PARAM2);
 		PhaseDescriptor phaseOne = initPhaseDescriptor(Ex4.PHASE1_NAME,optionOne);
@@ -82,7 +64,6 @@ public final class ConfigurationFactory {
 		optionOne = initOptionDescriptor(Ex4.OPTION3_CLASS,Ex4.OPTION3_PARAM1);
 		PhaseDescriptor phaseThree = initPhaseDescriptor(Ex4.PHASE3_NAME,optionOne);
 		return Lists.newArrayList(phaseOne, phaseTwo,phaseThree);
->>>>>>> 7c860750542831d5749afafcf72147c591f3a548
 	}
 
 	public static PhaseDescriptor initPhaseDescriptor(String name,
