@@ -30,7 +30,9 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>> ext
   public T getNext() throws Exception {
     prevNode = curNode;
     curNode = curNode.hasChildren() ? curNode.getChildren().get(0) : curNode;
-    return prevNode.getData().execute(input);
+    T out = prevNode.getData().execute(input);
+    input = out;
+    return out;
   }
 
   @Override

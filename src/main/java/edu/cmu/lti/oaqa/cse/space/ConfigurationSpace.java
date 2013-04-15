@@ -64,7 +64,7 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		buildPhases(plDesc);
 	}
 
-	private Node<E> buildCollectionReaderNode() {
+	private Node<E> buildCollectionReaderNode() throws Exception {
 		CollectionReaderDescriptor crDesc = conf
 				.getCollectionReaderDescriptor();
 		Node<E> collectionReaderNode = createNode(crDesc);
@@ -100,7 +100,7 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
     return new Node<E>(componentFactory.createExecutableComponent(cd));
   }
   
-  private Node<E> createNode(CollectionReaderDescriptor cd) {
+  private Node<E> createNode(CollectionReaderDescriptor cd) throws Exception {
     return new Node<E>(componentFactory.createExecutableComponent(cd));
   }
 
