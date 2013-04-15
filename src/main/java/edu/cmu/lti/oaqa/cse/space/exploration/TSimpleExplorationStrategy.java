@@ -22,8 +22,7 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>> ext
 
   private T input;
   
-  public TSimpleExplorationStrategy(T input) {
-    this.input = input;
+  public TSimpleExplorationStrategy() {
   }
   
   @Override

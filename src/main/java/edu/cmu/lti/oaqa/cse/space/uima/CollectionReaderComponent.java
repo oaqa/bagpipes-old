@@ -1,7 +1,11 @@
 package edu.cmu.lti.oaqa.cse.space.uima;
 
+import static java.util.Arrays.asList;
+
+import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CollectionReader;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.util.CasCreationUtils;
 
 public class CollectionReaderComponent extends UimaComponent {
 
@@ -19,8 +23,9 @@ public class CollectionReaderComponent extends UimaComponent {
 
   @Override
   public JCas execute(JCas input) throws Exception {
-    reader.getNext(input.getCas());
-    return input;
+    CAS cas = CasCreationUtils.createCas(asList(reader.getMetaData()));
+    reader.getNext(cas);
+    return cas.getJCas();
   }
 	
 }
