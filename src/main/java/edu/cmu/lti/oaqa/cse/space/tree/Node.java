@@ -55,7 +55,7 @@ public class Node<T> implements Visitable{
         return children.get(index);
     }
 
-    public T getData() {
+    public T getElement() {
         return this.data;
     }
 
@@ -64,22 +64,22 @@ public class Node<T> implements Visitable{
     }
 
     public String toString() {
-        return getData().toString();
+        return getElement().toString();
     }
 
     public boolean equals(Node<T> node) {
-        return node.getData().equals(getData());
+        return node.getElement().equals(getElement());
     }
 
     public int hashCode() {
-        return getData().hashCode();
+        return getElement().hashCode();
     }
 
     public String toStringVerbose() {
-        String stringRepresentation = getData().toString() + ":[";
+        String stringRepresentation = getElement().toString() + ":[";
 
         for (Node<T> node : getChildren()) {
-            stringRepresentation += node.getData().toString() + ", ";
+            stringRepresentation += node.getElement().toString() + ", ";
         }
 
         //Pattern.DOTALL causes ^ and $ to match. Otherwise it won't. It's retarded.

@@ -3,6 +3,7 @@ package edu.cmu.lti.oaqa.cse.space.tree;
 import java.util.*;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class Tree<T> {
 
@@ -11,11 +12,11 @@ public class Tree<T> {
 	}
 
 	private Node<T> root;
-	private List<Node<T>> leaves;
+	private Set<Node<T>> leaves;
 
 	public Tree() {
 		super();
-		leaves = Lists.newArrayList();
+		leaves = Sets.newHashSet();
 	}
 
 	public Node<T> getRoot() {
@@ -28,17 +29,20 @@ public class Tree<T> {
 		this.root = root;
 	}
 
-	public void addToLeaves(Node<T>... nodes) {
-		List<Node<T>> newLeaves = Lists.newArrayList();
-		for (Node<T> newLeaf : nodes)
-			for (Node<T> oldLeaf : leaves)
-				addToLeaf(oldLeaf, newLeaf, newLeaves);
-		leaves = newLeaves;
+	/*
+	 * public void addToLeaves(Node<T>... nodes) { List<Node<T>> newLeaves =
+	 * Lists.newArrayList(); for (Node<T> newLeaf : nodes) for (Node<T> oldLeaf
+	 * : leaves) addToLeaf(oldLeaf, newLeaf, newLeaves); leaves = newLeaves; }
+	 */
+
+	public Set<Node<T>> getLeaves() {
+		return leaves;
 	}
 
-	private void addToLeaf(Node<T> n1, Node<T> n2, List<Node<T>> newLeaves) {
-		newLeaves.add(n2);
-		n1.addChild(n2);
+	public void addToLeaf(Node<T> oldLeaf, Node<T> newLeaf) {
+		oldLeaf.addChild(newLeaf);
+		leaves.add(newLeaf);
+		leaves.remove(oldLeaf);
 	}
 
 	public int getNumberOfNodes() {
@@ -190,15 +194,17 @@ public class Tree<T> {
 		 * We're going to assume a pre-order traversal by default
 		 */
 
-		String stringRepresentation = "";
-
-		if (root != null) {
-			stringRepresentation = build(
-					GenericTreeTraversalOrderEnum.PRE_ORDER).toString();
-
-		}
-
-		return stringRepresentation;
+		/*
+		 * String stringRepresentation = "";
+		 * 
+		 * if (root != null) { stringRepresentation = build(
+		 * GenericTreeTraversalOrderEnum.PRE_ORDER).toString();
+		 * 
+		 * }
+		 * 
+		 * return stringRepresentation;
+		 */
+		return toStringWithDepth();
 	}
 
 	public String toStringWithDepth() {
@@ -207,12 +213,21 @@ public class Tree<T> {
 		 */
 
 		String stringRepresentation = "";
-
+		Map<Node<T>, Integer> depthMap = Collections.EMPTY_MAP;
 		if (root != null) {
-			stringRepresentation = buildWithDepth(
-					GenericTreeTraversalOrderEnum.PRE_ORDER).toString();
+			depthMap = buildWithDepth(GenericTreeTraversalOrderEnum.PRE_ORDER);
 		}
-
+		if (!depthMap.isEmpty())
+			for (Node<T> node : depthMap.keySet())
+				stringRepresentation += whiteSpace(depthMap.get(node)) + "|---"
+						+ node + "\n";
 		return stringRepresentation;
+	}
+
+	private static String whiteSpace(int space) {
+		String whitespace = "";
+		for (int i = 0; i < Math.round(space *1.5); i++)
+			whitespace += " ";
+		return  whitespace;
 	}
 }

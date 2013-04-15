@@ -14,3 +14,9 @@ pipeline:
 
 consumers:
      - inherit: cas_consumer.XmiWriterCasConsumer
+     
+metrics:
+    -inherit: componentScores
+    
+exploration-strategist:
+    -inherit: simple-strategist

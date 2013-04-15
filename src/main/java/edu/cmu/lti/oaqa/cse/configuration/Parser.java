@@ -29,21 +29,25 @@ public abstract class Parser {
 		String author = getAuthor();
 		CollectionReaderDescriptor crDesc = buildCollectionReader();
 		PipelineDescriptor plDesc = buildPipelineDescriptor();
-		List<ConsumerDescriptor> consumerDescs = buildConsumers();
-		return new Configuration(name, author, crDesc, plDesc, consumerDescs);
+		Configuration config = new Configuration(name, author, crDesc, plDesc);
+		config.setConsumers(buildConsumers());
+		config.setScoreMap(buildScores());
+		return config;
 	}
 
-	public abstract Map<String, Object> getResMap(String resource)
+	protected abstract Map<String, Object> getResMap(String resource)
 			throws FileNotFoundException;
 
-	public abstract CollectionReaderDescriptor buildCollectionReader();
+	protected abstract CollectionReaderDescriptor buildCollectionReader();
 
-	public abstract PipelineDescriptor buildPipelineDescriptor();
+	protected abstract PipelineDescriptor buildPipelineDescriptor();
 
-	public abstract List<ConsumerDescriptor> buildConsumers();
+	protected abstract List<ConsumerDescriptor> buildConsumers();
 
-	public abstract String getName();
+	protected abstract Map<String, ScoreDescriptor> buildScores();
 
-	public abstract String getAuthor();
+	protected abstract String getName();
+
+	protected abstract String getAuthor();
 
 }

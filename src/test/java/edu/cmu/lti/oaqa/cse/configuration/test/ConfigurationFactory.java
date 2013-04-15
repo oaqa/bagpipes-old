@@ -20,6 +20,7 @@ public final class ConfigurationFactory {
 	public static final PipelineDescriptor pipelineDescEx1 = initPipeline(phaseDescsEx1);
 	public static final PipelineDescriptor pipelineDescEx4 = initPipeline(phaseDescsEx4);
 	public static final Configuration programmedConfEx1 = initProgrammaticConfigurationEx1();
+	public static final Configuration programmedConfEx4 = initProgrammaticConfigurationEx4();
 
 	public static Configuration initProgrammaticConfigurationEx1() {
 		List<ConsumerDescriptor> consumerDescs = initConsumers();
@@ -49,23 +50,30 @@ public final class ConfigurationFactory {
 				optionDescs);
 		return Lists.newArrayList(phaseDesc);
 	}
-	
+
 	public static List<PhaseDescriptor> initPhaseDescriptorsEx4() {
-		//Create phase1
-		OptionDescriptor optionOne = initOptionDescriptor(Ex4.OPTION1_CLASS,Ex4.OPTION1_PARAM1,Ex4.OPTION1_PARAM2);
-		PhaseDescriptor phaseOne = initPhaseDescriptor(Ex4.PHASE1_NAME,optionOne);
-		//Create phase2
-		optionOne = initOptionDescriptor(Ex4.OPTION2_1_CLASS,Ex4.OPTION2_1_PARAM1);
-		OptionDescriptor optionTwo = initOptionDescriptor(Ex4.OPTION2_2_CLASS,Ex4.OPTION2_2_PARAM1);
-		PhaseDescriptor phaseTwo = initPhaseDescriptor(Ex4.PHASE2_NAME,optionOne,optionTwo);
-		//create phase3
-		optionOne = initOptionDescriptor(Ex4.OPTION3_CLASS,Ex4.OPTION3_PARAM1);
-		PhaseDescriptor phaseThree = initPhaseDescriptor(Ex4.PHASE3_NAME,optionOne);
-		return Lists.newArrayList(phaseOne, phaseTwo,phaseThree);
+		// Create phase1
+		OptionDescriptor optionOne = initOptionDescriptor(Ex4.OPTION1_CLASS,
+				Ex4.OPTION1_PARAM1, Ex4.OPTION1_PARAM2);
+		PhaseDescriptor phaseOne = initPhaseDescriptor(Ex4.PHASE1_NAME,
+				optionOne);
+		// Create phase2
+		optionOne = initOptionDescriptor(Ex4.OPTION2_1_CLASS,
+				Ex4.OPTION2_1_PARAM1);
+		OptionDescriptor optionTwo = initOptionDescriptor(Ex4.OPTION2_2_CLASS,
+				Ex4.OPTION2_2_PARAM1);
+		PhaseDescriptor phaseTwo = initPhaseDescriptor(Ex4.PHASE2_NAME,
+				optionOne, optionTwo);
+		// create phase3
+		optionOne = initOptionDescriptor(Ex4.OPTION3_CLASS, Ex4.OPTION3_PARAM1);
+		PhaseDescriptor phaseThree = initPhaseDescriptor(Ex4.PHASE3_NAME,
+				optionOne);
+		return Lists.newArrayList(phaseOne, phaseTwo, phaseThree);
 	}
-	
-	public static PhaseDescriptor initPhaseDescriptor(String name, OptionDescriptor ... optionDescs){
-		return new PhaseDescriptor(name,Arrays.asList(optionDescs));
+
+	public static PhaseDescriptor initPhaseDescriptor(String name,
+			OptionDescriptor... optionDescs) {
+		return new PhaseDescriptor(name, Arrays.asList(optionDescs));
 	}
 
 	public static final OptionDescriptor initOptionDescriptor(String className,
@@ -75,15 +83,12 @@ public final class ConfigurationFactory {
 			optionDesc.addParam(p);
 		return optionDesc;
 	}
-	
-	
+
 	public static List<OptionDescriptor> initPhaseOneOptionDescriptors() {
 		OptionDescriptor optionDesc = new OptionDescriptor(Ex1.OPTION1_CLASS);
 		optionDesc.addParam(Ex1.OPTION1_PARAM1);
 		return Lists.newArrayList(optionDesc);
 	}
-
-	
 
 	public static PipelineDescriptor initPipeline(
 			List<PhaseDescriptor> phaseDescs) {

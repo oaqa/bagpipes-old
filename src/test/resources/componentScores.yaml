@@ -1,0 +1,5 @@
+scores:
+   - inherit: tutorial.ex1.RoomNumberAnnotator
+     cost: 0.4
+     benefit: 0.8
+     

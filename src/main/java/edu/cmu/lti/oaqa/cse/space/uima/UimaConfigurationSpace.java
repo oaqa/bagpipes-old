@@ -15,14 +15,13 @@ public class UimaConfigurationSpace extends ConfigurationSpace<JCas, UimaCompone
   }
 
   @Override
-  protected Tree<UimaComponent> getTree() {
+  protected Tree<UimaComponent> newTree() {
     return new Tree<UimaComponent>();
   }
 
   @Override
   protected Factory<JCas, UimaComponent> getFactory() throws Exception {
     return new UimaFactory(conf);
-
   }
 
 }

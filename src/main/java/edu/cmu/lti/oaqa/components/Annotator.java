@@ -23,4 +23,6 @@ public class Annotator extends UimaComponent {
 		return null;
 	}
 	
+	
+	
 }

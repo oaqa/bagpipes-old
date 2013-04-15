@@ -2,6 +2,7 @@ package edu.cmu.lti.oaqa.cse.configuration;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.collect.Lists;
 
@@ -14,6 +15,7 @@ public class Configuration {
 	private CollectionReaderDescriptor collectionReaderDesc;
 	private PipelineDescriptor pipelineDesc;
 	private List<ConsumerDescriptor> consumerDescs;
+	private Map<String, ScoreDescriptor> scoreMap;
 
 	private Configuration(String name, String author) {
 		this.name = name;
@@ -38,6 +40,14 @@ public class Configuration {
 			PipelineDescriptor plDesc) {
 		this("oaqa-experiment", "oaqa-author", crDesc, plDesc);
 	}
+	
+	public void setConsumers(List<ConsumerDescriptor> consumerDescs){
+		this.consumerDescs = consumerDescs;
+	}
+	
+	public void setScoreMap(Map<String,ScoreDescriptor> scoreMap){
+		this.scoreMap = scoreMap;
+	}
 
 	public String getAuthor() {
 		return this.author;
@@ -57,6 +67,10 @@ public class Configuration {
 
 	public List<ConsumerDescriptor> getConsumers() {
 		return consumerDescs;
+	}
+	
+	public Map<String, ScoreDescriptor> getScores() {
+		return scoreMap;
 	}
 
 	public boolean equals(Object obj) {

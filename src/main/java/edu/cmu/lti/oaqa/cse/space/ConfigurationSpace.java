@@ -18,7 +18,9 @@ package edu.cmu.lti.oaqa.cse.space;
 
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Set;
+import com.google.common.collect.Sets;
 import edu.cmu.lti.oaqa.components.ExecutableComponent;
 import edu.cmu.lti.oaqa.components.Factory;
 import edu.cmu.lti.oaqa.cse.configuration.CollectionReaderDescriptor;
@@ -27,6 +29,7 @@ import edu.cmu.lti.oaqa.cse.configuration.ConsumerDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.OptionDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.PhaseDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.PipelineDescriptor;
+import edu.cmu.lti.oaqa.cse.configuration.ScoreDescriptor;
 import edu.cmu.lti.oaqa.cse.space.exploration.ExplorationStrategy;
 import edu.cmu.lti.oaqa.cse.space.tree.Node;
 import edu.cmu.lti.oaqa.cse.space.tree.Tree;
@@ -36,6 +39,7 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		implements Iterable<T> {
 
 	private ExplorationStrategy<T, E> strategy;
+	protected Map<String, ScoreDescriptor> scoreMap;
 
 	protected final Configuration conf;
 
@@ -44,24 +48,25 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 
 	public ConfigurationSpace(Configuration conf) throws Exception {
 		this.conf = conf;
-      this.componentFactory = getFactory();
-		this.phaseTree = getTree();
-		initTree();
-		// typeSystem =null;
+		this.componentFactory = getFactory();
+		this.scoreMap = conf.getScores();
+		this.phaseTree = initTree(this.newTree());
+
 	}
 
 	public Tree<E> getPhaseTree() {
 		return phaseTree;
 	}
 
-	private void initTree() throws Exception {
+	private Tree<E> initTree(Tree<E> tree) throws Exception {
 		// Set the collection reader as root of the phaseTree
 		Node<E> root = buildCollectionReaderNode();
-		phaseTree.setRoot(root);
+		tree.setRoot(root);
 
 		// Build all the options in the phases from the pipeline descriptor
 		PipelineDescriptor plDesc = conf.getPipelineDescriptor();
-		buildPhases(plDesc);
+		buildPhases(plDesc, tree);
+		return tree;
 	}
 
 	private Node<E> buildCollectionReaderNode() {
@@ -71,40 +76,45 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		return collectionReaderNode;
 	}
 
-	private void buildPhases(PipelineDescriptor plDesc) throws Exception {
+	private void buildPhases(PipelineDescriptor plDesc, Tree<E> tree)
+			throws Exception {
 		List<PhaseDescriptor> phaseDescs = plDesc.getPhaseDescriptors();
 		for (PhaseDescriptor phaseDesc : phaseDescs)
-			buildPhase(phaseDesc);
+			buildPhase(phaseDesc, tree);
 	}
 
-	private void buildPhase(PhaseDescriptor pd) throws Exception {
+	private void buildPhase(PhaseDescriptor pd, Tree<E> tree) throws Exception {
 		List<OptionDescriptor> optionDescs = pd.getOptionDescriptors();
-		for (OptionDescriptor optionDesc : optionDescs)
-			// IMPORTANT: this method essentially adds the next phase to the
-			// execution tree by taking all the options in the phase
-			// and adding it to the leaves from the previous phase.
-			phaseTree.addToLeaves(createNode(optionDesc));
+		Set<Node<E>> leaves = Sets.newHashSet();
+		leaves.addAll(tree.getLeaves());
+		for (Node<E> oldLeaf : leaves)
+			for (OptionDescriptor optionDesc : optionDescs)
+				// IMPORTANT: this method essentially adds the next phase to the
+				// execution tree by taking all the options in the phase
+				// and adding it to the leaves from the previous phase.
+				tree.addToLeaf(oldLeaf, createNode(optionDesc));
 	}
 
 	private void buildConsumers() throws Exception {
 		List<ConsumerDescriptor> consumerDescs = conf.getConsumers();
 		for (ConsumerDescriptor consumerDesc : consumerDescs)
-			phaseTree.addToLeaves(createNode(consumerDesc));
+			for (Node<E> oldLeaf : phaseTree.getLeaves())
+				phaseTree.addToLeaf(oldLeaf, createNode(consumerDesc));
 	}
 
 	private Node<E> createNode(ComponentDescriptor cd) throws Exception {
 		return new Node<E>(componentFactory.createExecutableComponent(cd));
 	}
-	
-  private Node<E> createNode(OptionDescriptor cd) throws Exception {
-    return new Node<E>(componentFactory.createExecutableComponent(cd));
-  }
-  
-  private Node<E> createNode(CollectionReaderDescriptor cd) {
-    return new Node<E>(componentFactory.createExecutableComponent(cd));
-  }
 
-	protected abstract Tree<E> getTree();
+	private Node<E> createNode(OptionDescriptor cd) throws Exception {
+		return new Node<E>(componentFactory.createExecutableComponent(cd));
+	}
+
+	private Node<E> createNode(CollectionReaderDescriptor cd) {
+		return new Node<E>(componentFactory.createExecutableComponent(cd));
+	}
+
+	protected abstract Tree<E> newTree();
 
 	protected abstract Factory<T, E> getFactory() throws Exception;
 
@@ -116,7 +126,7 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 	public void setExplorationStrategy(
 			ExplorationStrategy<T, E> explorationStrategy) {
 		explorationStrategy.setTree(this.phaseTree);
-		System.out.println(phaseTree);
+		explorationStrategy.setScoreMap(this.scoreMap);
 		this.strategy = explorationStrategy;
 	}
 
@@ -134,11 +144,11 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		@Override
 		public T next() {
 			try {
-        return strategy.getNext();
-      } catch (Exception e) {
-        // TODO Auto-generated catch block
-        throw new RuntimeException(e);
-      }
+				return strategy.getNext();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				throw new RuntimeException(e);
+			}
 		}
 
 		@Override

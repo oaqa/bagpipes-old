@@ -10,15 +10,13 @@ import edu.cmu.lti.oaqa.cse.space.tree.Tree;
 public class SimpleConfigurationSpace extends
 		ConfigurationSpace<String, SimpleClassNameAnnotator> {
 
-	private SimpleFactory sFactory;
-
 	public SimpleConfigurationSpace(Configuration conf) throws Exception {
 		super(conf);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	protected Tree<SimpleClassNameAnnotator> getTree() {
+	protected Tree<SimpleClassNameAnnotator> newTree() {
 		return new Tree<SimpleClassNameAnnotator>();
 	}
 

@@ -12,6 +12,10 @@ public abstract class NamedComponent<I> extends ExecutableComponent<I> {
 		this.className = className;
 	}
 	
+	public String toString(){
+		return className;
+	}
+	
 	
 
 }
