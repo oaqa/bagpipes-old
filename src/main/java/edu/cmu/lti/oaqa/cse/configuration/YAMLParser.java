@@ -222,11 +222,11 @@ public class YAMLParser extends Parser {
 	protected Map<String, ScoreDescriptor> buildScores() {
 		List<Map<String,Object>> scores =  (List<Map<String,Object>>)confMap.get("metrics");
 		Map<String,ScoreDescriptor> scoreMap = Maps.newHashMap();
-		for(Map<String,Object> score : scores){
+		/*for(Map<String,Object> score : scores){
 			String className = buildClass(score);
 			ScoreDescriptor sd= new ScoreDescriptor((Double)score.get("cost"),(Double)score.get("benefit"));
 			scoreMap.put(className,sd);
-		}
+		}*/
 			return scoreMap;
 	}
 

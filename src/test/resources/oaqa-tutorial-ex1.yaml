@@ -13,14 +13,11 @@ pipeline:
          - inherit: tutorial.ex1.RoomNumberAnnotator  
 
 consumers:
-<<<<<<< HEAD
      - inherit: cas_consumer.XmiWriterCasConsumer
      
 metrics:
-    -inherit: componentScores
+      - inherit: componentScores
     
 exploration-strategist:
     -inherit: simple-strategist
-=======
-     - inherit: cas_consumer.XmiWriterCasConsumer
->>>>>>> 7c860750542831d5749afafcf72147c591f3a548
+

@@ -20,6 +20,11 @@ pipeline:
        name: MeetingAnnotator
        options: 
          - inherit: tutorial.ex4.MeetingAnnotator   
-
-consumers:      
+consumers:
      - inherit: cas_consumer.XmiWriterCasConsumer
+     
+metrics:
+     - inherit: componentScores
+    
+exploration-strategist:
+    -inherit: simple-strategist
