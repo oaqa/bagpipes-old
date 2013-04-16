@@ -25,21 +25,18 @@ public class UimaFactory extends Factory<JCas, UimaComponent> {
   @Override
   public UimaComponent createExecutableComponent(ComponentDescriptor componentDescriptor) throws Exception {
     AnalysisEngineDescription desc = builder.buildComponent(componentDescriptor);
-    System.out.println("Create component: " + desc);
     return new AnalysisEngineComponent(desc);
   }
 
   @Override
   public UimaComponent createExecutableComponent(OptionDescriptor componentDescriptor) throws Exception {
     AnalysisEngineDescription desc = builder.buildComponent(componentDescriptor);
-    System.out.println("Create component: " + desc);
     return new AnalysisEngineComponent(desc);
   }
 
   @Override
   public UimaComponent createExecutableComponent(CollectionReaderDescriptor componentDescriptor) throws Exception {
     CollectionReader desc = builder.buildCollectionReader(componentDescriptor);
-    System.out.println("Create component: " + desc);
     return new CollectionReaderComponent(desc);
   }
 

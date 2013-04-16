@@ -1,4 +1,4 @@
-class: org.apache.uima.examples.xmi.XmiWriterCasConsumer
+class: edu.cmu.lti.oaqa.components.uima.XmiWriterCasConsumer
 
 OutputDirectory: cas-output
 
