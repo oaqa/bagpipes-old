@@ -45,14 +45,12 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>>
 			nextNode = toBeTraversed.remove(0);
 		
 		
-		T result;
-		if (curNode != phaseTree.getRoot()) {
-			result = execute(curNode, inputMap.get(curNode));
-			if (curNode.hasChildren())
-				for (Node<E> child : curNode.getChildren())
-					inputMap.put(child, result);
-		} else
-			result = execute(curNode, null);
+		T result = execute(curNode, inputMap.get(curNode));
+		if (curNode.hasChildren()) {
+		  for (Node<E> child : curNode.getChildren()) {
+		    inputMap.put(child, result);
+		  }
+		}
 		return result;
 	}
 
