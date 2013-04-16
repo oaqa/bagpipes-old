@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import edu.cmu.lti.oaqa.components.ExecutableComponent;
 import edu.cmu.lti.oaqa.cse.configuration.Configuration;
+import edu.cmu.lti.oaqa.cse.configuration.Parser;
+import edu.cmu.lti.oaqa.cse.configuration.YAMLParser;
 import edu.cmu.lti.oaqa.cse.configuration.test.ConfigurationFactory;
 import edu.cmu.lti.oaqa.cse.space.exploration.ExplorationStrategy;
 import edu.cmu.lti.oaqa.cse.space.exploration.TSimpleExplorationStrategy;
@@ -34,7 +36,7 @@ public class UimaFactoryTest {
 
   @BeforeClass
   public static void initSimpleConfigurationSpace() throws Exception {
-    Configuration ex1Conf = ConfigurationFactory.programmedConfEx1;
+    Configuration ex1Conf = parse("oaqa-tutorial-ex1");
     UimaConfigurationSpace space = new UimaConfigurationSpace(ex1Conf);
     simpleStrategy = initSimpleExplorationStrategy();
     space.setExplorationStrategy(simpleStrategy);
@@ -48,5 +50,11 @@ public class UimaFactoryTest {
   private static NodeVisitor<String, ExecutableComponent<String>> initExecutingVisitor() {
     return null;
   }
+  
+  private static Configuration parse(String resource){
+		Parser p = new YAMLParser(resource + ".yaml");
+		Configuration conf = p.parse();
+		return conf;
+	}
 
 }
