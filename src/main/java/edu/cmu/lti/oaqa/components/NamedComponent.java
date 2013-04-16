@@ -15,6 +15,10 @@ public abstract class NamedComponent<I> extends ExecutableComponent<I> {
 	public String toString(){
 		return className;
 	}
+	@Override
+	public String getClassName(){
+		return className;
+	}
 	
 	
 

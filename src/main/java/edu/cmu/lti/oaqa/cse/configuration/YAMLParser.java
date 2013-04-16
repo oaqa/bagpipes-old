@@ -1,19 +1,11 @@
 package edu.cmu.lti.oaqa.cse.configuration;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.yaml.snakeyaml.Yaml;
-
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 public class YAMLParser extends Parser {
@@ -220,14 +212,27 @@ public class YAMLParser extends Parser {
 
 	@Override
 	protected Map<String, ScoreDescriptor> buildScores() {
-		List<Map<String,Object>> scores =  (List<Map<String,Object>>)confMap.get("metrics");
-		Map<String,ScoreDescriptor> scoreMap = Maps.newHashMap();
-		/*for(Map<String,Object> score : scores){
+		List<Map<String, Object>> metrics = (List<Map<String, Object>>) confMap
+				.get("metrics");
+		List<Map<String, Object>> scores = null;
+		try {
+			scores = (List<Map<String, Object>>) ((Map<String, Object>) getResMap((String)metrics
+					.get(0).get("inherit") + ".yaml")).get("scores");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Map<String, ScoreDescriptor> scoreMap = Maps.newHashMap();
+		for (Map<String, Object> score : scores) {
+			score = flatten(score);
 			String className = buildClass(score);
-			ScoreDescriptor sd= new ScoreDescriptor((Double)score.get("cost"),(Double)score.get("benefit"));
-			scoreMap.put(className,sd);
-		}*/
-			return scoreMap;
+			System.out.println(score);
+			ScoreDescriptor sd = new ScoreDescriptor(
+					(Double) score.get("cost"), (Double) score.get("benefit"));
+			scoreMap.put(className, sd);
+		}
+
+		return scoreMap;
 	}
 
 	public static void main(String[] args) {

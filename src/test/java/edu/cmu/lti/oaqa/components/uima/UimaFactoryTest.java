@@ -36,7 +36,7 @@ public class UimaFactoryTest {
 
   @BeforeClass
   public static void initSimpleConfigurationSpace() throws Exception {
-    Configuration ex1Conf = parse("oaqa-tutorial-ex1");
+    Configuration ex1Conf = parse("oaqa-tutorial-ex4");
     UimaConfigurationSpace space = new UimaConfigurationSpace(ex1Conf);
     simpleStrategy = initSimpleExplorationStrategy();
     space.setExplorationStrategy(simpleStrategy);

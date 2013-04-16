@@ -12,6 +12,14 @@ public abstract class UimaComponent extends ExecutableComponent<JCas> {
 		this.className = className;
 	}
 	
+	public String getClassName(){
+		return className;
+	}
+	
+	public String toString(){
+		return className;
+	}
+	
 	
 
 }

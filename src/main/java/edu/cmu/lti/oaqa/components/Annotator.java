@@ -22,6 +22,12 @@ public class Annotator extends UimaComponent {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getClassName() {
+		// TODO Auto-generated method stub
+		return className;
+	}
 	
 	
 	

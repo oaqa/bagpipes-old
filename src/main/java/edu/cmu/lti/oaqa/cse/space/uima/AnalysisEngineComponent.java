@@ -9,8 +9,8 @@ public class AnalysisEngineComponent extends UimaComponent {
 
   private final AnalysisEngineDescription descriptor;
   
-	public AnalysisEngineComponent(AnalysisEngineDescription descriptor){
-		super(descriptor.getMetaData().getName());
+	public AnalysisEngineComponent(AnalysisEngineDescription descriptor,String className){
+		super(className);
 		this.descriptor = descriptor;
 	}
 	

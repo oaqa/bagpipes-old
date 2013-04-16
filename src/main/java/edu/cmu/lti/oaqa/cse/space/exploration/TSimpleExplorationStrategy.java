@@ -21,6 +21,7 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>>
 		extends ExplorationStrategy<T, E> {
 	private Node<E> nextNode, curNode;
 	private Stack<List<Node<E>>> traversalStack;
+	private double minBenefit = 0.6, maxCost = 1;
 
 	List<Node<E>> toBeTraversed;
 
@@ -35,23 +36,45 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>>
 		List<Node<E>> children = Lists.newLinkedList();
 		if (nextNode.hasChildren()) {
 			children.addAll(nextNode.getChildren());
-			nextNode = children.remove(0);
+			nextNode = thisOrNext(children);
 			if (!children.isEmpty())
 				traversalStack.push(children);
 		} else if (toBeTraversed.isEmpty() && !traversalStack.isEmpty()) {
 			toBeTraversed = traversalStack.pop();
-			nextNode = toBeTraversed.remove(0);
+			nextNode = thisOrNext(toBeTraversed);
 		} else if (!toBeTraversed.isEmpty())
-			nextNode = toBeTraversed.remove(0);
-		
-		
+			nextNode = thisOrNext(toBeTraversed);
+
 		T result = execute(curNode, inputMap.get(curNode));
 		if (curNode.hasChildren()) {
-		  for (Node<E> child : curNode.getChildren()) {
-		    inputMap.put(child, result);
-		  }
+			for (Node<E> child : curNode.getChildren()) {
+				inputMap.put(child, result);
+			}
 		}
 		return result;
+	}
+
+	private boolean condition(Node<E> n) {
+		if (scoreMap.containsKey(n.getElement().getClassName())) {
+			double benefit = scoreMap.get(n.getElement().getClassName())
+					.getBenefit();
+			double cost = scoreMap.get(n.getElement().getClassName()).getCost();
+			return benefit > minBenefit && cost < maxCost;
+		}
+
+		return true;
+	}
+
+	private Node<E> thisOrNext(List<Node<E>> nodes) {
+		if (nodes.isEmpty())
+			return null;
+
+		if (condition(nodes.get(0)))
+			return nodes.remove(0);
+
+		nodes.remove(0);
+		return thisOrNext(nodes);
+
 	}
 
 	private T execute(Node<E> node, T input) {

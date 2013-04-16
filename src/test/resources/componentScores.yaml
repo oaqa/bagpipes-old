@@ -1,5 +1,18 @@
 scores:
-   - inherit: tutorial.ex1.RoomNumberAnnotator
+   - inherit: tutorial.ex3.RoomNumberAnnotator
      cost: 0.4
      benefit: 0.8
-     
+   - inherit: tutorial.ex3.SimpleTutorialDateTime 
+     cost: 0.4
+     benefit: 0.8
+   - inherit: tutorial.ex3.TutorialDateTime
+     cost: 0.4
+     benefit: 0.8
+   - inherit: tutorial.ex3.RoomNumberAnnotator
+     cost: 0.4
+     benefit: 0.8
+   - inherit: tutorial.ex4.MeetingAnnotator
+     cost: 0.4
+     benefit: 0.8
+                    
+        
