@@ -44,7 +44,7 @@ public class YAMLParser extends Parser {
 	 */
 
 	@Override
-	public CollectionReaderDescriptor buildCollectionReader() {
+	public CollectionReaderDescriptor buildCollectionReaderDescriptor() {
 		Map<String, Object> resMap = (Map<String, Object>) confMap
 				.get("collection-reader");
 		String className = buildClass(resMap);
@@ -188,10 +188,11 @@ public class YAMLParser extends Parser {
 	 * 
 	 */
 	@Override
-	public List<ConsumerDescriptor> buildConsumers() {
+	public List<ConsumerDescriptor> buildConsumerDescriptors() {
 		List<Map<String, Object>> consumerResMaps = (List<Map<String, Object>>) confMap
 				.get("consumers");
 		List<ConsumerDescriptor> consumerDescs = new LinkedList<ConsumerDescriptor>();
+		
 		for (Map<String, Object> consumerResMap : consumerResMaps)
 			consumerDescs.add(buildConsumerDescriptor(consumerResMap));
 		return consumerDescs;
@@ -216,8 +217,10 @@ public class YAMLParser extends Parser {
 				.get("metrics");
 		List<Map<String, Object>> scores = null;
 		try {
-			scores = (List<Map<String, Object>>) ((Map<String, Object>) getResMap((String)metrics
-					.get(0).get("inherit") + ".yaml")).get("scores");
+			String path = (String) metrics.get(0).get("inherit");
+			Map<String, Object> scoreComponents = (Map<String, Object>) getResMap(path
+					+ ".yaml");
+			scores = (List<Map<String, Object>>) scoreComponents.get("scores");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -239,6 +242,15 @@ public class YAMLParser extends Parser {
 		String resource = args[0];
 		YAMLParser parser = new YAMLParser(resource);
 		parser.buildPipelineDescriptor();
+	}
+
+	@Override
+	protected ExplorerDescriptor buildExplorerDescriptor() {
+		List<Map<String, Object>> resMapList = (List<Map<String, Object>>) confMap
+				.get("exploration-strategist");
+		Map<String, Object> resMap = resMapList.get(0);
+		String className = buildClass(resMap);
+		return new ExplorerDescriptor(className, resMap);
 	}
 
 }

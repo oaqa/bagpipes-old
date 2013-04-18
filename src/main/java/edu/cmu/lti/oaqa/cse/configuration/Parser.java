@@ -23,26 +23,33 @@ public abstract class Parser {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
+	
 	public Configuration parse() {
 		String name = getName();
 		String author = getAuthor();
-		CollectionReaderDescriptor crDesc = buildCollectionReader();
+		CollectionReaderDescriptor crDesc = buildCollectionReaderDescriptor();
 		PipelineDescriptor plDesc = buildPipelineDescriptor();
 		Configuration config = new Configuration(name, author, crDesc, plDesc);
-		config.setConsumers(buildConsumers());
+		config.setConsumers(buildConsumerDescriptors());
+		
 		config.setScoreMap(buildScores());
+		config.setExplorerDescriptor(buildExplorerDescriptor());
+		
 		return config;
 	}
 
 	protected abstract Map<String, Object> getResMap(String resource)
 			throws FileNotFoundException;
 
-	protected abstract CollectionReaderDescriptor buildCollectionReader();
+	protected abstract CollectionReaderDescriptor buildCollectionReaderDescriptor();
 
 	protected abstract PipelineDescriptor buildPipelineDescriptor();
 
-	protected abstract List<ConsumerDescriptor> buildConsumers();
+	protected abstract List<ConsumerDescriptor> buildConsumerDescriptors();
+	
+	protected abstract ExplorerDescriptor buildExplorerDescriptor();
 
 	protected abstract Map<String, ScoreDescriptor> buildScores();
 

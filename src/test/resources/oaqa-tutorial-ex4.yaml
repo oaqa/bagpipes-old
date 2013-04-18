@@ -23,8 +23,11 @@ pipeline:
      - inherit: ecd.phase  
        name: printtofile
        options: 
-           - inherit: cas_consumer.XmiWriterCasConsumer  
-           
+           - class: org.apache.uima.examples.cpe.AnnotationPrinter
+             outputFile: output.txt
+             printToConsole: false       
+           - inherit: cas_consumer.XmiWriterCasConsumer
+
 consumers:
      - inherit: cas_consumer.XmiWriterCasConsumer
      
@@ -32,4 +35,6 @@ metrics:
      - inherit: componentScores
     
 exploration-strategist:
-    -inherit: simple-strategist
+     - class: edu.cmu.lti.oaqa.cse.space.exploration.UimaSimpleExplorationStrategy
+       minBenefit: 0.5
+       maxCost: 3.5

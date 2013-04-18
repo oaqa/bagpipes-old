@@ -70,6 +70,13 @@ public class ParserTestCase {
 		assertEquals(confPhases, progPhases);
 		assertEquals(parsedPd, progPd);
 	}
+	
+	@Test
+	public void multipleComponents(){
+		PhaseDescriptor phase4 = parsedConfEx4.getPipelineDescriptor().getPhaseDescriptors().get(3);
+		System.out.println("Options: " + phase4.getOptionDescriptors());
+		assert(phase4.getOptionDescriptors().size() > 1);
+	}
 
 	@Test
 	public void collectionReaderTest() {

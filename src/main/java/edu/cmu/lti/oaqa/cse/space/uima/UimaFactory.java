@@ -10,7 +10,10 @@ import edu.cmu.lti.oaqa.components.Factory;
 import edu.cmu.lti.oaqa.cse.configuration.CollectionReaderDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.ComponentDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.Configuration;
+import edu.cmu.lti.oaqa.cse.configuration.ExplorerDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.OptionDescriptor;
+import edu.cmu.lti.oaqa.cse.space.exploration.ExplorationStrategy;
+import edu.cmu.lti.oaqa.cse.space.exploration.UimaSimpleExplorationStrategy;
 
 public class UimaFactory extends Factory<JCas, UimaComponent> {
 
@@ -39,5 +42,11 @@ public class UimaFactory extends Factory<JCas, UimaComponent> {
     CollectionReader desc = builder.buildCollectionReader(componentDescriptor);
     return new CollectionReaderComponent(desc);
   }
-
+/*
+@Override
+public ExplorationStrategy<JCas, UimaComponent> createStrategist(
+		ExplorerDescriptor exploreDesc) {
+	return new UimaSimpleExplorationStrategy();
+}
+*/
 }

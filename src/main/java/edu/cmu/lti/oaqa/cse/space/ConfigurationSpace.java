@@ -51,11 +51,16 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		this.componentFactory = getFactory();
 		this.scoreMap = conf.getScores();
 		this.phaseTree = initTree(this.newTree());
-
+		this.strategy = initStrategist(buildStrategist());
 	}
 
 	public Tree<E> getPhaseTree() {
 		return phaseTree;
+	}
+
+	private ExplorationStrategy<T, E> buildStrategist() {
+		return componentFactory.createStrategist(conf
+				.getExplorationDescriptor());
 	}
 
 	private Tree<E> initTree(Tree<E> tree) throws Exception {
@@ -121,6 +126,12 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 	@Override
 	public Iterator<T> iterator() {
 		return new PipelineIterator(conf);
+	}
+	
+	public ExplorationStrategy<T, E>  initStrategist(ExplorationStrategy<T, E> explorationStrategy){
+		explorationStrategy.setTree(this.phaseTree);
+		explorationStrategy.setScoreMap(this.scoreMap);
+		return explorationStrategy;
 	}
 
 	public void setExplorationStrategy(

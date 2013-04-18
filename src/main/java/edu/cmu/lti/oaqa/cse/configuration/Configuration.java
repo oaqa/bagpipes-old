@@ -16,6 +16,7 @@ public class Configuration {
 	private PipelineDescriptor pipelineDesc;
 	private List<ConsumerDescriptor> consumerDescs;
 	private Map<String, ScoreDescriptor> scoreMap;
+	private ExplorerDescriptor explorerDesc;
 
 	private Configuration(String name, String author) {
 		this.name = name;
@@ -40,13 +41,17 @@ public class Configuration {
 			PipelineDescriptor plDesc) {
 		this("oaqa-experiment", "oaqa-author", crDesc, plDesc);
 	}
-	
-	public void setConsumers(List<ConsumerDescriptor> consumerDescs){
+
+	public void setConsumers(List<ConsumerDescriptor> consumerDescs) {
 		this.consumerDescs = consumerDescs;
 	}
-	
-	public void setScoreMap(Map<String,ScoreDescriptor> scoreMap){
+
+	public void setScoreMap(Map<String, ScoreDescriptor> scoreMap) {
 		this.scoreMap = scoreMap;
+	}
+
+	public void setExplorerDescriptor(ExplorerDescriptor expDesc) {
+		this.explorerDesc = expDesc;
 	}
 
 	public String getAuthor() {
@@ -68,9 +73,13 @@ public class Configuration {
 	public List<ConsumerDescriptor> getConsumers() {
 		return consumerDescs;
 	}
-	
+
 	public Map<String, ScoreDescriptor> getScores() {
 		return scoreMap;
+	}
+	
+	public ExplorerDescriptor getExplorationDescriptor(){
+		return explorerDesc;
 	}
 
 	public boolean equals(Object obj) {
@@ -95,7 +104,8 @@ public class Configuration {
 		equal &= this.pipelineDesc.equals(conf.getPipelineDescriptor());
 		System.out.println("plDesc: " + equal);
 		equal &= this.consumerDescs.equals(conf.getConsumers());
-		System.out.println("consumer1: " + consumerDescs + "consumer2: "+conf.getConsumers() + "equal?: " + equal);
+		System.out.println("consumer1: " + consumerDescs + "consumer2: "
+				+ conf.getConsumers() + "equal?: " + equal);
 		return equal;
 	}
 

@@ -14,6 +14,8 @@ import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.components.ExecutableComponent;
 import edu.cmu.lti.oaqa.components.simple.SimpleClassNameAnnotator;
+import edu.cmu.lti.oaqa.cse.configuration.ExplorerDescriptor;
+import edu.cmu.lti.oaqa.cse.configuration.ScoreDescriptor;
 import edu.cmu.lti.oaqa.cse.space.tree.Node;
 import edu.cmu.lti.oaqa.cse.space.tree.Tree;
 
@@ -21,59 +23,83 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>>
 		extends ExplorationStrategy<T, E> {
 	private Node<E> nextNode, curNode;
 	private Stack<List<Node<E>>> traversalStack;
-	private double minBenefit = 0.6, maxCost = 1;
+	private double minBenefit = 0.5, maxCost = 1;
 
 	List<Node<E>> toBeTraversed;
 
 	public TSimpleExplorationStrategy() {
 		toBeTraversed = Collections.EMPTY_LIST;
 		traversalStack = new Stack<List<Node<E>>>();
+		
+	}
+
+	public TSimpleExplorationStrategy(ExplorerDescriptor explorerDesc) {
+		super(explorerDesc);
+		toBeTraversed = Collections.EMPTY_LIST;
+		traversalStack = new Stack<List<Node<E>>>();
+		minBenefit = explorerDesc.getDouble("minBenefit");
+		maxCost = explorerDesc.getDouble("maxCost");		
 	}
 
 	@Override
 	public T getNext() {
+		// Move pointer to next node
 		curNode = nextNode;
 		List<Node<E>> children = Lists.newLinkedList();
+		// If node has children, pre-order recurse on child
 		if (nextNode.hasChildren()) {
 			children.addAll(nextNode.getChildren());
-			nextNode = thisOrNext(children);
+			nextNode = firstOrNext(children);
+			// if children are left, remember to visit them later
 			if (!children.isEmpty())
 				traversalStack.push(children);
-		} else if (toBeTraversed.isEmpty() && !traversalStack.isEmpty()) {
-			toBeTraversed = traversalStack.pop();
-			nextNode = thisOrNext(toBeTraversed);
+			// traverse all siblings of node after visiting the subtree
 		} else if (!toBeTraversed.isEmpty())
-			nextNode = thisOrNext(toBeTraversed);
+			nextNode = firstOrNext(toBeTraversed);
+		else {
+			// If you already traversed all the siblings, go back up the tree
+			if (!traversalStack.isEmpty())
+				toBeTraversed = traversalStack.pop();
+			// Store first node from the stack, but
+			// NOTE: will return null if no nodes are left
+			// and cause hasNext() to return false. This is how
+			// getNext() signals the end of execution.
+			nextNode = firstOrNext(toBeTraversed);
+		}
 
+		// Compute execution of current node and cache as input
+		// for all its child components
 		T result = execute(curNode, inputMap.get(curNode));
 		if (curNode.hasChildren()) {
 			for (Node<E> child : curNode.getChildren()) {
 				inputMap.put(child, result);
 			}
 		}
+
+		System.out.println(curNode);
 		return result;
 	}
 
 	private boolean condition(Node<E> n) {
-		if (scoreMap.containsKey(n.getElement().getClassName())) {
-			double benefit = scoreMap.get(n.getElement().getClassName())
-					.getBenefit();
-			double cost = scoreMap.get(n.getElement().getClassName()).getCost();
+		String nodeId = n.getElement().getClassName();
+		if (scoreMap.containsKey(nodeId)) {
+			ScoreDescriptor nodeScore = scoreMap.get(nodeId);
+			double benefit = nodeScore.getBenefit(), cost = nodeScore.getCost();
 			return benefit > minBenefit && cost < maxCost;
 		}
-
 		return true;
 	}
 
-	private Node<E> thisOrNext(List<Node<E>> nodes) {
+	private Node<E> firstOrNext(List<Node<E>> nodes) {
 		if (nodes.isEmpty())
 			return null;
 
-		if (condition(nodes.get(0)))
-			return nodes.remove(0);
+		Node<E> n = nodes.remove(0);
 
-		nodes.remove(0);
-		return thisOrNext(nodes);
+		if (condition(n))
+			return n;
+
+		return firstOrNext(nodes);
 
 	}
 
@@ -89,8 +115,9 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>>
 
 	@Override
 	public boolean hasNext() {
-		return curNode.hasChildren() || nextNode.hasChildren()
-				|| !traversalStack.isEmpty() || !toBeTraversed.isEmpty();
+		return   nextNode != null && ( nextNode.hasChildren() || curNode !=null
+				|| !traversalStack.isEmpty() || !toBeTraversed.isEmpty());
+				
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package edu.cmu.lti.oaqa.cse.configuration;
 
-public class Parameter<T> {
+public  class Parameter<T> {
 
 	private T value;
 	private String name;
@@ -32,5 +32,23 @@ public class Parameter<T> {
 		return  value + ""; 
 		
 	}
+	
+	
+	public static  Parameter<Integer> thisParameter(String name, Integer val){
+		return new IntegerParameter(name,val);
+	}
+	
+	public static DoubleParameter newParameter(String name, Double val){
+		return new DoubleParameter(name,val);
+	}
+	
+	public static StringParameter newParameter(String name, String val){
+		return new StringParameter(name,val);
+	}
+
+	public static IntegerParameter newParameter(String key, Integer val) {
+		return new IntegerParameter(key,val);
+	}
+	
 
 }

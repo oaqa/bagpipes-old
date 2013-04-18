@@ -30,8 +30,8 @@ public class UimaFactoryTest {
   @Test
   public void phaseTreeTest() {
     System.out.println(ex1SimpleSpace.getPhaseTree());
-    for (JCas c : ex1SimpleSpace)
-      System.out.println(c);
+    for (JCas c : ex1SimpleSpace);
+      //System.out.println(c);
   }
 
   @BeforeClass
@@ -39,7 +39,7 @@ public class UimaFactoryTest {
     Configuration ex1Conf = parse("oaqa-tutorial-ex4");
     UimaConfigurationSpace space = new UimaConfigurationSpace(ex1Conf);
     simpleStrategy = initSimpleExplorationStrategy();
-    space.setExplorationStrategy(simpleStrategy);
+   // space.setExplorationStrategy(simpleStrategy);
     ex1SimpleSpace = space;
   }
 

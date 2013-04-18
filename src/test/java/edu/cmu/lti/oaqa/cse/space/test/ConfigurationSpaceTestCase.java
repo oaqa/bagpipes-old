@@ -48,7 +48,7 @@ public class ConfigurationSpaceTestCase {
 		SimpleConfigurationSpace space;
 		try {
 			space = new SimpleConfigurationSpace(config);
-			space.setExplorationStrategy(strategy);
+			//space.setExplorationStrategy(strategy);
 			return space;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
