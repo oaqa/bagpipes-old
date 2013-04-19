@@ -24,6 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
 
+import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASException;
@@ -66,10 +67,11 @@ public class AnnotationPrinter extends CasConsumer_ImplBase {
    * @throws ResourceInitializationException
    *           if there is error in initializing the resources
    */
-  public void initialize() throws ResourceInitializationException {
+  @Override
+  public void initialize(UimaContext context) throws ResourceInitializationException {
 
     // extract configuration parameter settings
-    String oPath = (String) getContext().getConfigParameterValue("outputFile");
+    String oPath = (String) context.getConfigParameterValue("outputFile");
 
     // Output file should be specified in the descriptor
     if (oPath == null) {
