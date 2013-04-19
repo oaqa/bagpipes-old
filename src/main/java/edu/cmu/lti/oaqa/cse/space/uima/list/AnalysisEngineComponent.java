@@ -23,8 +23,8 @@ public class AnalysisEngineComponent extends UimaComponent {
 
   @Override
   public List<JCas> execute(List<JCas> input) throws Exception {
+    AnalysisEngine ae = AnalysisEngineFactory.createAggregate(descriptor);
     for (JCas cas : input) {
-      AnalysisEngine ae = AnalysisEngineFactory.createAggregate(descriptor);
       ae.process(cas);
     }
     return input;
