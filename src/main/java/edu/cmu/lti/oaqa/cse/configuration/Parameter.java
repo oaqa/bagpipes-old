@@ -1,5 +1,8 @@
 package edu.cmu.lti.oaqa.cse.configuration;
 
+/**
+ * A generic parameter for a component in a pipeline.
+ */
 public  class Parameter<T> {
 
 	private T value;
@@ -31,11 +34,6 @@ public  class Parameter<T> {
 	public String toString(){
 		return  value + ""; 
 		
-	}
-	
-	
-	public static  Parameter<Integer> thisParameter(String name, Integer val){
-		return new IntegerParameter(name,val);
 	}
 	
 	public static DoubleParameter newParameter(String name, Double val){

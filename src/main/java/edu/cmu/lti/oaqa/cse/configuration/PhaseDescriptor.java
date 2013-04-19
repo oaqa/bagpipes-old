@@ -2,6 +2,10 @@ package edu.cmu.lti.oaqa.cse.configuration;
 
 import java.util.List;
 
+/**
+ * An object describing one phase of a pipeline, namely its name and
+ * options (components).
+ */
 public class PhaseDescriptor {
 	private List<OptionDescriptor> options;
 	private String name;
