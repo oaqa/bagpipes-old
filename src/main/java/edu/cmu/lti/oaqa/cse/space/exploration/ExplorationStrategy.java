@@ -18,15 +18,27 @@ public abstract class ExplorationStrategy<T, E extends ExecutableComponent<T>> {
 	protected Node<E> root;
 	protected Map<String, ScoreDescriptor> scoreMap;
 	protected Map<Node<E>, T> inputMap;
-//	protected Map<String, Object> paramMap;
 
-	public abstract T getNext() throws Exception;
+	// protected Map<String, Object> paramMap;
+
+	public final T getNext() throws Exception {
+		Node<E> curNode = getNextNode();
+
+		// Compute execution of current node and cache as input
+		// for all its child components
+		T result = execute(curNode, inputMap.get(curNode));
+		if (curNode.hasChildren())
+			for (Node<E> child : curNode.getChildren())
+				inputMap.put(child, result);
+
+		return result;
+	}
 
 	public abstract boolean hasNext();
 
 	public ExplorationStrategy(ExplorerDescriptor explorerDesc) {
 		this();
-	//	this.paramMap = explorerDesc.getR;
+		
 	}
 
 	public ExplorationStrategy() {
@@ -46,7 +58,9 @@ public abstract class ExplorationStrategy<T, E extends ExecutableComponent<T>> {
 	public void setScoreMap(Map<String, ScoreDescriptor> scoreMap) {
 		this.scoreMap = scoreMap;
 	}
-	
+
+	protected abstract Node<E> getNextNode();
+
 	protected T execute(Node<E> node, T input) {
 		try {
 			return node.getElement().execute(input);

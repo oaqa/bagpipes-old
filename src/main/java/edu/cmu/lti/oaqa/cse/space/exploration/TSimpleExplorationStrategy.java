@@ -36,12 +36,13 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>>
 		super(explorerDesc);
 		toBeTraversed = Collections.EMPTY_LIST;
 		traversalStack = new Stack<List<Node<E>>>();
+		System.out.println(explorerDesc);
 		minBenefit = explorerDesc.getDouble("minBenefit");
 		maxCost = explorerDesc.getDouble("maxCost");
 	}
 
 	@Override
-	public T getNext() {
+	public Node<E> getNextNode() {
 		// Move pointer to next node
 		curNode = nextNode;
 		List<Node<E>> children = Lists.newLinkedList();
@@ -66,17 +67,8 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>>
 			nextNode = firstOrNext(toBeTraversed);
 		}
 
-		// Compute execution of current node and cache as input
-		// for all its child components
-		T result = execute(curNode, inputMap.get(curNode));
-		if (curNode.hasChildren()) {
-			for (Node<E> child : curNode.getChildren()) {
-				inputMap.put(child, result);
-			}
-		}
-
 		System.out.println(curNode);
-		return result;
+		return curNode;
 	}
 
 	private boolean condition(Node<E> n) {

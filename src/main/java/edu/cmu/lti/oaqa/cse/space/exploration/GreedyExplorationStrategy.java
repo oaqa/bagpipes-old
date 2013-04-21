@@ -1,6 +1,8 @@
 package edu.cmu.lti.oaqa.cse.space.exploration;
 
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import edu.cmu.lti.oaqa.components.ExecutableComponent;
 import edu.cmu.lti.oaqa.cse.configuration.ExplorerDescriptor;
@@ -14,25 +16,23 @@ public class GreedyExplorationStrategy<T, E extends ExecutableComponent<T>>
 
 	public GreedyExplorationStrategy(ExplorerDescriptor explorerDesc) {
 		super(explorerDesc);
-	
+
 	}
 
 	@Override
-	public T getNext() {
+	public Node<E> getNextNode() {
 		curNode = nextNode;
-		
-		
-		
-		
-		
-		T input = inputMap.get(curNode);
-		return execute(curNode,input);
+		if (nextNode.hasChildren()) {
+			List<Node<E>> children = nextNode.getChildren();
+			Collections.sort(children,new ScoreComparator());
+			nextNode = children.get(children.size()-1);
+		}
+		return curNode;
 	}
 
 	@Override
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
+		return nextNode != curNode;
 	}
 
 	public void setTree(Tree<E> tree) {

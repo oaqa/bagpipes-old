@@ -38,8 +38,8 @@ public class UimaFactoryTest {
   public static void initSimpleConfigurationSpace() throws Exception {
     Configuration ex1Conf = parse("oaqa-tutorial-ex4");
     UimaConfigurationSpace space = new UimaConfigurationSpace(ex1Conf);
-    simpleStrategy = initSimpleExplorationStrategy();
-   // space.setExplorationStrategy(simpleStrategy);
+    //simpleStrategy = initSimpleExplorationStrategy();
+    //space.setExplorationStrategy(simpleStrategy);
     ex1SimpleSpace = space;
   }
 

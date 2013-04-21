@@ -33,11 +33,15 @@ public abstract class ComponentDescriptor implements Paramable {
 	 */
 	public ComponentDescriptor(String className, Map<String, Object> paramMap) {
 		this(className);
+		
 		for (String key : paramMap.keySet()) {
 			Object value = paramMap.get(key);
 			addParam(new Parameter(key, value));
 			addToTypedMap(key,value);
 		}
+		
+		System.out.println(className + ": " + this.paramMap);
+		
 
 	}
 
@@ -108,6 +112,7 @@ public abstract class ComponentDescriptor implements Paramable {
 	}
 
 	public Double getDouble(String key) {
+		System.out.println(paramMap);
 		return dParamMap.get(key).getVal();
 	}
 
