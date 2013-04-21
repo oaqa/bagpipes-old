@@ -118,17 +118,17 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 	private Node<E> createNode(CollectionReaderDescriptor cd) throws Exception {
 		return new Node<E>(componentFactory.createExecutableComponent(cd));
 	}
-
+	
 	protected abstract Tree<E> newTree();
-
 	protected abstract Factory<T, E> getFactory() throws Exception;
 
 	@Override
 	public Iterator<T> iterator() {
 		return new PipelineIterator(conf);
 	}
-	
-	public ExplorationStrategy<T, E>  initStrategist(ExplorationStrategy<T, E> explorationStrategy){
+
+	public ExplorationStrategy<T, E> initStrategist(
+			ExplorationStrategy<T, E> explorationStrategy) {
 		explorationStrategy.setTree(this.phaseTree);
 		explorationStrategy.setScoreMap(this.scoreMap);
 		return explorationStrategy;

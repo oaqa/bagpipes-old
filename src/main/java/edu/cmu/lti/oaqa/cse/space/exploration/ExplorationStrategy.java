@@ -46,5 +46,15 @@ public abstract class ExplorationStrategy<T, E extends ExecutableComponent<T>> {
 	public void setScoreMap(Map<String, ScoreDescriptor> scoreMap) {
 		this.scoreMap = scoreMap;
 	}
+	
+	protected T execute(Node<E> node, T input) {
+		try {
+			return node.getElement().execute(input);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

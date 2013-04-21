@@ -24,13 +24,12 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>>
 	private Node<E> nextNode, curNode;
 	private Stack<List<Node<E>>> traversalStack;
 	private double minBenefit = 0.5, maxCost = 1;
-
 	List<Node<E>> toBeTraversed;
 
 	public TSimpleExplorationStrategy() {
 		toBeTraversed = Collections.EMPTY_LIST;
 		traversalStack = new Stack<List<Node<E>>>();
-		
+
 	}
 
 	public TSimpleExplorationStrategy(ExplorerDescriptor explorerDesc) {
@@ -38,7 +37,7 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>>
 		toBeTraversed = Collections.EMPTY_LIST;
 		traversalStack = new Stack<List<Node<E>>>();
 		minBenefit = explorerDesc.getDouble("minBenefit");
-		maxCost = explorerDesc.getDouble("maxCost");		
+		maxCost = explorerDesc.getDouble("maxCost");
 	}
 
 	@Override
@@ -103,21 +102,13 @@ public class TSimpleExplorationStrategy<T, E extends ExecutableComponent<T>>
 
 	}
 
-	private T execute(Node<E> node, T input) {
-		try {
-			return node.getElement().execute(input);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	@Override
 	public boolean hasNext() {
-		return   nextNode != null && ( nextNode.hasChildren() || curNode !=null
-				|| !traversalStack.isEmpty() || !toBeTraversed.isEmpty());
-				
+		return nextNode != null
+				&& (nextNode.hasChildren() || curNode != null
+						|| !traversalStack.isEmpty() || !toBeTraversed
+							.isEmpty());
+
 	}
 
 	@Override
