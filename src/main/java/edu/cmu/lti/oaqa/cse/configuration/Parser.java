@@ -4,6 +4,10 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Abstract parsing object for parsing a file (or some data) and
+ * retrieving a Configuration object.
+ */
 public abstract class Parser {
 
 	/*
@@ -17,7 +21,7 @@ public abstract class Parser {
 	public Parser(String resource) {
 		this.resource = resource;
 		try {
-			confMap = getResMap(resource);
+			confMap = getResourceMap(resource);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -40,7 +44,7 @@ public abstract class Parser {
 		return config;
 	}
 
-	protected abstract Map<String, Object> getResMap(String resource)
+	protected abstract Map<String, Object> getResourceMap(String resource)
 			throws FileNotFoundException;
 
 	protected abstract CollectionReaderDescriptor buildCollectionReaderDescriptor();

@@ -8,6 +8,11 @@ import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.cse.AnalysisEngineDescriptor;
 
+/**
+ * Master Configuration object containing information about the
+ * persistence, pipeline (collection readers, components, and consumers),
+ * scorers, and explorers.
+ */
 public class Configuration {
 
 	private String name, author;

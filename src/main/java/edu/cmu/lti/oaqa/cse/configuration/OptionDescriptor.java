@@ -2,6 +2,10 @@ package edu.cmu.lti.oaqa.cse.configuration;
 
 import java.util.Map;
 
+/**
+ * An object encompassing a single component of a phase within a
+ * pipeline, i.e. an option of a phase.
+ */
 public final class OptionDescriptor extends ComponentDescriptor {
 
 	public OptionDescriptor(String className) {

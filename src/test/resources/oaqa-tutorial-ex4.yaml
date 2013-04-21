@@ -6,13 +6,13 @@ configuration:
 collection-reader:
   inherit: collection_reader.filesystem-collection-reader
   InputDirectory: data/
-pipeline:  
-     - inherit: ecd.phase  
-       name: RoomNumberAnnotator
-       options: 
-         - inherit: tutorial.ex3.RoomNumberAnnotator   
-     - inherit: ecd.phase  
-       name: TutorialDateTime
+pipeline:
+   - room:  
+     - name: RoomNumberAnnotator
+     - options: 
+        - inherit: tutorial.ex2.RoomNumberAnnotator   
+       
+     - name: TutorialDateTime
        options: 
          - inherit: tutorial.ex3.SimpleTutorialDateTime  
          - inherit: tutorial.ex3.TutorialDateTime  
@@ -23,9 +23,9 @@ pipeline:
      - inherit: ecd.phase  
        name: printtofile
        options: 
-           - class: org.apache.uima.examples.cpe.AnnotationPrinter
+           - class: edu.cmu.lti.oaqa.components.uima.AnnotationPrinter
              outputFile: output.txt
-             printToConsole: false       
+             printToConsole: true       
            - inherit: cas_consumer.XmiWriterCasConsumer
 
 consumers:

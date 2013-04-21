@@ -19,7 +19,7 @@ public class YAMLParser extends Parser {
 	 * Map<String,Object> corresponding to its parameters.
 	 */
 	@Override
-	public Map<String, Object> getResMap(String resource)
+	public Map<String, Object> getResourceMap(String resource)
 			throws FileNotFoundException {
 		// Get configuration file from classpath.
 		Map<String, Object> resMap;
@@ -156,7 +156,7 @@ public class YAMLParser extends Parser {
 			// Get resource map specified by the resource
 			Map<String, Object> inheritedResMap;
 			try {
-				inheritedResMap = getResMap(resource);
+				inheritedResMap = getResourceMap(resource);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 				return null;
@@ -218,7 +218,7 @@ public class YAMLParser extends Parser {
 		List<Map<String, Object>> scores = null;
 		try {
 			String path = (String) metrics.get(0).get("inherit");
-			Map<String, Object> scoreComponents = (Map<String, Object>) getResMap(path
+			Map<String, Object> scoreComponents = (Map<String, Object>) getResourceMap(path
 					+ ".yaml");
 			scores = (List<Map<String, Object>>) scoreComponents.get("scores");
 		} catch (FileNotFoundException e) {

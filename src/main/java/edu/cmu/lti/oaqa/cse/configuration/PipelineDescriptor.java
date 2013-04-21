@@ -3,6 +3,9 @@ package edu.cmu.lti.oaqa.cse.configuration;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Pipeline description object, tracks phases of a pipeline.
+ */
 public class PipelineDescriptor {
 
 	private List<PhaseDescriptor> phaseDescs;
