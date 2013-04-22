@@ -9,17 +9,25 @@ import java.util.List;
 public class PipelineDescriptor {
 
 	private List<PhaseDescriptor> phaseDescs;
-//	private List<ConsumerDescriptor> consumers;
+	private List<ComponentDescriptor> components;
+	private List<ConsumerDescriptor> consumers;
 
 	public PipelineDescriptor(List<PhaseDescriptor> phases) {
 		this.phaseDescs = phases;
-	//	consumers = new LinkedList<ConsumerDescriptor>();	
+		// consumers = new LinkedList<ConsumerDescriptor>();
 	}
 	
-	public List<PhaseDescriptor> getPhaseDescriptors(){
+	public PipelineDescriptor(List<PhaseDescriptor> phases, List<ComponentDescriptor> components) {
+		this.phaseDescs = phases;
+		this.components = components;
+	}
+	
+	
+
+	public List<PhaseDescriptor> getPhaseDescriptors() {
 		return phaseDescs;
 	}
-	
+
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
@@ -29,18 +37,14 @@ public class PipelineDescriptor {
 		}
 		return equals((PipelineDescriptor) obj);
 	}
-	
-	private boolean equals(PipelineDescriptor plDesc){
+
+	private boolean equals(PipelineDescriptor plDesc) {
 		/* REMOVE, THIS IS TEMPORARY */
-		for(PhaseDescriptor p:phaseDescs)
-			if(!plDesc.getPhaseDescriptors().contains(p))
-				System.out.println("!not equal: "+ p + "!");
-		
+		for (PhaseDescriptor p : phaseDescs)
+			if (!plDesc.getPhaseDescriptors().contains(p))
+				System.out.println("!not equal: " + p + "!");
+
 		return phaseDescs.equals(plDesc.getPhaseDescriptors());
 	}
 
-	
-	
-	
-	
 }

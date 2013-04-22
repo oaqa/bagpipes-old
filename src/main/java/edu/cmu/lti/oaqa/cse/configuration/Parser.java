@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Abstract parsing object for parsing a file (or some data) and
- * retrieving a Configuration object.
+ * Abstract parsing object for parsing a file (or some data) and retrieving a
+ * Configuration object.
  */
 public abstract class Parser {
 
@@ -27,20 +27,18 @@ public abstract class Parser {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
 	public Configuration parse() {
 		String name = getName();
 		String author = getAuthor();
 		CollectionReaderDescriptor crDesc = buildCollectionReaderDescriptor();
 		PipelineDescriptor plDesc = buildPipelineDescriptor();
 		Configuration config = new Configuration(name, author, crDesc, plDesc);
-		config.setConsumers(buildConsumerDescriptors());
 		
+		config.setConsumers(buildConsumerDescriptors());
 		config.setScoreMap(buildScores());
 		config.setExplorerDescriptor(buildExplorerDescriptor());
-		
+
 		return config;
 	}
 
@@ -52,7 +50,7 @@ public abstract class Parser {
 	protected abstract PipelineDescriptor buildPipelineDescriptor();
 
 	protected abstract List<ConsumerDescriptor> buildConsumerDescriptors();
-	
+
 	protected abstract ExplorerDescriptor buildExplorerDescriptor();
 
 	protected abstract Map<String, ScoreDescriptor> buildScores();
