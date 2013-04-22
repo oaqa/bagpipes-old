@@ -30,7 +30,7 @@ public abstract class ExplorationStrategy<T, E extends ExecutableComponent<T>> {
 		if (curNode.hasChildren())
 			for (Node<E> child : curNode.getChildren())
 				inputMap.put(child, result);
-
+		System.out.println(curNode);
 		return result;
 	}
 

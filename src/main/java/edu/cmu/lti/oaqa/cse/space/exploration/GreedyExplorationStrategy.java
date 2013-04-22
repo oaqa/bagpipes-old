@@ -24,15 +24,15 @@ public class GreedyExplorationStrategy<T, E extends ExecutableComponent<T>>
 		curNode = nextNode;
 		if (nextNode.hasChildren()) {
 			List<Node<E>> children = nextNode.getChildren();
-			Collections.sort(children,new ScoreComparator());
-			nextNode = children.get(children.size()-1);
+			Collections.sort(children, new ScoreComparator());
+			nextNode = children.get(children.size() - 1);
 		}
 		return curNode;
 	}
 
 	@Override
 	public boolean hasNext() {
-		return nextNode != curNode;
+		return nextNode != curNode || curNode == root;
 	}
 
 	public void setTree(Tree<E> tree) {
@@ -44,7 +44,13 @@ public class GreedyExplorationStrategy<T, E extends ExecutableComponent<T>>
 
 		@Override
 		public int compare(Node<E> n1, Node<E> n2) {
-			return scoreMap.get(n1).compareTo(scoreMap.get(n2));
+			String id1 = n1.getElement().getClassName();
+			String id2 = n2.getElement().getClassName();
+			if (scoreMap.get(id1) == null)
+				return 1;
+			if (scoreMap.get(id2) == null)
+				return -1;
+			return scoreMap.get(id1).compareTo(scoreMap.get(id2));
 		}
 
 	}

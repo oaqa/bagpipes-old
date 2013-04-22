@@ -13,7 +13,7 @@ import edu.cmu.lti.oaqa.cse.configuration.Configuration;
 import edu.cmu.lti.oaqa.cse.configuration.ExplorerDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.OptionDescriptor;
 import edu.cmu.lti.oaqa.cse.space.exploration.ExplorationStrategy;
-import edu.cmu.lti.oaqa.cse.space.exploration.UimaSimpleExplorationStrategy;
+import edu.cmu.lti.oaqa.cse.space.exploration.uima.UimaSimpleExplorationStrategy;
 
 public class UimaFactory extends Factory<JCas, UimaComponent> {
 

@@ -35,6 +35,5 @@ metrics:
      - inherit: componentScores
     
 exploration-strategist:
-     - class: edu.cmu.lti.oaqa.cse.space.exploration.UimaSimpleExplorationStrategy
-       minBenefit: 0.5
-       maxCost: 3.5
+     - class: edu.cmu.lti.oaqa.cse.space.exploration.uima.UimaRandomExplorationStrategy
+     
