@@ -218,6 +218,7 @@ public class ExperimentBuilder {
 	public AnalysisEngineDescription buildComponent(ComponentDescriptor descriptor) throws Exception {
 		Map<String, Object> tuples = Maps.newLinkedHashMap();
 		tuples.put(EXPERIMENT_UUID_PROPERTY, experimentUuid);
+    tuples.put(STAGE_ID_PROPERTY, 0);
 		Class<? extends AnalysisComponent> ac = Class.forName(descriptor.getClassName()).asSubclass(AnalysisComponent.class);
 		Map<String, Parameter> parameters = descriptor.getParamMap();
 		Object[] params = getParamArray(parameters);
@@ -233,6 +234,7 @@ public class ExperimentBuilder {
 			throws Exception {
 		Map<String, Object> tuples = Maps.newLinkedHashMap();
 		tuples.put(EXPERIMENT_UUID_PROPERTY, experimentUuid);
+		tuples.put(STAGE_ID_PROPERTY, 0);
     Class<? extends CollectionReader> readerClass = Class.forName(descriptor.getClassName()).asSubclass(CollectionReader.class);
     Map<String, Parameter> parameters = descriptor.getParamMap();
     Object[] params = getParamArray(parameters);

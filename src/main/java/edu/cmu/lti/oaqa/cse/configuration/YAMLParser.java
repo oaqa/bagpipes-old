@@ -27,10 +27,11 @@ public class YAMLParser extends Parser {
 		InputStream input = this.getClass().getClassLoader()
 				.getResourceAsStream(resource);
 
-		Yaml yaml = new Yaml();
+		System.out.println("input:" + input);
 
 		if (input != null) { // is file available?
-			resMap = (Map<String, Object>) yaml.load(input);
+	    Yaml yaml = new Yaml();
+		  resMap = (Map<String, Object>) yaml.load(input);
 			System.out.println(resMap);
 			return resMap;
 		}

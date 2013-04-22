@@ -92,12 +92,15 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		List<OptionDescriptor> optionDescs = pd.getOptionDescriptors();
 		Set<Node<E>> leaves = Sets.newHashSet();
 		leaves.addAll(tree.getLeaves());
+		System.out.println("phase: " + pd);
 		for (Node<E> oldLeaf : leaves)
-			for (OptionDescriptor optionDesc : optionDescs)
-				// IMPORTANT: this method essentially adds the next phase to the
+			for (OptionDescriptor optionDesc : optionDescs){
+				System.out.println("option: " + optionDesc);
+			  // IMPORTANT: this method essentially adds the next phase to the
 				// execution tree by taking all the options in the phase
 				// and adding it to the leaves from the previous phase.
 				tree.addToLeaf(oldLeaf, createNode(optionDesc));
+			}
 	}
 
 	private void buildConsumers() throws Exception {

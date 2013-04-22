@@ -26,13 +26,13 @@ public class UimaFactoryTest {
 
   private static UimaConfigurationSpace ex1SimpleSpace;
 
-  
-  @Test
-  public void phaseTreeTest() {
-    System.out.println(ex1SimpleSpace.getPhaseTree());
-    for (JCas c : ex1SimpleSpace);
-      //System.out.println(c);
-  }
+//  
+//  @Test
+//  public void phaseTreeTest() {
+//    System.out.println(ex1SimpleSpace.getPhaseTree());
+//    for (JCas c : ex1SimpleSpace);
+//      //System.out.println(c);
+//  }
 
   @BeforeClass
   public static void initSimpleConfigurationSpace() throws Exception {
