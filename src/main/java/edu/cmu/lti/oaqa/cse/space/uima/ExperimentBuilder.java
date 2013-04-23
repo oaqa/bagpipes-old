@@ -64,7 +64,9 @@ import edu.cmu.lti.oaqa.cse.ResourceHandle;
 import edu.cmu.lti.oaqa.cse.ResourceHandle.HandleType;
 import edu.cmu.lti.oaqa.cse.configuration.CollectionReaderDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.ComponentDescriptor;
+import edu.cmu.lti.oaqa.cse.configuration.IntegerParameter;
 import edu.cmu.lti.oaqa.cse.configuration.Parameter;
+import edu.cmu.lti.oaqa.cse.configuration.StringParameter;
 import edu.cmu.lti.oaqa.ecd.config.ConfigurationLoader;
 import edu.cmu.lti.oaqa.ecd.flow.FixedFlowController797182;
 import edu.cmu.lti.oaqa.ecd.impl.AbstractExperimentPersistenceProvider;
@@ -216,27 +218,25 @@ public class ExperimentBuilder {
 
 	// Made this method public to invoke it from BasePhaseTest
 	public AnalysisEngineDescription buildComponent(ComponentDescriptor descriptor) throws Exception {
-		Map<String, Object> tuples = Maps.newLinkedHashMap();
-		tuples.put(EXPERIMENT_UUID_PROPERTY, experimentUuid);
-    tuples.put(STAGE_ID_PROPERTY, 0);
 		Class<? extends AnalysisComponent> ac = Class.forName(descriptor.getClassName()).asSubclass(AnalysisComponent.class);
 		Map<String, Parameter> parameters = descriptor.getParamMap();
+    parameters.put(EXPERIMENT_UUID_PROPERTY, new StringParameter(EXPERIMENT_UUID_PROPERTY, experimentUuid));
+    parameters.put(STAGE_ID_PROPERTY, new IntegerParameter(STAGE_ID_PROPERTY, 0));
 		Object[] params = getParamArray(parameters);
 		AnalysisEngineDescription description = AnalysisEngineFactory
 				.createPrimitiveDescription(ac, typeSystem, typePriorities,
 						params);
-		String name = (String) tuples.get("name");
-		description.getAnalysisEngineMetaData().setName(name);
+		//Parameter name = parameters.get("name");
+		//description.getAnalysisEngineMetaData().setName(name.toString());
 		return description;
 	}
 
 	public CollectionReader buildCollectionReader(CollectionReaderDescriptor descriptor)
 			throws Exception {
-		Map<String, Object> tuples = Maps.newLinkedHashMap();
-		tuples.put(EXPERIMENT_UUID_PROPERTY, experimentUuid);
-		tuples.put(STAGE_ID_PROPERTY, 0);
     Class<? extends CollectionReader> readerClass = Class.forName(descriptor.getClassName()).asSubclass(CollectionReader.class);
     Map<String, Parameter> parameters = descriptor.getParamMap();
+    parameters.put(EXPERIMENT_UUID_PROPERTY, new StringParameter(EXPERIMENT_UUID_PROPERTY, experimentUuid));
+    parameters.put(STAGE_ID_PROPERTY, new IntegerParameter(STAGE_ID_PROPERTY, 0));
     Object[] params = getParamArray(parameters);
 		CollectionReader reader = CollectionReaderFactory
 				.createCollectionReader(readerClass, typeSystem, params);
