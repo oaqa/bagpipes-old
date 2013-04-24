@@ -176,45 +176,7 @@ public class ExperimentBuilder {
 //		return builder.createAggregateDescription();
 //	}
 
-	private String[] getFromListOrInherit(AnyObject descriptor, String listName)
-			throws IOException {
-		Iterable<String> iterable = descriptor.getIterable(listName);
-		if (iterable != null) {
-			ArrayList<String> typePrioritiesList = new ArrayList<String>();
-			for (String type : iterable) {
-				typePrioritiesList.add(type);
-				System.out.println("Loaded type priorities: " + type);
-			}
-			return typePrioritiesList.toArray(new String[0]);
-		} else {
-			String resource = descriptor.getString("inherit");
-			if (resource != null) {
-				AnyObject yaml = ConfigurationLoader.load(resource);
-				return getFromListOrInherit(yaml, listName);
-			} else {
-				throw new IllegalArgumentException(
-						"Illegal experiment descriptor, must contain one list of type <"
-								+ listName + "> or <inherit>");
-			}
-		}
-	}
 
-	// Load type priorities
-	private void loadTypePriorities(AnyObject config) {
-		AnyObject tpObject = config.getAnyObject("type-priorities");
-		if (tpObject == null) {
-			return;
-		}
-		try {
-			String[] typePrioritiesArray = getFromListOrInherit(tpObject,
-					"type-list");
-			this.typePriorities = TypePrioritiesFactory
-					.createTypePriorities(typePrioritiesArray);
-		} catch (IOException e) {
-			System.err.println("Failed to load type-priorities.");
-			e.printStackTrace();
-		}
-	}
 
 	// Made this method public to invoke it from BasePhaseTest
 	public AnalysisEngineDescription buildComponent(ComponentDescriptor descriptor) throws Exception {
@@ -222,7 +184,8 @@ public class ExperimentBuilder {
 		Map<String, Parameter> parameters = descriptor.getParamMap();
     parameters.put(EXPERIMENT_UUID_PROPERTY, new StringParameter(EXPERIMENT_UUID_PROPERTY, experimentUuid));
     parameters.put(STAGE_ID_PROPERTY, new IntegerParameter(STAGE_ID_PROPERTY, 0));
-		Object[] params = getParamArray(parameters);
+
+    Object[] params = getParamArray(parameters);
 		AnalysisEngineDescription description = AnalysisEngineFactory
 				.createPrimitiveDescription(ac, typeSystem, typePriorities,
 						params);

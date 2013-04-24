@@ -28,6 +28,7 @@ public abstract class Factory<I, E extends ExecutableComponent<I>> {
 	public abstract E createExecutableComponent(
 			CollectionReaderDescriptor compoentDescriptor) throws Exception;
 
+
 	public ExplorationStrategy<I, E> createStrategist(
 			ExplorerDescriptor exploreDesc) {
 		String className = exploreDesc.getClassName();
