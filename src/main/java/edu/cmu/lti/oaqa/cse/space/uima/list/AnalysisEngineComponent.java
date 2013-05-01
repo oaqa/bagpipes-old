@@ -37,32 +37,22 @@ public class AnalysisEngineComponent extends UimaComponent {
     }
     return input;
   }
-  
+
   @Override
-  public List<JCas> cloneInput(List<JCas> input){
-			List<JCas> newList = Lists.newArrayList();
-			for (JCas cas : input){
-				CAS newCas = null;
-				try {
-					newCas = CasCreationUtils.createCas(Arrays.asList(descriptor.getMetaData()));
-				} catch (ResourceInitializationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				CasCopier.copyCas(cas.getCas(), newCas, true);
-				try {
-					newList.add(newCas.getJCas());
-				} catch (CASException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			return newList;
-		}
+  public List<JCas> cloneInput(List<JCas> input) {
+    List<JCas> newList = Lists.newArrayList();
+    for (JCas cas : input) {
+      try {
+        CAS newCas = CasCreationUtils.createCas(Arrays.asList(descriptor.getMetaData()));
+        CasCopier.copyCas(cas.getCas(), newCas, true);
+        newList.add(newCas.getJCas());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      // TODO: It remains unclear when should the CAS be released as it is dependent 
+      // on the exploration strategy
+      // cas.release();
+    }
+    return newList;
   }
-
-  
-  
-
-
-
+}
