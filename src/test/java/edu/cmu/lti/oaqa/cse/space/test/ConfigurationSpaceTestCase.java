@@ -10,7 +10,7 @@ import edu.cmu.lti.oaqa.cse.configuration.YAMLParser;
 import edu.cmu.lti.oaqa.cse.configuration.test.ConfigurationFactory;
 import edu.cmu.lti.oaqa.cse.space.ConfigurationSpace;
 import edu.cmu.lti.oaqa.cse.space.exploration.ExplorationStrategy;
-import edu.cmu.lti.oaqa.cse.space.exploration.SimpleExplorationStrategy;
+import edu.cmu.lti.oaqa.cse.space.exploration.simple.SimpleExplorationStrategy;
 import edu.cmu.lti.oaqa.cse.space.simple.SimpleConfigurationSpace;
 import edu.cmu.lti.oaqa.cse.space.tree.NodeVisitor;
 

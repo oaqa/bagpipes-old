@@ -7,13 +7,19 @@ import java.util.Set;
 
 import com.google.common.collect.Maps;
 
+import edu.cmu.lti.oaqa.cse.configuration.parameter.BooleanParameter;
+import edu.cmu.lti.oaqa.cse.configuration.parameter.DoubleParameter;
+import edu.cmu.lti.oaqa.cse.configuration.parameter.IntegerParameter;
+import edu.cmu.lti.oaqa.cse.configuration.parameter.Parameter;
+import edu.cmu.lti.oaqa.cse.configuration.parameter.StringParameter;
+
 public abstract class ComponentDescriptor implements Paramable {
 	protected String className;
 	protected Map<String, Parameter> paramMap;
-
 	protected Map<String, IntegerParameter> iParamMap;
 	protected Map<String, DoubleParameter> dParamMap;
 	protected Map<String, StringParameter> sParamMap;
+	protected Map<String, BooleanParameter> bParamMap;
 
 	public ComponentDescriptor(String className) {
 		this.className = className;
@@ -21,6 +27,7 @@ public abstract class ComponentDescriptor implements Paramable {
 		iParamMap = Maps.newHashMap();
 		dParamMap = Maps.newHashMap();
 		sParamMap = Maps.newHashMap();
+		bParamMap = Maps.newHashMap();
 	}
 
 	public String getClassName() {
@@ -33,15 +40,14 @@ public abstract class ComponentDescriptor implements Paramable {
 	 */
 	public ComponentDescriptor(String className, Map<String, Object> paramMap) {
 		this(className);
-		
+
 		for (String key : paramMap.keySet()) {
 			Object value = paramMap.get(key);
 			addParam(new Parameter(key, value));
-			addToTypedMap(key,value);
+			addToTypedMap(key, value);
 		}
-		
+
 		System.out.println(className + ": " + this.paramMap);
-		
 
 	}
 
@@ -50,6 +56,8 @@ public abstract class ComponentDescriptor implements Paramable {
 			iParamMap.put(key, Parameter.newParameter(key, (Integer) value));
 		if (value instanceof Double)
 			dParamMap.put(key, Parameter.newParameter(key, (Double) value));
+		if (value instanceof Boolean)
+			addToParams(key, (Boolean) value);
 		if (value instanceof String)
 			addToParams(key, (String) value);
 	}
@@ -103,6 +111,10 @@ public abstract class ComponentDescriptor implements Paramable {
 		dParamMap.put(name, Parameter.newParameter(name, d));
 	}
 
+	public void addToParams(String name, Boolean b) {
+		bParamMap.put(name, Parameter.newParameter(name, b));
+	}
+	
 	public void addToParams(String name, String s) {
 		sParamMap.put(name, Parameter.newParameter(name, s));
 	}

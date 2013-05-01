@@ -22,7 +22,7 @@ public class SimpleConfigurationSpace extends
 
 	@Override
 	protected Factory<String, SimpleClassNameAnnotator> getFactory() {
-		return new SimpleFactory(conf);
+		return new SimpleFactory();
 
 	}
 

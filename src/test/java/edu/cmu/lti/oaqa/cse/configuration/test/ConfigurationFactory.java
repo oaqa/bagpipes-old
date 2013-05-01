@@ -9,9 +9,9 @@ import edu.cmu.lti.oaqa.cse.configuration.CollectionReaderDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.Configuration;
 import edu.cmu.lti.oaqa.cse.configuration.ConsumerDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.OptionDescriptor;
-import edu.cmu.lti.oaqa.cse.configuration.Parameter;
 import edu.cmu.lti.oaqa.cse.configuration.PhaseDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.PipelineDescriptor;
+import edu.cmu.lti.oaqa.cse.configuration.parameter.Parameter;
 
 public final class ConfigurationFactory {
 	public static final List<PhaseDescriptor> phaseDescsEx1 = initPhaseDescriptorsEx1();

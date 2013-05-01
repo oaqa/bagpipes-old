@@ -15,11 +15,9 @@ public abstract class Parser {
 	 * COLLECTION_READER = "collection-reader", PIPELINE = "pipeline",
 	 * POST_PROCESS = "post-process";
 	 */
-	private String resource;
 	protected Map<String, Object> confMap;
 
 	public Parser(String resource) {
-		this.resource = resource;
 		try {
 			confMap = getResourceMap(resource);
 		} catch (FileNotFoundException e) {
@@ -34,7 +32,7 @@ public abstract class Parser {
 		CollectionReaderDescriptor crDesc = buildCollectionReaderDescriptor();
 		PipelineDescriptor plDesc = buildPipelineDescriptor();
 		Configuration config = new Configuration(name, author, crDesc, plDesc);
-		
+
 		config.setConsumers(buildConsumerDescriptors());
 		config.setScoreMap(buildScores());
 		config.setExplorerDescriptor(buildExplorerDescriptor());

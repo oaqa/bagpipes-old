@@ -3,7 +3,7 @@ package edu.cmu.lti.oaqa.cse.configuration.test;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.cmu.lti.oaqa.cse.configuration.Parameter;
+import edu.cmu.lti.oaqa.cse.configuration.parameter.Parameter;
 
 public final class Ex4 {
 	// GENERAL CONFIGURATION

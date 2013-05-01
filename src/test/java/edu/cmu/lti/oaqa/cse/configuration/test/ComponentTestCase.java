@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.cmu.lti.oaqa.cse.configuration.CollectionReaderDescriptor;
-import edu.cmu.lti.oaqa.cse.configuration.Parameter;
+import edu.cmu.lti.oaqa.cse.configuration.parameter.Parameter;
 
 public class ComponentTestCase {
 

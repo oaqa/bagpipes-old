@@ -18,46 +18,44 @@ package edu.cmu.lti.oaqa.ecd.driver;
 
 import java.util.UUID;
 
-import edu.cmu.lti.oaqa.cse.Executor;
-import edu.cmu.lti.oaqa.cse.Experiment;
-import edu.cmu.lti.oaqa.cse.ExperimentBase;
-import edu.cmu.lti.oaqa.cse.Pipeline;
+import edu.cmu.lti.oaqa.cse.component.uima.UimaConfigurationSpace;
+import edu.cmu.lti.oaqa.cse.configuration.Configuration;
+import edu.cmu.lti.oaqa.cse.configuration.Parser;
+import edu.cmu.lti.oaqa.cse.configuration.YAMLParser;
 import edu.cmu.lti.oaqa.cse.space.ConfigurationSpace;
 
 public class CSEDriver {
 
-  private final ConfigurationSpace confSpace = null;
+	private ConfigurationSpace confSpace;
 
-  private final Executor<Pipeline> executor=null;
-  public CSEDriver(){
-	  
-  }
-/*
-  public CSEDriver(String resource, String uuid)  {
-//    Experiment experiment = new ExperimentBase(uuid, resource);
-  //  confSpace = new ConfigurationSpace<Pipeline>(experiment.getConfiguration());
-   // confSpace.setExplorationStrategy(experiment.getExplorationStrategy());
-  //  executor = experiment.getExecutor();
-  }
-*/
-  
-  
-  public void run() throws Exception {
-  /*  for (Pipeline pipeline : confSpace) {
-      executor.execute(pipeline);
-    }*/
-  }
+	public CSEDriver(String resource, String uuid) throws Exception {
+		Configuration ex1Conf = parse(resource);
+		confSpace = new UimaConfigurationSpace(ex1Conf);
+	}
 
-  public static void main(String[] args) throws Exception {
-    String uuid = UUID.randomUUID().toString();
-    if (args.length > 1) {
-      uuid = args[1];
-    }
-    
-    System.out.println("Experiment UUID: " + uuid);
-  //  CSEDriver driver = new CSEDriver(args[0], uuid);
-    //driver.run();
-  
-  }
-  
+	private static Configuration parse(String resource) {
+		Parser p = new YAMLParser(resource + ".yaml");
+		Configuration conf = p.parse();
+		return conf;
+	}
+
+	public void run() throws Exception {
+
+		for (Object o : confSpace)
+			;
+
+	}
+
+	public static void main(String[] args) throws Exception {
+		String uuid = UUID.randomUUID().toString();
+		if (args.length > 1) {
+			uuid = args[1];
+		}
+
+		System.out.println("Experiment UUID: " + uuid);
+		CSEDriver driver = new CSEDriver(args[0], uuid);
+		driver.run();
+
+	}
+
 }

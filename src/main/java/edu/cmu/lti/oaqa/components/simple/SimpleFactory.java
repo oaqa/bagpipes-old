@@ -7,13 +7,10 @@ import edu.cmu.lti.oaqa.cse.configuration.Configuration;
 import edu.cmu.lti.oaqa.cse.configuration.ExplorerDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.OptionDescriptor;
 import edu.cmu.lti.oaqa.cse.space.exploration.ExplorationStrategy;
-import edu.cmu.lti.oaqa.cse.space.exploration.SimpleExplorationStrategy;
+import edu.cmu.lti.oaqa.cse.space.exploration.simple.SimpleExplorationStrategy;
 
 public class SimpleFactory extends Factory<String,SimpleClassNameAnnotator> {
 
-	public SimpleFactory(Configuration config) {
-		super(config);
-	}
 
 	@Override
 	public SimpleClassNameAnnotator createExecutableComponent(

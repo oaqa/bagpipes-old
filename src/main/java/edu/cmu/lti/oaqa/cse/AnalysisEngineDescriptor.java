@@ -7,7 +7,7 @@ import java.util.Map;
 
 //import org.apache.axis.server.ParamList;
 
-import edu.cmu.lti.oaqa.cse.configuration.Parameter;
+import edu.cmu.lti.oaqa.cse.configuration.parameter.Parameter;
 
 public class AnalysisEngineDescriptor {
 

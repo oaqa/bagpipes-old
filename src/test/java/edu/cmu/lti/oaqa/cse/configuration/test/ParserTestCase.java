@@ -15,11 +15,11 @@ import edu.cmu.lti.oaqa.cse.configuration.ComponentDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.Configuration;
 import edu.cmu.lti.oaqa.cse.configuration.ConsumerDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.OptionDescriptor;
-import edu.cmu.lti.oaqa.cse.configuration.Parameter;
 import edu.cmu.lti.oaqa.cse.configuration.Parser;
 import edu.cmu.lti.oaqa.cse.configuration.PhaseDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.PipelineDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.YAMLParser;
+import edu.cmu.lti.oaqa.cse.configuration.parameter.Parameter;
 
 public class ParserTestCase {
 
