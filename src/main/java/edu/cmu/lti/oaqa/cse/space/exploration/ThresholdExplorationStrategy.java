@@ -23,7 +23,7 @@ public class ThresholdExplorationStrategy<T, E extends ExecutableComponent<T>>
 		extends ExplorationStrategy<T, E> {
 	private Node<E> nextNode, curNode;
 	private Stack<List<Node<E>>> traversalStack;
-	private double minBenefit = 0.5, maxCost = 1;
+	private double minBenefit = 0, maxCost = 1;
 	List<Node<E>> toBeTraversed;
 
 	public ThresholdExplorationStrategy() {
@@ -37,8 +37,8 @@ public class ThresholdExplorationStrategy<T, E extends ExecutableComponent<T>>
 		toBeTraversed = Collections.EMPTY_LIST;
 		traversalStack = new Stack<List<Node<E>>>();
 		System.out.println(explorerDesc);
-		minBenefit = explorerDesc.getDouble("minBenefit");
-		maxCost = explorerDesc.getDouble("maxCost");
+	//	minBenefit = explorerDesc.getDouble("minBenefit");
+		//maxCost = explorerDesc.getDouble("maxCost");
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class ThresholdExplorationStrategy<T, E extends ExecutableComponent<T>>
 				traversalStack.push(children);
 			// traverse all siblings of node after visiting the subtree
 		} else if (!toBeTraversed.isEmpty())
-			nextNode = firstOrNext(toBeTraversed);
+			nextNode = firstOrNext(sort(toBeTraversed));
 		else {
 			// If you already traversed all the siblings, go back up the tree
 			if (!traversalStack.isEmpty())
@@ -64,12 +64,17 @@ public class ThresholdExplorationStrategy<T, E extends ExecutableComponent<T>>
 			// NOTE: will return null if no nodes are left
 			// and cause hasNext() to return false. This is how
 			// getNext() signals the end of execution.
-			nextNode = firstOrNext(toBeTraversed);
+			nextNode = firstOrNext(sort(toBeTraversed));
 		}
 
 		System.out.println(curNode);
 		return curNode;
 	}
+	
+	private   List<Node<E>> sort(List<Node<E>> list){
+	  Collections.sort(list, new ScoreComparator(scoreMap));
+	  return list;
+    }
 
 	private boolean condition(Node<E> n) {
 		String nodeId = n.getElement().getClassName();
