@@ -3,6 +3,7 @@ package edu.cmu.lti.oaqa.cse.space.exploration;
 import static java.util.Arrays.asList;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -23,7 +24,7 @@ public class ThresholdExplorationStrategy<T, E extends ExecutableComponent<T>>
 		extends ExplorationStrategy<T, E> {
 	private Node<E> nextNode, curNode;
 	private Stack<List<Node<E>>> traversalStack;
-	private double minBenefit = 0, maxCost = 1;
+	private double minBenefit = 0, maxCost = Integer.MAX_VALUE;
 	List<Node<E>> toBeTraversed;
 
 	public ThresholdExplorationStrategy() {
@@ -72,17 +73,37 @@ public class ThresholdExplorationStrategy<T, E extends ExecutableComponent<T>>
 	}
 	
 	private   List<Node<E>> sort(List<Node<E>> list){
-	  Collections.sort(list, new ScoreComparator(scoreMap));
-	  return list;
+		  Collections.sort(list, new ThresholdComparator(scoreMap));
+		  return list;
     }
 
-	private boolean condition(Node<E> n) {
-		String nodeId = n.getElement().getClassName();
-		if (scoreMap.containsKey(nodeId)) {
-			ScoreDescriptor nodeScore = scoreMap.get(nodeId);
-			double benefit = nodeScore.getBenefit(), cost = nodeScore.getCost();
-			return benefit > minBenefit && cost < maxCost;
+	private class ThresholdComparator<T, E extends ExecutableComponent<T>> implements Comparator<Node<E>>{
+
+		private Map<String,ScoreDescriptor> scoreMap;
+	public ThresholdComparator(Map<String,ScoreDescriptor> scoreMap){
+		this.scoreMap = scoreMap;
+	}
+		@Override
+		public int compare(Node<E> o1, Node<E> o2) {
+			double thisRatio = computeRatio(o1);
+			double thatRatio = computeRatio(o2);
+			if(thisRatio < thatRatio)
+				return 1;
+			if(thisRatio<thatRatio)
+				return -1;
+			else return 0;
+			
 		}
+	
+		private double computeRatio(Node<E> o1){
+			double thisBenefit = scoreMap.get(o1.getElement().getClassName()).getBenefit();
+			double thisCost = scoreMap.get(o1.getElement().getClassName()).getCost();
+			return thisBenefit/thisCost;
+		}
+	}
+	
+	private boolean condition(Node<E> n) {
+	
 		return true;
 	}
 
