@@ -22,6 +22,7 @@ import edu.cmu.lti.oaqa.cse.configuration.CollectionReaderDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.ComponentDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.Configuration;
 import edu.cmu.lti.oaqa.cse.configuration.OptionDescriptor;
+import edu.cmu.lti.oaqa.cse.configuration.PersistenceProviderDescriptor;
 import edu.cmu.lti.oaqa.ecd.util.CasUtils;
 
 public class UimaFactory extends Factory<List<JCas>, UimaComponent> {
@@ -58,6 +59,10 @@ public class UimaFactory extends Factory<List<JCas>, UimaComponent> {
 		CollectionReader desc = builder
 				.buildCollectionReader(componentDescriptor);
 		return new CollectionReaderComponent(desc);
+	}
+	
+	public void createPersistenceProvider(PersistenceProviderDescriptor ppd) throws ResourceInitializationException{
+	   builder.newPersistenceProvider(ppd);
 	}
 
 

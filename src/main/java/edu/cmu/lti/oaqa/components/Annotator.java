@@ -2,10 +2,9 @@ package edu.cmu.lti.oaqa.components;
 
 import java.util.List;
 
-import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.jcas.JCas;
 
-import edu.cmu.lti.oaqa.cse.space.uima.list.UimaComponent;
+import edu.cmu.lti.oaqa.cse.component.uima.UimaComponent;
 
 public class Annotator extends UimaComponent {
 

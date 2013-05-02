@@ -9,109 +9,119 @@ import com.google.common.collect.Lists;
 import edu.cmu.lti.oaqa.cse.AnalysisEngineDescriptor;
 
 /**
- * Master Configuration object containing information about the
- * persistence, pipeline (collection readers, components, and consumers),
- * scorers, and explorers.
+ * Master Configuration object containing information about the persistence, pipeline (collection
+ * readers, components, and consumers), scorers, and explorers.
  */
 public class Configuration {
 
-	private String name, author;
-	private PersistenceProviderDescriptor ppDesc;
-	private CollectionReaderDescriptor collectionReaderDesc;
-	private PipelineDescriptor pipelineDesc;
-	private List<ConsumerDescriptor> consumerDescs;
-	private Map<String, ScoreDescriptor> scoreMap;
-	private ExplorerDescriptor explorerDesc;
+  private String name, author;
 
-	private Configuration(String name, String author) {
-		this.name = name;
-		this.author = author;
-	}
+  private PersistenceProviderDescriptor ppDesc;
 
-	public Configuration(String name, String author,
-			CollectionReaderDescriptor crDesc, PipelineDescriptor plDesc) {
-		this(name, author);
-		this.collectionReaderDesc = crDesc;
-		this.pipelineDesc = plDesc;
-	}
+  private CollectionReaderDescriptor collectionReaderDesc;
 
-	public Configuration(String name, String author,
-			CollectionReaderDescriptor crDesc, PipelineDescriptor plDesc,
-			List<ConsumerDescriptor> consumers) {
-		this(name, author, crDesc, plDesc);
-		this.consumerDescs = consumers;
-	}
+  private PipelineDescriptor pipelineDesc;
 
-	public Configuration(CollectionReaderDescriptor crDesc,
-			PipelineDescriptor plDesc) {
-		this("oaqa-experiment", "oaqa-author", crDesc, plDesc);
-	}
+  private List<ConsumerDescriptor> consumerDescs;
 
-	public void setConsumers(List<ConsumerDescriptor> consumerDescs) {
-		this.consumerDescs = consumerDescs;
-	}
+  private Map<String, ScoreDescriptor> scoreMap;
 
-	public void setScoreMap(Map<String, ScoreDescriptor> scoreMap) {
-		this.scoreMap = scoreMap;
-	}
+  private ExplorerDescriptor explorerDesc;
 
-	public void setExplorerDescriptor(ExplorerDescriptor expDesc) {
-		this.explorerDesc = expDesc;
-	}
+  private Configuration(String name, String author) {
+    this.name = name;
+    this.author = author;
+  }
 
-	public String getAuthor() {
-		return this.author;
-	}
+  public Configuration(String name, String author, CollectionReaderDescriptor crDesc,
+          PipelineDescriptor plDesc) {
+    this(name, author);
+    this.collectionReaderDesc = crDesc;
+    this.pipelineDesc = plDesc;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public Configuration(String name, String author, CollectionReaderDescriptor crDesc,
+          PipelineDescriptor plDesc, List<ConsumerDescriptor> consumers) {
+    this(name, author, crDesc, plDesc);
+    this.consumerDescs = consumers;
+  }
 
-	public CollectionReaderDescriptor getCollectionReaderDescriptor() {
-		return collectionReaderDesc;
-	}
+  public Configuration(CollectionReaderDescriptor crDesc, PipelineDescriptor plDesc) {
+    this("oaqa-experiment", "oaqa-author", crDesc, plDesc);
+  }
 
-	public PipelineDescriptor getPipelineDescriptor() {
-		return pipelineDesc;
-	}
+  public void setConsumers(List<ConsumerDescriptor> consumerDescs) {
+    this.consumerDescs = consumerDescs;
+  }
 
-	public List<ConsumerDescriptor> getConsumers() {
-		return consumerDescs;
-	}
+  public void setScoreMap(Map<String, ScoreDescriptor> scoreMap) {
+    this.scoreMap = scoreMap;
+  }
 
-	public Map<String, ScoreDescriptor> getScores() {
-		return scoreMap;
-	}
-	
-	public ExplorerDescriptor getExplorationDescriptor(){
-		return explorerDesc;
-	}
+  public void setExplorerDescriptor(ExplorerDescriptor expDesc) {
+    this.explorerDesc = expDesc;
+  }
+  
+  public void setPersistenceProviderDescriptor(PersistenceProviderDescriptor ppDesc){
+    this.ppDesc = ppDesc;
+  }
 
-	public boolean equals(Object obj) {
-		if (obj == this) {
-			return true;
-		}
-		if (obj == null || obj.getClass() != this.getClass()) {
-			return false;
-		}
-		return equals((Configuration) obj);
-	}
+  public String getAuthor() {
+    return this.author;
+  }
 
-	public boolean equals(Configuration conf) {
-		boolean equal = true;
-		equal &= this.getName().equals(conf.getName());
-		System.out.println("name: " + equal);
-		equal &= this.getAuthor().equals(conf.getAuthor());
-		System.out.println("author: " + equal);
-		equal &= this.collectionReaderDesc.equals(conf
-				.getCollectionReaderDescriptor());
-		System.out.println("collectionReader: " + equal);
-		equal &= this.pipelineDesc.equals(conf.getPipelineDescriptor());
-		System.out.println("plDesc: " + equal);
-		equal &= this.consumerDescs.equals(conf.getConsumers());
-		System.out.println("consumer1: " + consumerDescs + "consumer2: "
-				+ conf.getConsumers() + "equal?: " + equal);
-		return equal;
-	}
+  public String getName() {
+    return name;
+  }
+
+  public CollectionReaderDescriptor getCollectionReaderDescriptor() {
+    return collectionReaderDesc;
+  }
+
+  public PipelineDescriptor getPipelineDescriptor() {
+    return pipelineDesc;
+  }
+
+  public List<ConsumerDescriptor> getConsumers() {
+    return consumerDescs;
+  }
+
+  public Map<String, ScoreDescriptor> getScores() {
+    return scoreMap;
+  }
+
+  public ExplorerDescriptor getExplorationDescriptor() {
+    return explorerDesc;
+  }
+
+  public PersistenceProviderDescriptor getPersistenceProviderDescriptor() {
+    return ppDesc;
+  }
+
+  public boolean equals(Object obj) {
+    if (obj == this) {
+      return true;
+    }
+    if (obj == null || obj.getClass() != this.getClass()) {
+      return false;
+    }
+    return equals((Configuration) obj);
+  }
+
+  public boolean equals(Configuration conf) {
+    boolean equal = true;
+    equal &= this.getName().equals(conf.getName());
+    System.out.println("name: " + equal);
+    equal &= this.getAuthor().equals(conf.getAuthor());
+    System.out.println("author: " + equal);
+    equal &= this.collectionReaderDesc.equals(conf.getCollectionReaderDescriptor());
+    System.out.println("collectionReader: " + equal);
+    equal &= this.pipelineDesc.equals(conf.getPipelineDescriptor());
+    System.out.println("plDesc: " + equal);
+    equal &= this.consumerDescs.equals(conf.getConsumers());
+    System.out.println("consumer1: " + consumerDescs + "consumer2: " + conf.getConsumers()
+            + "equal?: " + equal);
+    return equal;
+  }
 
 }

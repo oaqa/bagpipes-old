@@ -23,7 +23,9 @@ public class UimaConfigurationSpace extends ConfigurationSpace<List<JCas>, UimaC
 
   @Override
   protected Factory<List<JCas>, UimaComponent> getFactory() throws Exception {
-    return new UimaFactory();
+    UimaFactory factory=  new UimaFactory();
+    factory.createPersistenceProvider(conf.getPersistenceProviderDescriptor());
+    return factory;
   }
 
 }

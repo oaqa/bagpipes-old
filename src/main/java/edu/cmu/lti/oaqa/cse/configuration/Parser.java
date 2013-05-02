@@ -32,7 +32,7 @@ public abstract class Parser {
 		CollectionReaderDescriptor crDesc = buildCollectionReaderDescriptor();
 		PipelineDescriptor plDesc = buildPipelineDescriptor();
 		Configuration config = new Configuration(name, author, crDesc, plDesc);
-
+		config.setPersistenceProviderDescriptor(buildPersistenceProviderDescriptor());
 		config.setConsumers(buildConsumerDescriptors());
 		config.setScoreMap(buildScores());
 		config.setExplorerDescriptor(buildExplorerDescriptor());
@@ -53,6 +53,7 @@ public abstract class Parser {
 
 	protected abstract Map<String, ScoreDescriptor> buildScores();
 
+	protected abstract PersistenceProviderDescriptor buildPersistenceProviderDescriptor();
 	protected abstract String getName();
 
 	protected abstract String getAuthor();
