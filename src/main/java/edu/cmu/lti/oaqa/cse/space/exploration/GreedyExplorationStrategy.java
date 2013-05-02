@@ -23,7 +23,7 @@ public class GreedyExplorationStrategy<T, E extends ExecutableComponent<T>>
 		extends ExplorationStrategy<T, E> {
 	private Node<E> nextNode, curNode;
 	private Stack<List<Node<E>>> traversalStack;
-	private double minBenefit = 0, maxCost = 1;
+	private double minBenefit = Integer.MIN_VALUE, maxCost = Integer.MAX_VALUE;
 	List<Node<E>> toBeTraversed;
 
 	public GreedyExplorationStrategy() {
