@@ -13,7 +13,7 @@ import edu.cmu.lti.oaqa.cse.configuration.Configuration;
 import edu.cmu.lti.oaqa.cse.configuration.Parser;
 import edu.cmu.lti.oaqa.cse.configuration.YAMLParser;
 import edu.cmu.lti.oaqa.cse.space.exploration.ExplorationStrategy;
-import edu.cmu.lti.oaqa.cse.space.exploration.ThresholdExplorationStrategy;
+import edu.cmu.lti.oaqa.cse.space.exploration.GreedyExplorationStrategy;
 import edu.cmu.lti.oaqa.cse.space.tree.NodeVisitor;
 
 public class UimaFactoryTest {

@@ -6,10 +6,10 @@ import org.apache.uima.jcas.JCas;
 
 import edu.cmu.lti.oaqa.cse.component.uima.UimaComponent;
 import edu.cmu.lti.oaqa.cse.configuration.ExplorerDescriptor;
-import edu.cmu.lti.oaqa.cse.space.exploration.ThresholdExplorationStrategy;
+import edu.cmu.lti.oaqa.cse.space.exploration.GreedyExplorationStrategy;
 
 public class UimaSimpleExplorationStrategy extends
-		ThresholdExplorationStrategy<List<JCas>, UimaComponent> {
+		GreedyExplorationStrategy<List<JCas>, UimaComponent> {
 	
 	public UimaSimpleExplorationStrategy(ExplorerDescriptor explorerDesc){
 		super(explorerDesc);

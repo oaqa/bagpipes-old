@@ -12,13 +12,13 @@ import com.google.common.collect.Lists;
 import edu.cmu.lti.oaqa.components.ExecutableComponent;
 import edu.cmu.lti.oaqa.components.simple.SimpleClassNameAnnotator;
 import edu.cmu.lti.oaqa.cse.configuration.ScoreDescriptor;
-import edu.cmu.lti.oaqa.cse.space.exploration.ThresholdExplorationStrategy;
+import edu.cmu.lti.oaqa.cse.space.exploration.GreedyExplorationStrategy;
 import edu.cmu.lti.oaqa.cse.space.tree.Node;
 import edu.cmu.lti.oaqa.cse.space.tree.NodeVisitor;
 import edu.cmu.lti.oaqa.cse.space.tree.Tree;
 
 public class SimpleExplorationStrategy extends
-		ThresholdExplorationStrategy<String, SimpleClassNameAnnotator> {
+		GreedyExplorationStrategy<String, SimpleClassNameAnnotator> {
 
 
 
