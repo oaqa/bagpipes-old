@@ -1,19 +1,8 @@
 package edu.cmu.lti.oaqa.cse.component.uima;
 
-import java.util.Arrays;
 import java.util.List;
 
-import org.apache.uima.analysis_engine.AnalysisEngine;
-import org.apache.uima.analysis_engine.AnalysisEngineDescription;
-import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
-import org.apache.uima.cas.CAS;
-import org.apache.uima.cas.CASException;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.resource.ResourceInitializationException;
-import org.apache.uima.util.CasCopier;
-import org.apache.uima.util.CasCreationUtils;
-
-import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.components.ExecutableComponent;
 
@@ -50,7 +39,4 @@ public abstract class UimaComponent extends ExecutableComponent<List<JCas>> {
 			throws Exception;
 
 	protected abstract List<JCas> cloneInput(List<JCas> input);
-
-	// protected abstract AnalysisEngineMetaData getMetaData();
-
 }

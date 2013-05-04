@@ -1,6 +1,5 @@
 package edu.cmu.lti.oaqa.components;
 
-import java.lang.reflect.InvocationTargetException;
 import edu.cmu.lti.oaqa.cse.configuration.CollectionReaderDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.ComponentDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.ExplorerDescriptor;
@@ -36,33 +35,14 @@ public abstract class Factory<I, E extends ExecutableComponent<I>> {
 			return (ExplorationStrategy<I, E>) Class.forName(className)
 					.getConstructor(ExplorerDescriptor.class)
 					.newInstance(exploreDesc);
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (ClassCastException e) {
-			System.err.println("Class must be of type +"
+			System.err.println("Class must be of type "
 					+ this.getClass().getTypeParameters());
 			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return strategy;
 	}
 

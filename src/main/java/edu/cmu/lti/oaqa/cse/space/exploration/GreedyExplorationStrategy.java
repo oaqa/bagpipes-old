@@ -1,19 +1,12 @@
 package edu.cmu.lti.oaqa.cse.space.exploration;
 
-import static java.util.Arrays.asList;
-
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
-
-import org.apache.uima.cas.CAS;
-import org.apache.uima.util.CasCreationUtils;
 
 import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.components.ExecutableComponent;
-import edu.cmu.lti.oaqa.components.simple.SimpleClassNameAnnotator;
 import edu.cmu.lti.oaqa.cse.configuration.ExplorerDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.ScoreDescriptor;
 import edu.cmu.lti.oaqa.cse.space.tree.Node;
@@ -21,23 +14,19 @@ import edu.cmu.lti.oaqa.cse.space.tree.Tree;
 
 public class GreedyExplorationStrategy<T, E extends ExecutableComponent<T>>
 		extends ExplorationStrategy<T, E> {
-	private Node<E> nextNode, curNode;
-	private Stack<List<Node<E>>> traversalStack;
-	private double minBenefit = Integer.MIN_VALUE, maxCost = Integer.MAX_VALUE;
-	List<Node<E>> toBeTraversed;
-
-	public GreedyExplorationStrategy() {
-		toBeTraversed = Collections.EMPTY_LIST;
-		traversalStack = new Stack<List<Node<E>>>();
-
-	}
+  
+  private final Stack<List<Node<E>>> traversalStack = new Stack<List<Node<E>>>();
+  
+  private double minBenefit = Integer.MIN_VALUE;
+  private double maxCost = Integer.MAX_VALUE;
+  private List<Node<E>> toBeTraversed = Collections.emptyList();
+	private Node<E> nextNode;
+	private Node<E> curNode;
 
 	public GreedyExplorationStrategy(ExplorerDescriptor explorerDesc) {
 		super(explorerDesc);
-		toBeTraversed = Collections.EMPTY_LIST;
-		traversalStack = new Stack<List<Node<E>>>();
 		System.out.println(explorerDesc);
-	//	minBenefit = explorerDesc.getDouble("minBenefit");
+	  //minBenefit = explorerDesc.getDouble("minBenefit");
 		//maxCost = explorerDesc.getDouble("maxCost");
 	}
 

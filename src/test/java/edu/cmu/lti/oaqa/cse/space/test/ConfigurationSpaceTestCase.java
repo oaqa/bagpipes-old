@@ -19,8 +19,8 @@ public class ConfigurationSpaceTestCase {
 	private static ConfigurationFactory cFactory;
 	private static final Configuration ex1Conf = parse("oaqa-tutorial-ex1");//cFactory.programmedConfEx1;
 	private static final Configuration ex4Conf = parse("oaqa-tutorial-ex4");//cFactory.programmedConfEx4;
-	private static final ExplorationStrategy<String, SimpleClassNameAnnotator> simpleStrategyEx1 = initSimpleExplorationStrategy();
-	private static final ExplorationStrategy<String, SimpleClassNameAnnotator> simpleStrategyEx4 = initSimpleExplorationStrategy();
+	private static final ExplorationStrategy<String, SimpleClassNameAnnotator> simpleStrategyEx1 = initSimpleExplorationStrategy(ex1Conf);
+	private static final ExplorationStrategy<String, SimpleClassNameAnnotator> simpleStrategyEx4 = initSimpleExplorationStrategy(ex4Conf);
 	private static final ConfigurationSpace<String, SimpleClassNameAnnotator> ex1SimpleSpace = initSimpleConfigurationSpace(
 			ex1Conf, simpleStrategyEx1);
 	private static final ConfigurationSpace<String, SimpleClassNameAnnotator> ex4SimpleSpace = initSimpleConfigurationSpace(
@@ -62,8 +62,8 @@ public class ConfigurationSpaceTestCase {
 		return conf;
 	}
 	
-	private static SimpleExplorationStrategy initSimpleExplorationStrategy() {
-		return new SimpleExplorationStrategy();
+	private static SimpleExplorationStrategy initSimpleExplorationStrategy(Configuration conf) {
+		return new SimpleExplorationStrategy(conf.getExplorationDescriptor());
 	}
 
 	private static NodeVisitor<String, ExecutableComponent<String>> initExecutingVisitor() {

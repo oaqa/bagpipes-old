@@ -37,20 +37,20 @@ import edu.cmu.lti.oaqa.cse.configuration.ComponentDescriptor;
 
 public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		implements Iterable<T> {
-
-	private ExplorationStrategy<T, E> strategy;
-	protected Map<String, ScoreDescriptor> scoreMap;
-
+  
+  private final Tree<E> phaseTree;
+  private final Factory<T, E> componentFactory;
+  
+	protected final Map<String, ScoreDescriptor> scoreMap;
 	protected final Configuration conf;
 
-	private Tree<E> phaseTree;
-	private Factory<T, E> componentFactory;
+  private ExplorationStrategy<T, E> strategy;
 
 	public ConfigurationSpace(Configuration conf, Factory<T, E> factory) throws Exception {
 		this.conf = conf;
 		this.componentFactory = factory;
 		this.scoreMap = conf.getScores();
-		this.phaseTree = initTree(this.newTree());
+		this.phaseTree = initTree(newTree());
 		this.strategy = initStrategist(buildStrategist());
 	}
 
@@ -59,8 +59,7 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 	}
 
 	private ExplorationStrategy<T, E> buildStrategist() {
-		return componentFactory.createStrategist(conf
-				.getExplorationDescriptor());
+		return componentFactory.createStrategist(conf.getExplorationDescriptor());
 	}
 
 	private Tree<E> initTree(Tree<E> tree) throws Exception {
@@ -75,8 +74,7 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 	}
 
 	private Node<E> buildCollectionReaderNode() throws Exception {
-		CollectionReaderDescriptor crDesc = conf
-				.getCollectionReaderDescriptor();
+		CollectionReaderDescriptor crDesc = conf.getCollectionReaderDescriptor();
 		Node<E> collectionReaderNode = createNode(crDesc);
 		return collectionReaderNode;
 	}
@@ -84,8 +82,9 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 	private void buildPhases(PipelineDescriptor plDesc, Tree<E> tree)
 			throws Exception {
 		List<PhaseDescriptor> phaseDescs = plDesc.getPhaseDescriptors();
-		for (PhaseDescriptor phaseDesc : phaseDescs)
+		for (PhaseDescriptor phaseDesc : phaseDescs) {
 			buildPhase(phaseDesc, tree);
+		}
 	}
 
 	private void buildPhase(PhaseDescriptor pd, Tree<E> tree) throws Exception {
@@ -93,7 +92,7 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		Set<Node<E>> leaves = Sets.newHashSet();
 		leaves.addAll(tree.getLeaves());
 		System.out.println("phase: " + pd);
-		for (Node<E> oldLeaf : leaves)
+		for (Node<E> oldLeaf : leaves) {
 			for (OptionDescriptor optionDesc : optionDescs){
 				System.out.println("option: " + optionDesc);
 			  // IMPORTANT: this method essentially adds the next phase to the
@@ -101,13 +100,16 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 				// and adding it to the leaves from the previous phase.
 				tree.addToLeaf(oldLeaf, createNode(optionDesc));
 			}
+		}
 	}
 
 	private void buildConsumers() throws Exception {
 		List<ConsumerDescriptor> consumerDescs = conf.getConsumers();
-		for (ConsumerDescriptor consumerDesc : consumerDescs)
-			for (Node<E> oldLeaf : phaseTree.getLeaves())
+		for (ConsumerDescriptor consumerDesc : consumerDescs) {
+			for (Node<E> oldLeaf : phaseTree.getLeaves()) {
 				phaseTree.addToLeaf(oldLeaf, createNode(consumerDesc));
+			}
+		}
 	}
 
 	private Node<E> createNode(ComponentDescriptor cd) throws Exception {
@@ -129,15 +131,13 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 		return new PipelineIterator(conf);
 	}
 
-	public ExplorationStrategy<T, E> initStrategist(
-			ExplorationStrategy<T, E> explorationStrategy) {
+	public ExplorationStrategy<T, E> initStrategist(ExplorationStrategy<T, E> explorationStrategy) {
 		explorationStrategy.setTree(this.phaseTree);
 		explorationStrategy.setScoreMap(this.scoreMap);
 		return explorationStrategy;
 	}
 
-	public void setExplorationStrategy(
-			ExplorationStrategy<T, E> explorationStrategy) {
+	public void setExplorationStrategy(ExplorationStrategy<T, E> explorationStrategy) {
 		explorationStrategy.setTree(this.phaseTree);
 		explorationStrategy.setScoreMap(this.scoreMap);
 		this.strategy = explorationStrategy;

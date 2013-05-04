@@ -63,6 +63,7 @@ import edu.cmu.lti.oaqa.cse.configuration.PersistenceProviderDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.parameter.IntegerParameter;
 import edu.cmu.lti.oaqa.cse.configuration.parameter.Parameter;
 import edu.cmu.lti.oaqa.cse.configuration.parameter.StringParameter;
+import edu.cmu.lti.oaqa.ecd.ExperimentPersistenceProvider;
 import edu.cmu.lti.oaqa.ecd.config.ConfigurationLoader;
 import edu.cmu.lti.oaqa.ecd.impl.AbstractExperimentPersistenceProvider;
 import edu.cmu.lti.oaqa.ecd.impl.DefaultExperimentPersistenceProvider;
@@ -83,7 +84,7 @@ public class ExperimentBuilder {
 
   // private final AnyObject configuration;
 
-  private AbstractExperimentPersistenceProvider persistence;
+  private ExperimentPersistenceProvider persistence;
 
   private TypePriorities typePriorities = (TypePriorities) null;
 
@@ -514,12 +515,17 @@ public class ExperimentBuilder {
     return params;
   }
   
-  public void initializePersistenceProvider(PersistenceProviderDescriptor config) throws Exception {
+  public void initializePersistenceProvider(
+          PersistenceProviderDescriptor config) throws Exception {
       this.persistence = newPersistenceProvider(config);
       insertExperiment(null, null);
   }
+  
+  public ExperimentPersistenceProvider getExperimentPersistenceProvider() {
+      return persistence;
+  }
 
-  private AbstractExperimentPersistenceProvider newPersistenceProvider(
+  private ExperimentPersistenceProvider newPersistenceProvider(
           PersistenceProviderDescriptor config) throws ResourceInitializationException {
     if (config == null) {
       return new DefaultExperimentPersistenceProvider();

@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReader;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
@@ -48,7 +47,7 @@ public class UimaFactory extends Factory<List<JCas>, UimaComponent> {
 			CollectionReaderDescriptor componentDescriptor) throws Exception {
 		CollectionReader desc = builder
 				.buildCollectionReader(componentDescriptor);
-		return new CollectionReaderComponent(desc);
+		return new CollectionReaderComponent(desc, builder.getExperimentPersistenceProvider(), builder.getExperimentUuid());
 	}
 	
 	public void createPersistenceProvider(PersistenceProviderDescriptor ppd) throws Exception{

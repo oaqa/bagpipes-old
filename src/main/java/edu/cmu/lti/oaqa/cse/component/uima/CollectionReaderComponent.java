@@ -4,9 +4,6 @@ import static java.util.Arrays.asList;
 
 import java.util.List;
 
-import org.apache.uima.analysis_engine.AnalysisEngine;
-import org.apache.uima.analysis_engine.AnalysisEngineDescription;
-import org.apache.uima.analysis_engine.metadata.AnalysisEngineMetaData;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CollectionReader;
 import org.apache.uima.jcas.JCas;
@@ -14,13 +11,22 @@ import org.apache.uima.util.CasCreationUtils;
 
 import com.google.common.collect.Lists;
 
+import edu.cmu.lti.oaqa.ecd.ExperimentPersistenceProvider;
+
 public class CollectionReaderComponent extends UimaComponent {
 
 	private final CollectionReader reader;
+	
+	private final ExperimentPersistenceProvider persistence;
+	
+	private final String uuid;
 
-	public CollectionReaderComponent(CollectionReader reader) {
+	public CollectionReaderComponent(CollectionReader reader, ExperimentPersistenceProvider persistence, 
+	          String uuid) {
 		super(reader.getMetaData().getName());
 		this.reader = reader;
+		this.persistence = persistence;
+		this.uuid = uuid;
 	}
 
 	@Override
@@ -36,6 +42,7 @@ public class CollectionReaderComponent extends UimaComponent {
 			reader.getNext(cas);
 			list.add(cas.getJCas());
 		}
+		persistence.updateExperimentMeta(uuid, list.size());
 		return list;
 	}
 
@@ -43,13 +50,4 @@ public class CollectionReaderComponent extends UimaComponent {
 	protected List<JCas> cloneInput(List<JCas> input) {
 		return input;
 	}
-	
-	
-/*
-	@Override
-	protected AnalysisEngineMetaData getMetaData() {
-		return reader.getMetaData();
-	}
-*/
-
 }
