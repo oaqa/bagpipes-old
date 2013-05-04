@@ -19,6 +19,7 @@ package edu.cmu.lti.oaqa.ecd.driver;
 import java.util.UUID;
 
 import edu.cmu.lti.oaqa.cse.component.uima.UimaConfigurationSpace;
+import edu.cmu.lti.oaqa.cse.component.uima.UimaFactory;
 import edu.cmu.lti.oaqa.cse.configuration.Configuration;
 import edu.cmu.lti.oaqa.cse.configuration.Parser;
 import edu.cmu.lti.oaqa.cse.configuration.YAMLParser;
@@ -30,7 +31,9 @@ public class CSEDriver {
 
 	public CSEDriver(String resource, String uuid) throws Exception {
 		Configuration ex1Conf = parse(resource);
-		confSpace = new UimaConfigurationSpace(ex1Conf);
+    UimaFactory factory=  new UimaFactory(uuid);
+    factory.createPersistenceProvider(ex1Conf.getPersistenceProviderDescriptor());
+		confSpace = new UimaConfigurationSpace(ex1Conf, factory);
 	}
 
 	private static Configuration parse(String resource) {

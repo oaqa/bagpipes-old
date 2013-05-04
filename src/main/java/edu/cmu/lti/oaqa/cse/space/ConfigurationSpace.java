@@ -46,9 +46,9 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 	private Tree<E> phaseTree;
 	private Factory<T, E> componentFactory;
 
-	public ConfigurationSpace(Configuration conf) throws Exception {
+	public ConfigurationSpace(Configuration conf, Factory<T, E> factory) throws Exception {
 		this.conf = conf;
-		this.componentFactory = getFactory();
+		this.componentFactory = factory;
 		this.scoreMap = conf.getScores();
 		this.phaseTree = initTree(this.newTree());
 		this.strategy = initStrategist(buildStrategist());
@@ -123,7 +123,6 @@ public abstract class ConfigurationSpace<T, E extends ExecutableComponent<T>>
 	}
 	
 	protected abstract Tree<E> newTree();
-	protected abstract Factory<T, E> getFactory() throws Exception;
 
 	@Override
 	public Iterator<T> iterator() {

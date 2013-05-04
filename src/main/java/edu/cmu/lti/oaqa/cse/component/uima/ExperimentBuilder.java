@@ -18,7 +18,6 @@ package edu.cmu.lti.oaqa.cse.component.uima;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -84,7 +83,7 @@ public class ExperimentBuilder {
 
   // private final AnyObject configuration;
 
-  // private final AbstractExperimentPersistenceProvider persistence;
+  private AbstractExperimentPersistenceProvider persistence;
 
   private TypePriorities typePriorities = (TypePriorities) null;
 
@@ -93,8 +92,6 @@ public class ExperimentBuilder {
     this.typeSystem = typeSystem;
     this.experimentUuid = experimentUuid;
     // this.configuration = ConfigurationLoader.load(resource);
-    // this.persistence = newPersistenceProvider(configuration);
-    // insertExperiment(configuration, resource);
   }
 
   public String getExperimentUuid() {
@@ -235,14 +232,13 @@ public class ExperimentBuilder {
     return reader;
   }
 
-  // private void insertExperiment(AnyObject config, String resource)
-  // throws Exception {
-  // AnyObject experiment = config.getAnyObject("configuration");
-  // String name = experiment.getString("name");
-  // String author = experiment.getString("author");
-  // persistence.insertExperiment(getExperimentUuid(), name, author,
-  // ConfigurationLoader.getString(resource), resource);
-  // }
+  private void insertExperiment(AnyObject config, String resource) throws Exception {
+    //AnyObject experiment = config.getAnyObject("configuration");
+    //String name = experiment.getString("name");
+    //String author = experiment.getString("author");
+    persistence.insertExperiment(getExperimentUuid(), "bagpipes", "bagpipes",
+            "", "");
+  }
 
   public static <T extends Resource> T loadProvider(String provider, Class<T> type)
           throws ResourceInitializationException {
@@ -517,14 +513,18 @@ public class ExperimentBuilder {
     }
     return params;
   }
+  
+  public void initializePersistenceProvider(PersistenceProviderDescriptor config) throws Exception {
+      this.persistence = newPersistenceProvider(config);
+      insertExperiment(null, null);
+  }
 
-  public AbstractExperimentPersistenceProvider newPersistenceProvider(
+  private AbstractExperimentPersistenceProvider newPersistenceProvider(
           PersistenceProviderDescriptor config) throws ResourceInitializationException {
     if (config == null) {
       return new DefaultExperimentPersistenceProvider();
     }
     try {
-      System.out.println(">>>>>>>>>>>>>>>>>>>>>" + config);
       return initializeResource(config, "persistence-provider",
               AbstractExperimentPersistenceProvider.class);
     } catch (Exception e) {

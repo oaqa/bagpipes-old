@@ -1,38 +1,28 @@
 package edu.cmu.lti.oaqa.cse.component.uima;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
-import org.apache.uima.cas.CAS;
-import org.apache.uima.cas.CASException;
 import org.apache.uima.collection.CollectionReader;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.apache.uima.util.CasCopier;
-import org.apache.uima.util.CasCreationUtils;
-import org.uimafit.component.CasMultiplier_ImplBase;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
-
-import com.google.common.collect.Lists;
 
 import edu.cmu.lti.oaqa.components.Factory;
 import edu.cmu.lti.oaqa.cse.configuration.CollectionReaderDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.ComponentDescriptor;
-import edu.cmu.lti.oaqa.cse.configuration.Configuration;
 import edu.cmu.lti.oaqa.cse.configuration.OptionDescriptor;
 import edu.cmu.lti.oaqa.cse.configuration.PersistenceProviderDescriptor;
-import edu.cmu.lti.oaqa.ecd.util.CasUtils;
 
 public class UimaFactory extends Factory<List<JCas>, UimaComponent> {
 
 	private final ExperimentBuilder builder;
 
-	public UimaFactory() throws Exception {
+	public UimaFactory(String uuid) throws Exception {
 		TypeSystemDescription typeSystem = TypeSystemDescriptionFactory
 				.createTypeSystemDescription();
-		this.builder = new ExperimentBuilder("", "", typeSystem);
+		this.builder = new ExperimentBuilder(uuid, "", typeSystem);
 	}
 
 	@Override
@@ -61,12 +51,9 @@ public class UimaFactory extends Factory<List<JCas>, UimaComponent> {
 		return new CollectionReaderComponent(desc);
 	}
 	
-	public void createPersistenceProvider(PersistenceProviderDescriptor ppd) throws ResourceInitializationException{
-	   builder.newPersistenceProvider(ppd);
+	public void createPersistenceProvider(PersistenceProviderDescriptor ppd) throws Exception{
+	   builder.initializePersistenceProvider(ppd);
 	}
-
-
-
 
 	/*
 	 * @Override public ExplorationStrategy<JCas, UimaComponent>
