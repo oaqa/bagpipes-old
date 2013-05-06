@@ -30,9 +30,9 @@ public abstract class UimaComponent extends ExecutableComponent<List<JCas>> {
 	public  List<JCas> execute(List<JCas> input)
 			throws Exception {
 		List<JCas> result = thisExecute(cloneInput(input));
-	/*	if (input != null)
+		if (input != null)
 			for (JCas cas : input)
-				cas.release();*/
+				cas.release();
 		return result;
 	}
 

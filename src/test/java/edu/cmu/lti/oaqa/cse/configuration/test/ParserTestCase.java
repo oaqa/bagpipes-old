@@ -28,7 +28,7 @@ public class ParserTestCase {
 	private ConfigurationFactory cFactory;
 	private Configuration parsedConfEx1, parsedConfEx4;
 
-	@Before
+/*	@Before
 	public void initialize() {
 		// Parse example 1 configuration
 		String resource = "oaqa-tutorial-ex1.yaml";
@@ -39,6 +39,7 @@ public class ParserTestCase {
 		Parser parserEx4 = new YAMLParser(resource);
 		parsedConfEx4 = parserEx4.parse();
 	}
+	*/
 //
 //	@Test
 //	public void parserTest() {
