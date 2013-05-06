@@ -21,20 +21,21 @@ public abstract class UimaComponent extends ExecutableComponent<List<JCas>> {
 	public String toString() {
 		return className;
 	}
-
+/*
 	public final List<JCas> execute(List<JCas> input) throws Exception {
 		return thisExecute(input);
 	}
-/*
-	public final List<JCas> execute(List<JCas> input, boolean isLast)
+*/
+
+	public  List<JCas> execute(List<JCas> input)
 			throws Exception {
 		List<JCas> result = thisExecute(cloneInput(input));
-		if (input != null)
+	/*	if (input != null)
 			for (JCas cas : input)
-				cas.release();
+				cas.release();*/
 		return result;
 	}
-*/
+
 	protected abstract List<JCas> thisExecute(List<JCas> input)
 			throws Exception;
 
