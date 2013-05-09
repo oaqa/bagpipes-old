@@ -44,6 +44,7 @@ public class RandomExplorationStrategy<T, E extends ExecutableComponent<T>>
 	@Override
 	public Node<E> getNextNode() {
 		// Move pointer to next node
+		prevNode = curNode;
 		curNode = nextNode;
 		List<Node<E>> children = Lists.newLinkedList();
 		// If node has children, pre-order recurse on child
@@ -77,12 +78,12 @@ public class RandomExplorationStrategy<T, E extends ExecutableComponent<T>>
     }
 
 	private boolean condition(Node<E> n) {
-		String nodeId = n.getElement().getClassName();
+		/*String nodeId = n.getElement().getClassName();
 		if (scoreMap.containsKey(nodeId)) {
 			ScoreDescriptor nodeScore = scoreMap.get(nodeId);
 			double benefit = nodeScore.getBenefit(), cost = nodeScore.getCost();
 			return benefit > minBenefit && cost < maxCost;
-		}
+		}*/
 		return true;
 	}
 

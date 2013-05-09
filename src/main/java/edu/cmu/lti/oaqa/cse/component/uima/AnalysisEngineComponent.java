@@ -19,12 +19,11 @@ public class AnalysisEngineComponent extends UimaComponent {
 
   private final AnalysisEngineDescription descriptor;
   
-  private final AnalysisEngine ae;
+
 
   public AnalysisEngineComponent(AnalysisEngineDescription descriptor, String className) throws ResourceInitializationException {
     super(className);
     this.descriptor = descriptor;
-    this.ae = AnalysisEngineFactory.createAggregate(descriptor);
   }
 
   @Override
@@ -34,9 +33,11 @@ public class AnalysisEngineComponent extends UimaComponent {
 
   @Override
   public List<JCas> thisExecute(List<JCas> input) throws Exception {
+    AnalysisEngine ae = AnalysisEngineFactory.createAggregate(descriptor);
     for (JCas cas : input) {
       ae.process(cas);
     }
+    ae.destroy();
     return input;
   }
   
