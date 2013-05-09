@@ -18,7 +18,7 @@ public abstract class ExplorationStrategy<T, E extends ExecutableComponent<T>> {
 	protected Node<E> root;
 	protected Map<String, ScoreDescriptor> scoreMap;
 	protected Map<Node<E>, T> inputMap;
-
+	protected Node<E> curNode, prevNode;
 	// protected Map<String, Object> paramMap;
 
 	public final T getNext() throws Exception {
@@ -27,7 +27,7 @@ public abstract class ExplorationStrategy<T, E extends ExecutableComponent<T>> {
 		// Compute execution of current node and cache as input
 		// for all its child components
 		T result = execute(curNode, inputMap.get(curNode));
-		
+
 		if (curNode.hasChildren())
 			for (Node<E> child : curNode.getChildren())
 				inputMap.put(child, result);

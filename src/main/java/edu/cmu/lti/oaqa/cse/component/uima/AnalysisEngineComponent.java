@@ -54,7 +54,7 @@ public class AnalysisEngineComponent extends UimaComponent {
       String sequenceId = ProcessingStepUtils.getSequenceId(cas);
       Trace trace = ProcessingStepUtils.getPartialTrace(prevTrace.getTrace(), 0, optionId);
       process(ae, cas, prevCasId, prevTrace, optionId, sequenceId, trace);
-      ae.process(cas);
+      //ae.process(cas);
     }
     ae.destroy();
     return input;
@@ -70,6 +70,7 @@ public class AnalysisEngineComponent extends UimaComponent {
       insertExecutionTrace(nextCas, optionId, a, prevCasId, trace, key);
       System.out.printf("[%s] Executing option: %s on trace %s\n", sequenceId, optionId, prevTrace);
       addExecutionIdHash(key, nextCas);
+      ae.process(nextCas);
       long b = System.currentTimeMillis();
       addProcessingStep(nextCas, optionId, key);
       // storeCas(nextCas, b, key);
