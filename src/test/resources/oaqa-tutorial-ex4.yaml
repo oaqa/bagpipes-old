@@ -24,8 +24,9 @@ pipeline:
       name: printtofile
       options: 
            - class: edu.cmu.lti.oaqa.components.uima.AnnotationPrinter
-             outputFile: output.txt
-             printToConsole: true       
+             parameters:
+               outputFile: output.txt
+               printToConsole: true       
            - inherit: cas_consumer.XmiWriterCasConsumer
 
 consumers:

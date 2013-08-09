@@ -1,2 +1,7 @@
 class: org.apache.uima.tutorial.ex1.RoomNumberAnnotator
-test: param1
+
+parameters:
+  test: param1
+
+persistence-provider: 
+   inherit: ecd.default-log-persistence-provider

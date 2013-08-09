@@ -4,6 +4,7 @@
 	<groupId>edu.cmu.lti.oaqa.ecd</groupId>
 	<artifactId>cse2</artifactId>
 	<version>2.3.2-SNAPSHOT</version>
+
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
@@ -44,20 +45,8 @@
 	</build>
 
 	<repositories>
-		<repository>
-			<id>scala-tools-releases</id>
-			<name>Scala-Tools Maven2 Repository Releases</name>
-			<url>http://scala-tools.org/repo-releases</url>
-		</repository>
-		<repository>
-			<id>scala-tools-snapshots</id>
-			<name>Scala-Tools Maven2 Repository - Snapshots</name>
-			<url>http://scala-tools.org/repo-snapshots</url>
-		</repository>
+
 	</repositories>
-	<properties>
-		<scala.version>2.9.1</scala.version>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -99,26 +88,58 @@
 			<version>1.9.0</version>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>edu.cmu.lti.oaqa.ecd</groupId>
 			<artifactId>uima-ecd</artifactId>
 			<version>2.3.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>net.sf.josql</groupId> <!-- Exclude Project-D from Project-B -->
+					<artifactId>josql</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.sf.josql</groupId> <!-- Exclude Project-D from Project-B -->
+					<artifactId>gentlyweb-utils</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
-		<dependency>
-			<groupId>org.scalaz</groupId>
-			<artifactId>scalaz-core_${scala.version}</artifactId>
-			<version>6.0.4</version>
-		</dependency>
 		<dependency>
 			<groupId>org.apache.uima</groupId>
 			<artifactId>uimaj-examples</artifactId>
 			<version>2.4.0</version>
 		</dependency>
+
 		<dependency>
-		  <groupId>edu.cmu.lti.oaqa.tutorial</groupId>
-		  <artifactId>oaqa-tutorial</artifactId>
-		  <version>1.0.0-SNAPSHOT</version>
+			<groupId>net.liftweb</groupId>
+			<artifactId>lift-json_2.10</artifactId>
+			<version>2.5.1</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>2.10.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-compiler</artifactId>
+			<version>2.10.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-reflect</artifactId>
+			<version>2.10.2</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.scalatra</groupId>
+			<artifactId>scalatra-scalatest_2.10</artifactId>
+			<version>2.2.1</version>
 		</dependency>
 	</dependencies>
 

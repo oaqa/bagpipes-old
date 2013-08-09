@@ -1,9 +1,5 @@
 class: org.apache.uima.examples.cpe.FileSystemCollectionReader
-
-Language: en
-BrowseSubdirectories: FALSE
-Encoding: UTF-8 
-
-
-#persistence-provider: |
-#  inherit: ecd.default-experiment-persistence-provider
+parameters:
+    Language: en
+    BrowseSubdirectories: FALSE
+    Encoding: UTF-8 

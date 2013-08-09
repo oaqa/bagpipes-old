@@ -1,6 +1,7 @@
 class: edu.cmu.lti.oaqa.components.uima.XmiWriterCasConsumer
 
-OutputDirectory: cas-output
+parameters:
+  OutputDirectory: cas-output
 
-#persistence-provider: |
-#  inherit: ecd.default-log-persistence-provider
+persistence-provider:
+  inherit: ecd.default-log-persistence-provider

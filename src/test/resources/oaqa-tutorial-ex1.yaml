@@ -19,9 +19,9 @@ pipeline:
 consumers:
      - inherit: cas_consumer.XmiWriterCasConsumer
      
-metrics:
-      - inherit: componentScores
+#metrics:
+#      - inherit: componentScores
     
-exploration-strategist:
-    - class: edu.cmu.lti.oaqa.cse.space.exploration.uima.UimaRandomExplorationStrategy
+#exploration-strategist:
+#    - class: edu.cmu.lti.oaqa.cse.space.exploration.uima.UimaRandomExplorationStrategy
 
