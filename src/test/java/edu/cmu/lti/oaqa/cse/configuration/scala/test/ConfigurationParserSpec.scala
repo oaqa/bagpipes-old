@@ -28,7 +28,6 @@ configuration:
  
 collection-reader:
   inherit: collection_reader.filesystem-collection-reader
-
 """
 
     val ex1 = """
@@ -38,7 +37,8 @@ configuration:
 
 collection-reader:
   inherit: collection_reader.filesystem-collection-reader
-  InputDirectory: data/
+  params:
+    InputDirectory: data/
 
 pipeline:
      - inherit: phases.phase  
@@ -54,7 +54,8 @@ configuration:
 
 collection-reader:
   inherit: collection_reader.filesystem-collection-reader
-  InputDirectory: data/
+  params:
+    InputDirectory: data/
 
 pipeline:
     - inherit: phases.phase  

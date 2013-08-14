@@ -10,6 +10,8 @@ import net.liftweb.json.JsonAST.JDouble
 
 object ConfigurationDescriptors {
 
+  val paramsKey = "params"
+  
   trait ExecutableDescriptor
 
   abstract class ParameterizedDescriptor(`class`: String, parmeters: Map[String, Any]) {
@@ -19,25 +21,20 @@ object ConfigurationDescriptors {
         case s => s
       }
     def get(key: String) = get[Any](key)
-    def getInt(key: String) = get[Integer](key)
-    def getDouble(key: String) = get[Double](key)
-    def getString(key: String) = get[String](key)
-    def getBoolean(key: String) = get[Boolean](key)
+    def getInt(key: String) = get[IntegerParameter](key)
+    def getDouble(key: String) = get[DoubleParameter](key)
+    def getString(key: String) = get[StringParameter](key)
+    def getBoolean(key: String) = get[BooleanParameter](key)
+    def getMap(key: String) = get[Map[String, Parameter]](key)
+    def getList(key: String) = get[List[Parameter]](key)
   }
 
   case class ConfigurationDescriptor(configuration: Configuration, `collection-reader`: CollectionReaderDescriptor, pipeline: List[PhaseDescriptor]) //, pipeline: List[PhaseDescriptor], consumers: List[ConsumerDescriptor])
   case class Configuration(name: String = "default-config", author: String = "default-author")
-  case class CollectionReaderDescriptor(`class`: String, parameters: Map[String, Parameter] = Map()) extends ExecutableDescriptor
-  //high-level pipeline descriptors
-  //case class PipelineDescriptor(pipeline: List[ExecutableDescriptor])
+  case class CollectionReaderDescriptor(`class`: String, params: Map[String, Parameter] = Map()) extends ExecutableDescriptor
   case class PhaseDescriptor(name: String, options: List[ComponentDescriptor]) extends ExecutableDescriptor
-  //case class OptionDescriptor(`class`: String, parameters: Map[String, Parameter] = Map()) //extends ComponentDescriptor(`class`) 
-  //executable components 
-  trait ComponentExpr
-  val emptyComponent = ComponentDescriptor("")
-  case class ComponentDescriptor(`class`: String, parameters: Map[String, Parameter] = Map()/*, `persistence-provider`: ComponentDescriptor = emptyComponent*/) extends ParameterizedDescriptor(`class`, parameters) with ExecutableDescriptor with ComponentExpr
-  case class EmptyComponent extends ComponentExpr
-  // case class ConsumerDescriptor(`class`: String, parameters: Map[String, Parameter] = Map()) extends ParameterizedDescriptor(`class`, parameters) with ExecutableDescriptor
+  val emptyComponent = ComponentDescriptor("EMPTY", Map())
+  case class ComponentDescriptor(`class`: String, params: Map[String, Parameter]/*, `persistence-provider`: ComponentDescriptor = emptyComponent*/) extends ParameterizedDescriptor(`class`, params) with ExecutableDescriptor
   case class ScoreDescriptor(cost: Double, benefit: Double)
 
   abstract class Parameter
@@ -45,8 +42,8 @@ object ConfigurationDescriptors {
   case class StringParameter(value: String) extends Parameter
   case class DoubleParameter(value: Double) extends Parameter
   case class BooleanParameter(value: Boolean) extends Parameter
-  case class ListParameter[P <: Parameter](pList: List[P]) extends Parameter
-  case class MapParameter[P <: Parameter](map: Map[String, P]) extends Parameter
+  case class ListParameter(pList: List[Parameter]) extends Parameter
+  case class MapParameter(map: Map[String, Parameter]) extends Parameter
   implicit def primitive2Parameter[T <: Any](value: T): Parameter = value match {
     case v: Int => IntegerParameter(v)
     case v: String => StringParameter(v)

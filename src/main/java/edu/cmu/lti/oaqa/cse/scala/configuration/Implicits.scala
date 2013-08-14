@@ -2,6 +2,9 @@ package edu.cmu.lti.oaqa.cse.scala.configuration
 import scala.collection.JavaConverters._
 import net.liftweb.json.JsonAST._
 import scala.collection.JavaConversions._
+import net.liftweb.json.Serialization
+import net.liftweb.json.ShortTypeHints
+import edu.cmu.lti.oaqa.cse.scala.configuration.ConfigurationDescriptors._
 object Implicits {
   class MapWithRestrictTo[A, That](from: Map[A, That]) {
     def restrictTo[B](implicit m: scala.reflect.Manifest[B]): Map[A, B] = {
@@ -12,19 +15,6 @@ object Implicits {
   implicit def makeMapWithRestrictTo[A, B](from: Map[A, B]) = {
     new MapWithRestrictTo(from)
   }
-  /*
-  implicit def ==[J <: JValue, T <: Any](jval: J, sVal: T) = (jval, sVal) match {
-    case (j: JInt, s: Int) => jInt2SInt(j) == s
-    case (j: JString, s: String) => jString2SString(j) == s
-    case (j: JBool, s: Boolean) => jBool2SBool(j) == s
-    case (j: JDouble, s: Double) => jDouble2SDouble(j) == s
-  }
-*/
- // implicit def ==[J <: JValue, T <: Any](sval: T, jVal: J) = jVal == sval
-  implicit def jInt2SInt(jVal: JInt): Int = jVal.num.toInt
-  implicit def jBool2SBool(jVal: JBool): Boolean = jVal.value
-  implicit def jDouble2SDouble(jVal: JDouble): Double = jVal.num
-  implicit def jString2SString(jVal: JString): String = jVal.s
 
   /**
    * Implicitly takes a Java map and converts it to a Scala map. If the
@@ -60,4 +50,11 @@ object Implicits {
     deepListAsScalaConverter(list)
   }
 
+  implicit val formats = Serialization.formats(ShortTypeHints(List(
+    classOf[StringParameter],
+    classOf[DoubleParameter],
+    classOf[IntegerParameter],
+    classOf[BooleanParameter],
+    classOf[ListParameter],
+    classOf[MapParameter])))
 }
