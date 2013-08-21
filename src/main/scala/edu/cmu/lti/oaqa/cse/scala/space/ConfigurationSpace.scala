@@ -14,7 +14,7 @@ import edu.cmu.lti.oaqa.cse.scala.configuration._
  * -----------------  ------  ------  ------  -----------
  * 		                      c_1_0
  *                                    c_2_0
- * 		   cr         c_0_0   c_1_1               s_0
+ * 		cr            c_0_0   c_1_1                 s_0
  *                                    c_2_1
  * 		                      c_1_2
  * }}}
