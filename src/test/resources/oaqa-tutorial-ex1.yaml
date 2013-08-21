@@ -4,7 +4,8 @@ configuration:
 
 collection-reader:
   inherit: collection_reader.filesystem-collection-reader
-  InputDirectory: data/
+  params:
+    InputDirectory: data/
 
 pipeline:
      - inherit: ecd.phase  

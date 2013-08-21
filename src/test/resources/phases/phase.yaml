@@ -1,4 +1,4 @@
 class: edu.cmu.lti.oaqa.ecd.phase.BasePhase
 
-persistence-provider:
-  class: edu.cmu.lti.oaqa.ecd.impl.DefaultPhasePersistenceProvider
+#persistence-provider:
+#  class: edu.cmu.lti.oaqa.ecd.impl.DefaultPhasePersistenceProvider
