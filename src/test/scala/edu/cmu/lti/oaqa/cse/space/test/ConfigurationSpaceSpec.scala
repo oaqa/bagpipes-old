@@ -19,29 +19,50 @@ import edu.cmu.lti.oaqa.cse.scala.configuration._
 import edu.cmu.lti.oaqa.cse.scala.configuration.Implicits._
 import edu.cmu.lti.oaqa.cse.CommonTesting.yamlsAndParsedConfigs
 import edu.cmu.lti.oaqa.cse.scala.space.ConfigurationSpace
+import edu.cmu.lti.oaqa.cse.scala.space.ConfigurationSpace._
 
 @RunWith(classOf[JUnitRunner])
 class ConfigurationSpaceSpec extends FeatureSpec {
-  val confSpace = ConfigurationSpace
-  feature("construct simple pipeline trees") {
-    new confTrees {
+  new confTrees {
+    feature("construct simple pipeline trees") {
 
       scenario("just a collection reader") {
-        val testTree0 = confSpace.populateTree(confEx0)
+        val testTree0 = ConfigurationSpace(confEx0).getSpace
         assert(testTree0 === confTree0)
       }
 
       scenario("collection reader + 1 phase with 1 option") {
-        val testTree1 = confSpace.populateTree(confEx1)
+        val testTree1 = ConfigurationSpace(confEx1).getSpace
         assert(testTree1 === confTree1)
       }
 
       scenario("collection reader + 1 phase with 2 options") {
-        val testTree2 = confSpace.populateTree(confEx2)
+        val testTree2 = ConfigurationSpace(confEx2).getSpace
         assert(testTree2 === confTree2)
       }
 
+      scenario("collection reader + 1 phase + 1 phase with 2 options") {
+        val testTree3 = ConfigurationSpace(confEx3).getSpace
+        assert(testTree3 === confTree3)
+      }
+
+      scenario("collection reader + 1 phase with 2 options + 1 phase with 2 options") {
+        val testTree4 = ConfigurationSpace(confEx4).getSpace
+        assert(testTree4 === confTree4)
+      }
+    }
+
+    feature("test cross-opted components") {
+      scenario("collection reader + 1 phase with 2 crossoptions (3 params + 2 params, expanded)") {
+        val testTree5 = ConfigurationSpace(confEx5).getSpace
+        assert(testTree5 === confTree5)
+      }
+      
+      /*scenario("collection reader + 1 phase with 2 crossoptions (3 params + 2 params, expanded)") {
+        val testTree6  = ConfigurationSpace(confEx5).getSpace
+        assert(testTree6 === confTree6)
+      }*/
     }
   }
-
 }
+

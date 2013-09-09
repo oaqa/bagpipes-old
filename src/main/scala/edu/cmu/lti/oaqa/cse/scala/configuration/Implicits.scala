@@ -17,7 +17,7 @@ object Implicits {
   }
 
   /**
-   * Implicitly takes a Java map and converts it to a Scala map. If the
+   * Implicitly returns a Scala map converted from a Java map. If the
    * values of the Java map contains any references to another Java map or
    * list, then those will be recursively converted to Scala map or list
    * respectively. If one of the keys in the map uses the Java keyword "class"
@@ -35,7 +35,7 @@ object Implicits {
   }
 
   /**
-   * Implicitly takes a Java list and converts it to a Scala list. If the
+   * Implicitly returns a Scala list and converted it to a Java list. If the
    * values of the Java list contains any references to another Java map or
    * list, then those will be recursively converted to Scala map or list
    * respectively.

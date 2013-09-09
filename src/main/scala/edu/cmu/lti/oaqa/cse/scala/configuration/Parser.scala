@@ -1,16 +1,17 @@
 package edu.cmu.lti.oaqa.cse.scala.configuration
 
-import edu.cmu.lti.oaqa.cse.scala.configuration._
+import edu.cmu.lti.oaqa.cse.scala.configuration.Descriptors._
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.DefaultFormats
 import net.liftweb.json.JsonAST._
-import net.liftweb.json.Extraction._
 import net.liftweb.json.Serialization
 import net.liftweb.json.ShortTypeHints
 import scala.util.parsing.json.JSONObject
 import ParserUtils._
 import Implicits._
 import edu.cmu.lti.oaqa.cse.scala.configuration.Parameters._
+import net.liftweb.json.FullTypeHints
+import net.liftweb.json.TypeHints
 
 /**
  * Maps a configuration descriptor (specified as its content or file path) to its canonical [[$confDes]]
@@ -79,18 +80,6 @@ trait Parser {
     parse(resMap)
   }
 
-  /*The list of hints that tell the parser which parameters to extract*/
-  val parameterHints = List(
-    classOf[StringParameter],
-    classOf[DoubleParameter],
-    classOf[IntegerParameter],
-    classOf[BooleanParameter],
-    classOf[ListParameter],
-    classOf[MapParameter])
-
-  /*The list of all formats that tell the parser which types to extract.
-    Append to this list to support new types.*/
-  implicit val formats = Serialization.formats(ShortTypeHints(parameterHints))
   /**
    *  Returns a new [[$confDes]] from a parsed [[scala.collections.Map]].
    *
@@ -109,24 +98,18 @@ trait Parser {
     val configMap = flattenConfMap(resMap)
     //helpful for debugging
     println("configMap: " + configMap)
-    //Serialize to JSON
-    //scala.collections.map->JSONObject
-    //implicit value "formats" is used in decomposition of map into JSONObject.
-    val jsonObjConf = decompose(configMap)
-    //Deserialize to Scala case classes
-    // JSONObj -> ConfigurationDescriptor
-    jsonObjConf.extract[ConfigurationDescriptor]
+    extract[ConfigurationDescriptor](configMap)
   }
 
   /**
    * Returns a [[scala.util.Map]] representation of a configuration. Reformats
    * file path String to classpath resource style from standard Java package style
-   * (e.g.,`edu.cmu.lti.oaqa.cse.configuration` -> `/edu/cmu/lti.oaqa.cse.configuration`).
+   * (e.g.,`edu.cmu.lti.oaqa.cse.configuration` -> `/edu/cmu/lti/oaqa/cse/configuration`).
    *
    * @param path the file path of the configuration descriptor.
    * @return [[scala.util.Map]] representation of the configuration descriptor.
    */
-  protected def getConfigurationMapFromFile(path: Any): Map[String, Any] = getConfigurationMapFromFile("/" + path.asInstanceOf[String].replace(".", "/"))
+  protected def getConfigurationMapFromPath(path: String): Map[String, Any] = getConfigurationMapFromFile("/" + path.replace(".", "/"))
 
   /**
    * Returns a new [[scala.util.Map]] representation of a configuration from the
@@ -157,7 +140,7 @@ trait Parser {
    * @param  confMap a map representation of the configuration descriptor
    * @return a flattened and effective version of confMap.
    */
-  private def flattenConfMap(confMap: Map[String, Any]): Map[String, Any] =
+  /* private*/ def flattenConfMap(confMap: Map[String, Any]): Map[String, Any] =
     confMap.map {
       case (k, v: List[_]) => (k, flattenConfList(v)) // recursively flatten the list
       case (k, v: Map[_, _]) => (k, flattenComponentOrConfMap(v.asInstanceOf[Map[String, Any]]))
@@ -191,14 +174,25 @@ trait Parser {
    */
   private def flattenComponentOrConfMap(confMap: Map[String, Any]) = confMap.head match {
     //if it contains "inherit" then flatten the component and combine with inheriting configuration descriptor
-    case ("inherit", _) => flattenComponent(confMap)
+    case ("inherit", v: String) => {
+      val flattenedConfMap = flattenComponent(confMap, v)
+      extractComponent(flattenedConfMap)
+    }
+   // case ("collection-reader", v: String) => extract[CollectionReaderDescriptor](flattenComponent(confMap,v))
     //else just recursively flatten the map
     case _ => flattenConfMap(confMap)
   }
 
+  def extractComponent(confMap: Map[String, Any]) =
+    if (confMap.contains("cross-opts"))
+      extract[CrossComponentDescriptor](confMap)
+    else if (confMap.contains("params")) extract[ComponentDescriptor](confMap)
+    else confMap
+
   /**
    * Returns "flattened," effective version of the component where all "inherits" are
-   * substituted by concrete class definitions and parameters are merged.
+   * substituted by concrete class definitions and parameters are merged. The properties
+   * (e.g., "params") to be merged between
    *
    * Example:
    *
@@ -221,12 +215,21 @@ trait Parser {
    *      param_b: baz
    * }}}
    *
+   * @param parentConfMap the parent configuration map
+   * @param childResoucePath the path specified by the parent's inherit tag
    */
-  private def flattenComponent(confMap: Map[String, Any]): Map[String, Any] = {
-    val resourcePath = confMap.head._2 // head contains the classpath "inherit: foo.bar" information
-    val resource = flattenConfMap(getConfigurationMapFromFile(resourcePath)) // get resource from file specified by head
-    val combinedWithInherited = Map(resource.head, "params" -> joinMaps(confMap, resource, "params")) // combine parameters with inheriting configuration descriptor
-    combinedWithInherited ++ flattenConfMap(confMap.tail ++ resource.tail - "params") //combine non-parameters with inherited configuration descriptor and return it 
+  private def flattenComponent(parentConfMap: Map[String, Any], childResourcePath: String): Map[String, Any] = {
+    val childConfMap = flattenConfMap(getConfigurationMapFromPath(childResourcePath)) // get resource from file specified by head
+    // merge parent and child properties (e.g., "params," "cross-opts," etc.)
+    val mergedPropertiesConf =
+      childConfMap.map {
+        // if it's a map merge with parent
+        case (k, v: Map[_, _]) => (k -> (joinMaps(childConfMap, parentConfMap, k)))
+        // else, just override with child
+        case (k, v) => (k -> v)
+      }
+    // add the rest of the properties in the parent to the merged map
+    mergedPropertiesConf ++ flattenConfMap(parentConfMap).filterNot { case (k, v) => childConfMap.contains(k) }
   }
 
 }

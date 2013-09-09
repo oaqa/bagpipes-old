@@ -10,16 +10,20 @@ import net.liftweb.json.JsonAST.JDouble
 import Parameters.Parameter
 import edu.cmu.lti.oaqa.cse.scala.configuration.Parameters._
 
-sealed trait ConfExpr
-sealed trait ExecutableDescriptor
-sealed trait ExecutableConf extends ExecutableDescriptor with ConfExpr
-case class ConfigurationDescriptor(configuration: Configuration, `collection-reader`: CollectionReaderDescriptor, pipeline: List[PhaseDescriptor]) extends ConfExpr //, pipeline: List[PhaseDescriptor], consumers: List[ConsumerDescriptor]) 
-case class Configuration(name: String = "default-config", author: String = "default-author") extends ConfExpr
-case class CollectionReaderDescriptor(`class`: String, params: Map[String, Parameter] = Map()) extends ParameterizedDescriptor(`class`, params) with ExecutableConf
-case class PhaseDescriptor(name: String, options: List[ComponentDescriptor]) extends ExecutableConf
-case class ComponentDescriptor(`class`: String, params: Map[String, Parameter] = Map() /*, `persistence-provider`: ComponentDescriptor = emptyComponent*/ ) extends ParameterizedDescriptor(`class`, params) with ExecutableConf
-case class ScoreDescriptor(cost: Double, benefit: Double)
-
+object Descriptors {
+  sealed trait ExecutableConf //extends ExecutableDescriptor with ConfExpr
+  sealed trait Testable //extends ExecutableDescriptor with ConfExpr
+ 
+  sealed trait ExecutableComponent extends ExecutableConf
+  case class ConfigurationDescriptor(configuration: Configuration, `collection-reader`: ComponentDescriptor, pipeline: List[PhaseDescriptor])
+  case class Configuration(name: String = "default-config", author: String = "default-author")
+  case class CollectionReaderDescriptor(`class`: String, params: Map[String, Parameter] = Map()) extends /* ParameterizedDescriptor(`class`, params) with*/ ExecutableConf
+  case class PhaseDescriptor(phase: String, options: List[ExecutableConf]) extends ExecutableConf
+  case class ComponentDescriptor(`class`: String, params: Map[String, Parameter] = Map()) extends /*ParameterizedDescriptor(`class`, params) with*/ ExecutableConf
+  case class CrossComponentDescriptor(`class`: String, params: Map[String, Parameter] = Map(), `cross-opts`: Map[String, ListParameter] = Map()) extends /* ParameterizedDescriptor(`class`, params) with*/ ExecutableComponent
+  case class ScoreDescriptor(cost: Double, benefit: Double)
+}
+/*
 sealed abstract class ParameterizedDescriptor(`class`: String, parmeters: Map[String, Any]) {
   def get[T](key: String)(implicit m: scala.reflect.Manifest[T]): Option[T] =
     parmeters.restrictTo[T].get(key) match {
@@ -33,6 +37,6 @@ sealed abstract class ParameterizedDescriptor(`class`: String, parmeters: Map[St
   def getDouble(key: String) = get[DoubleParameter](key)
   def getString(key: String) = get[StringParameter](key)
   def getBoolean(key: String) = get[BooleanParameter](key)
-  def getMap(key: String) = get[Map[String, Parameter]](key)
-  def getList(key: String) = get[List[Parameter]](key)
-}
+  def getMap(key: String) = get[MapParameter](key)
+  def getList(key: String) = get[ListParameter](key)
+}*/

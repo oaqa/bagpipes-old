@@ -1,5 +1,4 @@
 package edu.cmu.lti.oaqa.cse.configuration.test
-import edu.cmu.lti.oaqa.cse.configuration.scala.test._
 import net.liftweb.json.JsonAST._
 import net.liftweb.json.Extraction._
 import net.liftweb.json.Printer._
@@ -47,7 +46,11 @@ class ConfigurationParserSpec extends FeatureSpec {
         val parsedEx4 = parser.parse(ex4)
         assert(confEx4 === parsedEx4)
       }
-
+      
+      scenario("ex5: collection-reader + component with cross-opts") {
+        val parsedEx5 = parser.parse(ex6)
+        assert(confEx5 === parsedEx5)
+      }
     }
   }
 }
